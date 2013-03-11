@@ -1,4 +1,18 @@
 Isg2::Application.routes.draw do
+  root :to => "node#index"
+
+  match "node/create/:parent_id" => "node#create"
+  post "node/create"
+  get "node/destroy"
+  get "node/add"
+  get "node/remove"
+  get "node/add_resource"
+  get "node/remove_resource"
+
+  get "parenthood/add"
+  get "parenthood/remove"
+  get "parenthood/create_node_then_add_child"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
