@@ -1,6 +1,5 @@
 <h1>Create a new child</h1>
 
-<%= params[:parent] %>
 <%= form_tag("/node/add_child") do %>
   <%= label_tag :name, 'Name: ' %>
   <%= text_field_tag :name %><br />

@@ -25,9 +25,9 @@ class NodeController < ApplicationController
   def add_child
     new_child = Node.new(:name => params[:name])
     new_child.parent = Node.find(params[:parent])
-    new_child.save
-
-    redirect_to root_url
+    if new_child.save
+      redirect_to root_url
+    end
   end
 
   def add_resource
