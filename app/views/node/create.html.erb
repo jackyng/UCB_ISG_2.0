@@ -1,0 +1,7 @@
+<h1>Node#create</h1>
+<%= form_tag "/node/create" do %>
+  <%= label_tag :name, 'Name: ' %>
+  <%= text_field_tag :name %><br />
+  <%= hidden_field_tag :parent_id, params[:parent_id] %>
+  <%= submit_tag 'Create' %>
+<% end %>

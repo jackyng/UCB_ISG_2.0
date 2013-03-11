@@ -1,0 +1,8 @@
+<ul>
+  <%= @nodes.each do |node| %>
+    <li>
+      <%= node.name %>
+      <%= link_to "Add child", parenthood_create_node_then_add_child_path(:parent_id => node.id), :method => :get %>
+    </li>
+  <% end %>
+</ul>
