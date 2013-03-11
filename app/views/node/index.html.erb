@@ -1,8 +1,13 @@
 <ul>
-  <%= @nodes.each do |node| %>
+  <li>
+    <%= @node.name %>
+    <%= link_to "Add child", node_add_child_path(:parent => @node), :method => :get %>
+  </li>
+  <%= @children.each do |node| %>
     <li>
       <%= node.name %>
-      <%= link_to "Add child", parenthood_create_node_then_add_child_path(:parent_id => node.id), :method => :get %>
+      <%= link_to "Add child", node_add_child_path(:parent => node), :method => :get %>
+      <%= link_to "Remove node", node_destroy_path(:node_id => node.id), :method => :get %>
     </li>
   <% end %>
 </ul>
