@@ -1,11 +1,12 @@
 Isg2::Application.routes.draw do
   root :to => "node#index"
 
+  match "node" => "node#index", :via => [:get, :post]
   get "node/create"
   get "node/destroy"
   get "node/add_resource"
   get "node/remove_resource"
-  match 'node/add_child' => 'node#add_child', :via => [:get, :post]
+  match "node/add_child" => "node#add_child", :via => [:get, :post]
 
   get "parenthood/add"
   get "parenthood/remove"
