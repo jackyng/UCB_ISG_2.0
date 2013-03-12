@@ -4,4 +4,15 @@
     <%= link_to "Add child", node_add_child_path(:parent => @node), :method => :get %>
   </li>
 
+  <% unless @children.blank? %>
+    <ul>
+    <%= @children.each do |node| %>
+      <li>
+        <%= link_to node.name, node_path(:id => node) %>
+        <%= link_to "Add child", node_add_child_path(:parent => node), :method => :get %>
+        <%= link_to "Remove node", node_destroy_path(:node_id => node.id), :method => :get %>
+      </li>
+    <% end %>
+    </ul>
+  <% end %>
 </ul>
