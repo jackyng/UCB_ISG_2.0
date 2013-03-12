@@ -6,7 +6,7 @@
 
   <% unless @children.blank? %>
     <ul>
-    <%= @children.each do |node| %>
+    <% @children.each do |node| %>
       <li>
         <%= link_to node.name, node_path(:id => node) %>
         <%= link_to "Add child", node_add_child_path(:parent => node), :method => :get %>
