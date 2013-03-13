@@ -13,7 +13,7 @@ class NodeController < ApplicationController
   def create
     # Data validation
     if params[:name] == Isg2::Application::ROOT_NODE_NAME
-      flash[:error] = 'Illegal topic name "' + Isg2::Application::ROOT_NODE_NAME + '".'
+      flash[:error] = 'Error: illegal topic name "' + Isg2::Application::ROOT_NODE_NAME + '".'
       redirect_to node_path(:id => params[:parent])
       return
     end
@@ -25,12 +25,12 @@ class NodeController < ApplicationController
     @node = Node.find(params[:node_id])
     parent_id = @node.parent.id
     if @node.name == Isg2::Application::ROOT_NODE_NAME
-      flash[:error] = "Can't remove the default root node"
+      flash[:error] = "Error: can't remove the root topic."
     elsif @node.has_children?
-      flash[:error] = "Node has children, can't remove!"
+      flash[:error] = "Error: can't remove a topic with subtopics."
     else
       @node.destroy
-      flash[:notice] = "Removed node"
+      flash[:notice] = "Successfully removed topic."
     end
     redirect_to node_path(:id => parent_id)
   end
@@ -38,7 +38,7 @@ class NodeController < ApplicationController
   def add_child
     # Data validation
     if params[:name] == Isg2::Application::ROOT_NODE_NAME
-      flash[:error] = 'Illegal topic name "' + Isg2::Application::ROOT_NODE_NAME + '".'
+      flash[:error] = 'Error: illegal topic name "' + Isg2::Application::ROOT_NODE_NAME + '".'
       redirect_to node_path(:id => params[:parent])
       return
     end
@@ -46,7 +46,7 @@ class NodeController < ApplicationController
     new_child = Node.new(:name => params[:name])
     new_child.parent = Node.find(params[:parent])
     if new_child.save
-      flash[:notice] = "Created child node '#{new_child.name}' to parent node '#{new_child.parent.name}'"
+      flash[:notice] = "Successfully created subtopic '#{new_child.name}' under '#{new_child.parent.name}'"
       redirect_to node_path(:id => new_child.parent)
     end
   end
