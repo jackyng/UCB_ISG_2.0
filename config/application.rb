@@ -58,5 +58,8 @@ module Isg2
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Global variables
+    ROOT_NODE_NAME = "ISG_root"
   end
 end
