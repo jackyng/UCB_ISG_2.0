@@ -1,0 +1,166 @@
+@import "bootstrap";
+@import "bootstrap-responsive";
+
+/* mixins, variables, etc. */
+
+$grayMediumLight: #eaeaea;
+
+@mixin box_sizing {
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
+}
+
+/* universal */
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  padding-top: 60px;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.center {
+  text-align: center;
+  h1 {
+    margin-bottom: 10px;
+  }
+}
+
+/* typography */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.7em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: $grayLight;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+
+/* header */
+.navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+  width: 80em;
+}
+.container {
+  width: 80em;
+  padding: 5px;
+}
+
+#CALNET {
+  margin-right: 5px;
+}
+
+#banner {
+  width: 90%;
+  height: 10em;
+  margin: auto;
+  background: #d9d919;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+/* sidebar */
+#treeview {
+  margin-top: 17px;
+  padding-left: 0px;
+  font-size: 15.5px;
+}
+
+.tree_func {
+  margin-left: 5px;
+  padding: 1px;
+  font-size: 10px;
+  background: #ccc;
+  color: #000;
+}
+
+#side_bar_list {
+  list-style-type: none;
+  margin-left: 7px;
+}
+
+/* content */
+
+#content {
+  height: 60em;
+  background: #ccc;
+}
+
+/* footer */
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid $grayMediumLight;
+  color: $grayLight;
+  a {
+    color: $gray;
+    &:hover { 
+      color: $grayDarker;
+    }
+  }  
+  small {
+  	display: block; 
+    margin: auto; 
+    text-align: center;
+  }
+}
+
+/* forms */
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
+}
+
+#notice {
+  color: #f00;
+  ul {
+    list-style: none;
+    margin: 0 0 18px 0;
+  }
+}
+
+/* miscellaneous */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
+}

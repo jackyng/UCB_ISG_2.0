@@ -1,18 +1,43 @@
-<ul>
-  <li>
-    <%= @node.name %>
-    <%= link_to "Add child", node_add_child_path(:parent => @node), :method => :get %>
-  </li>
-
-  <% unless @children.blank? %>
-    <ul>
-    <% @children.each do |node| %>
-      <li>
-        <%= link_to node.name, node_path(:id => node) %>
-        <%= link_to "Add child", node_add_child_path(:parent => node), :method => :get %>
-        <%= link_to "Remove node", node_destroy_path(:node_id => node.id), :method => :get %>
-      </li>
-    <% end %>
-    </ul>
-  <% end %>
-</ul>
+<% provide(:title, 'Home') %>
+<div id="container">
+  <div id="banner"><h1>UC Berkeley ISG Website</h1></div> 
+  <div id="treeview" class="container-fluid">
+    <div class="row-fluid">
+      <div class="span4">
+        <div class="well sidebar-nav">
+          <ul class="nav nav-list">
+            <% if @node.id == 1 %>
+              <%= link_to @node.name, node_path(:id => @node.parent) %>
+              <%= link_to "Add child", node_add_child_path(:parent => @node), :method => :get, :class => "tree_func" %>
+            <% elsif @node.depth == 1 %>
+              <%=link_to @node.root.name, node_path(:id => @node.root)%> / <%=link_to @node.name, node_path(:id => @node)%>
+              <%= link_to "Add child", node_add_child_path(:parent => @node), :method => :get, :class => "tree_func" %>
+            <% elsif @node.depth == 2 %>
+              <%=link_to @node.root.name, node_path(:id => @node.root)%> / <%=link_to @node.parent.name, node_path(:id => @node.parent)%> / <%=link_to @node.name, node_path(:id => @node)%>
+              <%= link_to "Add child", node_add_child_path(:parent => @node), :method => :get, :class => "tree_func" %>
+            <% elsif @node.depth == 3 %>            
+              <%=link_to @node.root.name, node_path(:id => @node.root)%> / <%=link_to @node.parent.parent.name, node_path(:id => @node.parent.parent)%> / <%=link_to @node.parent.name, node_path(:id => @node.parent)%> / <%=link_to @node.name, node_path(:id => @node)%>
+              <%= link_to "Add child", node_add_child_path(:parent => @node), :method => :get, :class => "tree_func" %>
+            <% else %>
+              <%=link_to @node.root.name, node_path(:id => @node.root)%>/.../<%=link_to @node.parent.parent.name, node_path(:id => @node.parent.parent)%> / <%=link_to @node.parent.name, node_path(:id => @node.parent)%> / <%=link_to @node.name, node_path(:id => @node)%>
+              <%= link_to "Add child", node_add_child_path(:parent => @node), :method => :get, :class => "tree_func" %>
+            <% end %>
+            
+            <% unless @children.blank? %>
+              <ul id="side_bar_list">
+              <% @children.each do |node| %>
+                <li>
+                  <%= link_to '<i class="icon-book"></i>'.html_safe + node.name, node_path(:id => node) %>
+                  <%= link_to "Add child", node_add_child_path(:parent => node), :method => :get, :class => "tree_func"%>
+                  <%= link_to "Remove node", node_destroy_path(:node_id => node.id), :method => :get, :class => "tree_func"%>
+                </li>
+              <% end %>
+              </ul>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <div id="content" class="span8"></div>
+    </div>
+  </div>
+</div>

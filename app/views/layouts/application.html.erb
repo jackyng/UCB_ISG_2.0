@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Isg2</title>
+  <title><%= full_title(yield(:title)) %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <%= render 'layouts/shim' %>
 </head>
 <body>
-  <%= flash[:notice] %>
-  <%= flash[:error] %>
+	<%= render 'layouts/header' %>
+	<div class="container">
+  	<%= flash[:notice] %>
+  	<%= flash[:error] %>
+  	<%= yield %>
+  </div>
+  <%= render 'layouts/footer' %>
   <%= debug(params) if Rails.env.development? %>
-  <%= yield %>
 </body>
 </html>

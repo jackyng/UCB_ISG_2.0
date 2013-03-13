@@ -20,13 +20,6 @@ ActiveRecord::Schema.define(:version => 20130311064533) do
     t.string   "ancestry"
   end
 
-  create_table "parenthoods", :force => true do |t|
-    t.integer  "node_id"
-    t.integer  "parent_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "resources", :force => true do |t|
     t.string   "name"
     t.string   "url"
