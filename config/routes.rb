@@ -8,9 +8,8 @@ Isg2::Application.routes.draw do
   get "node/remove_resource"
   match "node/add_child" => "node#add_child", :via => [:get, :post]
 
-  get "parenthood/add"
-  get "parenthood/remove"
-  get "parenthood/create_node_then_add_child"
+  match "resource/create" => "resource#create", :via => [:get, :post]
+  get "resource/destroy"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

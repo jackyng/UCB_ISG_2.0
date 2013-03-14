@@ -8,6 +8,7 @@ class NodeController < ApplicationController
     @node = Node.find(id)
     @children = @node.children
     @ancestors = @node.ancestors
+    @resources = @node.resources
   end
 
   def create

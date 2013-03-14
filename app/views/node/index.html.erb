@@ -30,6 +30,18 @@
                   <%= link_to '<i class="icon-book"></i>'.html_safe + node.name, node_path(:id => node) %>
                   <%= link_to "Add child", node_add_child_path(:parent => node), :method => :get, :class => "tree_func"%>
                   <%= link_to "Remove node", node_destroy_path(:node_id => node.id), :method => :get, :class => "tree_func"%>
+                  <%= link_to "Add resource", resource_create_path(:node_id => node.id), :method => :get, :class => "tree_func" %>
+                </li>
+              <% end %>
+              </ul>
+            <% end %>
+
+            <% unless @resources.blank? %>
+              <ul id="side_bar_list">
+              <% @resources.each do |resource| %>
+                <li>
+                  <%= link_to '<i class="icon-file"></i>'.html_safe + resource.name, resource.url %>
+                  <%= link_to "Remove resource", resource_destroy_path(:id => resource.id), :method => :get, :class => "tree_func"%>
                 </li>
               <% end %>
               </ul>

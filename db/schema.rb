@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130311064533) do
+ActiveRecord::Schema.define(:version => 20130314194935) do
 
   create_table "nodes", :force => true do |t|
     t.string   "name"
@@ -26,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20130311064533) do
     t.integer  "count"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "node_id"
   end
 
 end
