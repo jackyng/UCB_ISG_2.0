@@ -22,6 +22,7 @@
               <%=link_to @node.root.name, node_path(:id => @node.root)%>/.../<%=link_to @node.parent.parent.name, node_path(:id => @node.parent.parent)%> / <%=link_to @node.parent.name, node_path(:id => @node.parent)%> / <%=link_to @node.name, node_path(:id => @node)%>
               <%= link_to "Add child", node_add_child_path(:parent => @node), :method => :get, :class => "tree_func" %>
             <% end %>
+            <%= link_to "Add resource", resource_create_path(:node_id => @node.id), :method => :get, :class => "tree_func" %>
             
             <% unless @children.blank? %>
               <ul id="side_bar_list">
