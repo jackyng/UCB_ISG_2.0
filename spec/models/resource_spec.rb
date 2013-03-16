@@ -8,6 +8,10 @@ describe "A Resource" do
   it { should respond_to :url }
   it { should respond_to :count }
 
+  it "should save with valid arguments" do
+    subject.save.should == true
+  end
+
   it "should have a name" do
     subject.name = nil
     subject.should_not be_valid
