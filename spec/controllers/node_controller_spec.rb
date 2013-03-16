@@ -1,9 +1,6 @@
 require 'spec_helper'
-require 'json'
 
 describe NodeController do
-  render_views
-
   before(:each) do
     @root = Node.create(:name => Isg2::Application::ROOT_NODE_NAME)
   end
