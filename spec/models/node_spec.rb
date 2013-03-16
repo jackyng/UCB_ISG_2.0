@@ -6,6 +6,10 @@ describe "A Node" do
 
   it { should respond_to :name }
 
+  it "should save with valid argument" do
+    subject.save.should == true
+  end
+
   it "should have a name" do
     subject.name = nil
     subject.should_not be_valid
