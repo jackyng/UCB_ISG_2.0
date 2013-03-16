@@ -14,4 +14,13 @@ Frontend:
 
 Backend:
 1. /app/controllers/node_controller.rb - contains all the functions that interacts between the tree structure in our model and the view. index contains all the instance variables for the index/root view. create and destroy let the users and us add and remove nodes from the tree structure/model. add_child helps add a child to the parent we want in the tree. node_controller contains various data validation point to ensure that the tree-structure invariant is maintained (that is, no node has multiple parents), and that the root node is always unique.
-2. /app/models/node.rb - defines what the node is in our tree structure model. Ancestry is a Ruby gem or API that defines a logical parent-child and ancestors tree structure. We are using it to define our tree structure too, so the node would be a node on a tree that has a parent, unless it is the root. Also, each node can have many resources that contain static links to help pages for that specific problem associated with that node.
+2. /app/controllers/resource_controller.rb - contains all the functions for modifying the resources for each node in our tree structure. create and destroy let the users and us add and remove resources from any node in the tree.
+3. /app/models/node.rb - defines what the node is in our tree structure model. Ancestry is a Ruby gem or API that defines a logical parent-child and ancestors tree structure. We are using it to define our tree structure too, so the node would be a node on a tree that has a parent, unless it is the root. Also, each node can have many resources that contain static links to help pages for that specific problem associated with that node.
+4. /app/models/resource.rb - defines what the resource is in our tree structure model for each node. The resource is the solution to a specific problem, which is represented by a node. Therefore, that is why a node can have many resources, and a resource belongs to a node. The resource keeps track of its name, how many times an user visited this resource, and an url that contains a static link that directs to help pages for that specific problem associated with the node it belongs to. Also, each resource is unique.
+
+The Rails router that recognizes URL and dispatches them to the node and resource controllers' actions, dealing with HTTP requests of GET and POST is located at /config/routes.rb. It can also generate paths and URLs, avoiding the need to hardcode strings in our views.
+
+Testing:
+1. /spec - Using RSpec to do the unit, integration, and functional testing for our model and controller.
+
+The Gemfile contains all of our gems (APIs and plug-ins for Ruby on Rails) that we need to use for our project, including the tree structure and database.
