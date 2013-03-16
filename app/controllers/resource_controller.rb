@@ -27,11 +27,12 @@ class ResourceController < ApplicationController
 
   def destroy
     @resource = Resource.find(params[:id])
+    node_id = @resource.node_id
     if @resource.destroy
       flash[:notice] = "Resource removed"
     else
       flash[:error] = "Please try again"
     end
-    redirect_to root_url
+    redirect_to node_path(:id => node_id)
   end
 end
