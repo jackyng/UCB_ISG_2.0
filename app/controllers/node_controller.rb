@@ -3,7 +3,11 @@ class NodeController < ApplicationController
     id = if params[:id]
       params[:id]
     else
-      1
+      root = Node.find_by_name(Isg2::Application::ROOT_NODE_NAME)
+      if root.nil?
+        root = Node.create(:name => Isg2::Application::ROOT_NODE_NAME)
+      end
+      root.id
     end
     @node = Node.find(id)
     @children = @node.children
@@ -69,11 +73,5 @@ class NodeController < ApplicationController
       flash[:notice] = "Successfully created subtopic '#{new_child.name}' under '#{new_child.parent.name}'"
       redirect_to node_path(:id => new_child.parent)
     end
-  end
-
-  def add_resource
-  end
-
-  def remove_resource
   end
 end
