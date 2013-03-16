@@ -6,12 +6,9 @@ class Resource < ActiveRecord::Base
   validates :count, :presence => true
   validates :url, :presence => true, :uniqueness => true
 
-  def initialize_with_defaults(attrs = nil, &block)
-    initialize_without_defaults(attrs) do
-      setter = lambda { |key, value| self.send("#{key.to_s}=", value) unless !attrs.nil? && attrs.keys.map(&:to_s).include?(key.to_s) }
-      setter.call('count', 0)
-      yield self if block_given?
-    end
+  before_save :default_values
+  before_validation :default_values
+  def default_values
+    self.count = 0 if self.count.nil?
   end
-  alias_method_chain :initialize, :defaults
 end
