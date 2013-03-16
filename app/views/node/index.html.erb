@@ -6,7 +6,7 @@
       <div class="span4">
         <div class="well sidebar-nav">
           <ul class="nav nav-list">
-            <% if @node.id == 1 %>
+            <% if @node.name == Isg2::Application::ROOT_NODE_NAME %>
               <%= link_to @node.name, node_path(:id => @node.parent) %>
               <%= link_to "Add child", node_add_child_path(:parent => @node), :method => :get, :class => "tree_func" %>
             <% elsif @node.depth == 1 %>
