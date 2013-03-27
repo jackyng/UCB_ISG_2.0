@@ -1,7 +1,6 @@
 require 'spec_helper'
-require 'node'
 
-describe "A Node" do
+describe Node do
   subject { Node.new(:name => "node1") }
 
   it { should respond_to :name }

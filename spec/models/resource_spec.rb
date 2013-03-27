@@ -1,7 +1,6 @@
 require 'spec_helper'
-require 'resource'
 
-describe "A Resource" do
+describe Resource do
   subject { Resource.new(:name => "res1", :url => "res1.com") }
 
   it { should respond_to :name }
