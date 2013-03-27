@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130314194935) do
+ActiveRecord::Schema.define(:version => 20130327043813) do
+
+  create_table "complaints", :force => true do |t|
+    t.string   "title"
+    t.string   "description"
+    t.string   "ip_address"
+    t.string   "user_email"
+    t.boolean  "isResolved"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "nodes", :force => true do |t|
     t.string   "name"
@@ -27,6 +38,14 @@ ActiveRecord::Schema.define(:version => 20130314194935) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "node_id"
+  end
+
+  create_table "users", :force => true do |t|
+    t.boolean  "isAdmin"
+    t.integer  "calnetID"
+    t.string   "email"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end
