@@ -22,5 +22,7 @@ RSpec.configure do |config|
   config.after(:each) do
     Node.delete_all
     Resource.delete_all
+    User.delete_all
+    Complaint.delete_all
   end
 end
