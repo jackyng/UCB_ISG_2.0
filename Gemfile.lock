@@ -57,6 +57,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.21)
     multi_json (1.6.1)
+    net-ldap (0.3.1)
     pg (0.12.2)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -95,6 +96,8 @@ GEM
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
       rspec-mocks (~> 2.13.0)
+    rubycas-client (2.3.9)
+      activesupport
     sass (3.2.6)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -126,9 +129,11 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   jquery-rails
   json
+  net-ldap
   pg (= 0.12.2)
   rails (= 3.2.8)
   rspec-rails
+  rubycas-client
   sass-rails (~> 3.2.3)
   sqlite3
   uglifier (>= 1.0.3)
