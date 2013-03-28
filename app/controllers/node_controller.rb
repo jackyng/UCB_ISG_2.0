@@ -32,7 +32,6 @@ class NodeController < ApplicationController
       return
     end
 
-
     @node = Node.create(:name => params[:name])
   end
 
