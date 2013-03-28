@@ -9,6 +9,7 @@ class NodeController < ApplicationController
       end
       root.id
     end
+    @root_node = Node.find(1)
     @node = Node.find(id)
     @children = @node.children
     @ancestors = @node.ancestors
