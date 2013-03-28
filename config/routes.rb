@@ -9,6 +9,9 @@ Isg2::Application.routes.draw do
   match "resource/create" => "resource#create", :via => [:get, :post]
   get "resource/destroy"
 
+  get "user/login"
+  get "user/logout"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
