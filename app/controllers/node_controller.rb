@@ -17,7 +17,7 @@ class NodeController < ApplicationController
       end
       root.id
     end
-    @root_node = Node.find(1)
+    @root_node = Node.find_by_name(Isg2::Application::ROOT_NODE_NAME)
     @node = Node.find(id)
     @children = @node.children
     @ancestors = @node.ancestors
