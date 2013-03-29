@@ -87,31 +87,22 @@ p {
   background-image:url(/assets/banner.jpg);  
 }
 
-/* sidebar */
-#treeview {
+#body {
   margin-top: 17px;
   padding-left: 0px;
   font-size: 15.5px;
 }
 
-.tree_func {
-  margin-left: 5px;
-  padding: 1px;
-  font-size: 10px;
-  background: #ccc;
-  color: #000;
-}
+/* sidebar */
 
-#side_bar_list {
-  list-style-type: none;
-  margin-left: 7px;
-}
 
 /* content */
-
-#content {
-  height: 800px;
-  background: #ccc;
+.resource {
+  background-color: transparent;
+  text-decoration: underline;
+  border: none;
+  color: blue;
+  cursor: pointer;
 }
 
 /* footer */
