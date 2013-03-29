@@ -1,9 +1,9 @@
 <% provide(:title, 'Home') %>
 <div id="container">
   <div id="banner"></div> 
-  <div id="treeview" class="container-fluid">
+  <div id="body" class="container-fluid">
     <div class="row-fluid">
-      <div class="span4">
+      <div id="sidebar" class="span4">
         <div class="well sidebar-nav">
         	<div id="treecontrol">
 						<a title="Collapse the entire tree below" href="#">Collapse All</a> |
@@ -14,8 +14,7 @@
 					</ul>
         </div>
       </div>
-      <div id="content" class="span8">
-      </div>
+      <div id="content"></div>
     </div>
   </div>
 </div>
