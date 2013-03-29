@@ -75,15 +75,16 @@ p {
 
 #CALNET {
   margin-right: 5px;
+  color: #0066FF;
+  font-weight:900;
 }
 
 #banner {
-  width: 90%;
-  height: 10em;
+  width: 750px;
+  height: 250px;
+  display: block;
   margin: auto;
-  background: #d9d919;
-  vertical-align: middle;
-  display: table-cell;
+  background-image:url(/assets/banner.jpg);  
 }
 
 /* sidebar */
@@ -109,7 +110,7 @@ p {
 /* content */
 
 #content {
-  height: 60em;
+  height: 800px;
   background: #ccc;
 }
 

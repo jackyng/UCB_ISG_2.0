@@ -13,7 +13,6 @@
 		  		<%= button_to "Calnet sign-in", @login_url, :class => "btn" %>
 	  		<% else %>
 	  			Welcome, <%= @user_fullname %>!
-		  		<!-- <%= button_to "Sign-out", user_logout_path, :class => "btn" %> -->
 	  			(<a href=<%=user_logout_path%>>sign out</a>)
 	  		<% end %>
 		  </div>
