@@ -7,10 +7,10 @@ function displayResource(url) {
 	$('<iframe />', {
 		src: url,
 		width: content.width(),
-		height: 900
+		height: 900,
+		frameborder: 1
 	}).appendTo(content);
 }
-
 
 $(document).ready( function() {
 	$("#my_tree").treeview({control: "#treecontrol"});
