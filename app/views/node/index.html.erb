@@ -1,18 +1,17 @@
-<% provide(:title, 'Admin Home') %>
-
+<% provide(:title, 'Home') %>
 <div id="container">
   <div id="banner"></div> 
   <div id="body" class="container-fluid">
     <div class="row-fluid">
       <div id="sidebar" class="span4">
         <div class="well sidebar-nav">
-          <div id="treecontrol">
-            <a title="Collapse the entire tree below" href="#">Collapse All</a> |
-            <a title="Expand the entire tree below" href="#">Expand All</a>
-          </div>
+        	<div id="treecontrol">
+						<a title="Collapse the entire tree below" href="#">Collapse All</a> |
+						<a title="Expand the entire tree below" href="#">Expand All</a>
+					</div>
           <ul id="my_tree" class="nav nav-list">
-            <%= display_segment(@root_node, true) %>
-          </ul>
+						<%= display_segment(@root_node, false) %>
+					</ul>
         </div>
       </div>
       <div id="content"></div>
@@ -21,60 +20,3 @@
 </div>
 
 
-<!--
-<div id="container">
-  <div id="banner"><h1>UC Berkeley ISG Website</h1></div> 
-  <div id="treeview" class="container-fluid">
-    <div class="row-fluid">
-      <div class="span4">
-        <div class="well sidebar-nav">
-          <ul class="nav nav-list">
-            <% if @node.name == Isg2::Application::ROOT_NODE_NAME %>
-              <%= link_to @node.name, node_path(:id => @node.parent) %>
-              <%= link_to "Add child", node_add_child_path(:parent => @node), :method => :get, :class => "tree_func" %>
-            <% elsif @node.depth == 1 %>
-              <%=link_to @node.root.name, node_path(:id => @node.root)%> / <%=link_to @node.name, node_path(:id => @node)%>
-              <%= link_to "Add child", node_add_child_path(:parent => @node), :method => :get, :class => "tree_func" %>
-            <% elsif @node.depth == 2 %>
-              <%=link_to @node.root.name, node_path(:id => @node.root)%> / <%=link_to @node.parent.name, node_path(:id => @node.parent)%> / <%=link_to @node.name, node_path(:id => @node)%>
-              <%= link_to "Add child", node_add_child_path(:parent => @node), :method => :get, :class => "tree_func" %>
-            <% elsif @node.depth == 3 %>            
-              <%=link_to @node.root.name, node_path(:id => @node.root)%> / <%=link_to @node.parent.parent.name, node_path(:id => @node.parent.parent)%> / <%=link_to @node.parent.name, node_path(:id => @node.parent)%> / <%=link_to @node.name, node_path(:id => @node)%>
-              <%= link_to "Add child", node_add_child_path(:parent => @node), :method => :get, :class => "tree_func" %>
-            <% else %>
-              <%=link_to @node.root.name, node_path(:id => @node.root)%>/.../<%=link_to @node.parent.parent.name, node_path(:id => @node.parent.parent)%> / <%=link_to @node.parent.name, node_path(:id => @node.parent)%> / <%=link_to @node.name, node_path(:id => @node)%>
-              <%= link_to "Add child", node_add_child_path(:parent => @node), :method => :get, :class => "tree_func" %>
-            <% end %>
-            <%= link_to "Add resource", resource_create_path(:node_id => @node.id), :method => :get, :class => "tree_func" %>
-            
-            <% unless @children.blank? %>
-              <ul id="side_bar_list">
-              <% @children.each do |node| %>
-                <li>
-                  <%= link_to '<i class="icon-book"></i>'.html_safe + node.name, node_path(:id => node) %>
-                  <%= link_to "Add child", node_add_child_path(:parent => node), :method => :get, :class => "tree_func"%>
-                  <%= link_to "Remove node", node_destroy_path(:node_id => node.id), :method => :get, :class => "tree_func"%>
-                  <%= link_to "Add resource", resource_create_path(:node_id => node.id), :method => :get, :class => "tree_func" %>
-                </li>
-              <% end %>
-              </ul>
-            <% end %>
-
-            <% unless @resources.blank? %>
-              <ul id="side_bar_list">
-              <% @resources.each do |resource| %>
-                <li>
-                  <%= link_to '<i class="icon-file"></i>'.html_safe + resource.name, resource.url %>
-                  <%= link_to "Remove resource", resource_destroy_path(:id => resource.id), :method => :get, :class => "tree_func"%>
-                </li>
-              <% end %>
-              </ul>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-      <div id="content" class="span8"></div>
-    </div>
-  </div>
-</div>
--->

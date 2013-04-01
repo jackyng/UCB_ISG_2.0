@@ -20,13 +20,13 @@ class ComplaintController < ApplicationController
   			:description => params[:description],
   			:ip_address => @remote_ip,
   			:isResolved => false,
-  			:user => params[:user],		# TO-DO: accurately define what :user is
+  			:user => @current_user,		
   			:user_email => params[:user_email]
-		)
+		  )
 
 	    if new_complaint.save
-	      	flash[:notice] = "Successfully submitted complaint '#{new_complaint.title}'."
-	      	redirect_to(:controller => 'complaint')
+	      flash[:notice] = "Successfully submitted complaint '#{new_complaint.title}'."
+	      redirect_to complaint_path
 	  	else
 	  		flash[:error] = "Error: could not submit complaint."
 	  	end
@@ -37,8 +37,8 @@ class ComplaintController < ApplicationController
   		complaint_title = @complaint.title
   		@complaint.destroy
 
-      	flash[:notice] = "Successfully removed complaint '#{complaint_title}'."
-      	redirect_to(:controller => 'complaint')
+      flash[:notice] = "Successfully removed complaint '#{complaint_title}'."
+      redirect_to complaint_path
   	end
 
   	def list_all

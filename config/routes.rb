@@ -2,16 +2,15 @@ Isg2::Application.routes.draw do
   root :to => "node#index"
 
   match "node" => "node#index", :via => [:get, :post]
-  get "node/create"
+  match "node/create" => "node#create", :via => [:get, :post]
   get "node/destroy"
-  match "node/add_child" => "node#add_child", :via => [:get, :post]
 
   match "resource/create" => "resource#create", :via => [:get, :post]
   get "resource/destroy"
 
   get "user/logout"
 
-  get "complaint/create"
+  match "complaint/create" => "complaint#create", :via => [:get, :post]
   get "complaint/destroy"
   match "complaint/:id" => "complaint#index", :via => [:get, :post]
   match "complaint" => "complaint#list_all", :via => [:get, :post]

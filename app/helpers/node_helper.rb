@@ -6,7 +6,7 @@ module NodeHelper
         html = "<li class=\"opened\">"
     end
     html << "<span><i class=\"icon-book\"></i>#{h(node.name)}</span>"
-    add_child_path = node_add_child_path(:parent => node)
+    add_child_path = node_create_path(:parent => node)
     remove_child_path = node_destroy_path(:node_id => node.id)
     add_resource_path = resource_create_path(:node_id => node.id)
     if (isAdmin) 
