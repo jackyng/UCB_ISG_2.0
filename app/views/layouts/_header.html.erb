@@ -11,6 +11,11 @@
 			<form class="navbar-form pull-right" method="post" action=<%=@login_url%>>
 		  	<% if @current_user.nil? %>
 			  	<button type="submit" id="CALNET" class="btn">CalNet</button>
+	  		<% elsif isAdmin(@current_user) %>
+	  			Welcome, Admin!
+	  			(<a href=<%=user_logout_path%>>Sign out</a>)
+	  			<br>
+	  			<a href=<%=complaint_path%>>Manage Complaints</a>
 	  		<% else %>
 	  			Welcome, <%= @user_fullname %>!
 	  			(<a href=<%=user_logout_path%>>Sign out</a>)
