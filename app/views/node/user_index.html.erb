@@ -1,0 +1,22 @@
+<% provide(:title, 'Home') %>
+<div id="container">
+  <div id="banner"></div> 
+  <div id="body" class="container-fluid">
+    <div class="row-fluid">
+      <div id="sidebar" class="span4">
+        <div class="well sidebar-nav">
+        	<div id="treecontrol">
+						<a title="Collapse the entire tree below" href="#">Collapse All</a> |
+						<a title="Expand the entire tree below" href="#">Expand All</a>
+					</div>
+          <ul id="my_tree" class="nav nav-list">
+						<%= display_segment(@root_node) %>
+					</ul>
+        </div>
+      </div>
+      <div id="content"></div>
+    </div>
+  </div>
+</div>
+
+
