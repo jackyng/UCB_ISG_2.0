@@ -12,8 +12,7 @@ Isg2::Application.routes.draw do
 
   match "complaint/create" => "complaint#create", :via => [:get, :post]
   get "complaint/destroy"
-  match "complaint/:id" => "complaint#index", :via => [:get, :post]
-  match "complaint" => "complaint#list_all", :via => [:get, :post]
+  match "complaint" => "complaint#index", :via => [:get, :post]
   
 
   # The priority is based upon order of creation:

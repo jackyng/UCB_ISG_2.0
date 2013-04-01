@@ -1,4 +1,4 @@
-<% provide(:title, 'Complaints Management') %>
+<% provide(:title, 'User Complaints Management') %>
 <%= button_to "Submit a Ticket", complaint_create_path, :method => "get", :class => "btn btn-large btn-primary" %>
 <table class="table table-stripped table-hover table-condensed">
 	<thead>
@@ -10,8 +10,8 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% unless @complaints.blank? %>
-			<% @complaints.each do |complaint| %> 
+		<% unless @user_complaints.blank? %>
+			<% @user_complaints.each do |complaint| %> 
 				<tr class=<%=getRowColor(complaint.isResolved)%> >
 					<td><%= complaint.created_at %></td>
 					<td><%= complaint.ip_address %></td>
