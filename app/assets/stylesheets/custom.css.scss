@@ -35,33 +35,7 @@ textarea {
     margin-bottom: 10px;
   }
 }
-
 /* typography */
-
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1;
-}
-
-h1 {
-  font-size: 3em;
-  letter-spacing: -2px;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-h2 {
-  font-size: 1.7em;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
-  text-align: center;
-  font-weight: normal;
-  color: $grayLight;
-}
-
-p {
-  font-size: 1.1em;
-  line-height: 1.7em;
-}
 
 
 /* header */
@@ -98,8 +72,8 @@ p {
   margin-left: 5px;
   padding: 1px;
   font-size: 10px;
-  background: #ccc;
-  color: #000;
+  background: #ddd;
+  color: rgb(0, 136, 204);
 }
 
 

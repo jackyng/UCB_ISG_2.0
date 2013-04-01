@@ -27,8 +27,6 @@ class ComplaintController < ApplicationController
 	    if new_complaint.save
 	      flash[:notice] = "Successfully submitted complaint '#{new_complaint.title}'."
 	      redirect_to complaint_path
-	  	else
-	  		flash[:error] = "Error: could not submit complaint."
 	  	end
   	end
 

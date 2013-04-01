@@ -1,9 +1,9 @@
-<h1>Resource#create</h1>
+<h2>Add New Resource </h2>
 <%= form_tag "/resource/create" do %>
   <%= label_tag :name, 'Name: ' %>
   <%= text_field_tag :name %><br />
   <%= label_tag :url, 'URL: ' %>
-  <%= text_field_tag :url %><br />
+  <%= url_field_tag :url %><br />
   <%= hidden_field_tag :node_id, params[:node_id] %>
-  <%= submit_tag 'Create' %>
+  <%= submit_tag 'Add', :class => "btn btn-large btn-primary" %>
 <% end %>
