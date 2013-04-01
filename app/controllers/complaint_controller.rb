@@ -12,11 +12,11 @@ class ComplaintController < ApplicationController
 	def create
 		new_complaint = Complaint.new(
 			:title => params[:title],
+      :user_email => params[:user_email],
 			:description => params[:description],
 			:ip_address => @remote_ip,
 			:isResolved => false,
-			:user => @current_user,		
-			:user_email => params[:user_email]
+			:user => @current_user		
 	  )
 
     if new_complaint.save
