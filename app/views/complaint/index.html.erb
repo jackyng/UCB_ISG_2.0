@@ -3,7 +3,7 @@
 <table class="table table-stripped table-hover table-condensed">
 	<thead>
 		<tr>
-			<th>Submited Date</th>
+			<th>Submitted Date</th>
 			<th>IP_Address</th>
 			<th>Title</th>
 			<th>Resolved</th>
@@ -17,6 +17,13 @@
 					<td><%= complaint.ip_address %></td>
 					<td><%= complaint.title %></td>
 					<td><%= isResolved(complaint.isResolved) %></td>
+					<th>
+						<% if complaint.isResolved %>
+						<%= link_to("Unresolved", toggle_complaint_path(complaint), :method => :put, :title => "This unresolves the complaint") %> 
+						<% else %>
+						<%= link_to("Resolved", toggle_complaint_path(complaint), :method => :put, :title => "This resolves the complaint") %>
+						<% end %>
+					</th>
 					<th><button onclick="displayTicket(<%= complaint.id %>)" type="button">Show Content</button></th>
 				</tr>
 			<% end %>

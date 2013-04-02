@@ -15,12 +15,14 @@
 	  			Welcome, Admin!
 	  			(<a href=<%=user_logout_path%>>Sign out</a>)
 	  			<br>
-	  			<a href=<%=complaint_path%>>Manage Complaints</a>
+	  			<a href=<%=complaint_path%>>Manage Complaints</a> |
+	  			<a href=<%=user_path%>>Add Admins</a>
 	  		<% else %>
 	  			Welcome, <%= @user_fullname %>!
 	  			(<a href=<%=user_logout_path%>>Sign out</a>)
 	  			<br>
-	  			<a href=<%=complaint_path%>>Manage Complaints</a>
+	  			<a href=<%=complaint_path%>>Manage Complaints</a> |
+	  			<a href=<%=user_path%>>Add Admins</a>
 	  		<% end %>
 		  </form>
 		</div>
