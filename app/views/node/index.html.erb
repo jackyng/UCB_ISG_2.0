@@ -11,7 +11,7 @@
             <a title="Expand the entire tree below" href="#">Expand All</a>
           </div>
           <ul id="my_tree" class="nav nav-list">
-            <%= display_segment(@root_node, true) %>
+            <%= display_segment(@root_node, @user_admin) %>
           </ul>
         </div>
       </div>

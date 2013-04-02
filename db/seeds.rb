@@ -6,3 +6,4 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
 Node.create(:name => "ISG_root")
+User.create(:isAdmin => true, :calnetID => 869195, :email => "JackyDNg@gmail.com")

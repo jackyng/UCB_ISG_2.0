@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
 
     @remote_ip = request.remote_ip
     @login_url = CASClient::Frameworks::Rails::Filter.login_url(self)
+    @user_admin = @current_user.isAdmin unless @current_user.nil?
   end
 
   def name_for_calnet_id

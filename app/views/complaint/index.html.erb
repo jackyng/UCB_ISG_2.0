@@ -17,6 +17,7 @@
 					<td><%= complaint.ip_address %></td>
 					<td><%= complaint.title %></td>
 					<td><%= isResolved(complaint.isResolved) %></td>
+					<th><button onclick="displayTicket(<%= complaint.id %>)" type="button">Show Content</button></th>
 				</tr>
 			<% end %>
 		<% end %>
