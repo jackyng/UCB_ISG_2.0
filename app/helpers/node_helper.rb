@@ -22,7 +22,7 @@ module NodeHelper
     }
     node.resources.each{|resource|
     	html << "<li>"
-        html << "<button onclick=\"displayResource('#{h(resource.url)}')\" class=\"resource\" type=\"button\"><i class=\"icon-file\"></i>#{h(resource.name)}</button>"
+        html << "<a href=\"#{h(resource.url)}\" class=\"iframe\"><i class=\"icon-file\"></i>#{h(resource.name)}</a>"
     	if (isAdmin)
             remove_resource_path = resource_destroy_path(:id => resource.id)
             html << "<span><a href=\"#{h(remove_resource_path)}\" class=\"tree_func\" data-method=\"get\">Remove resource</a></span>"
