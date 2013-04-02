@@ -13,6 +13,17 @@ Isg2::Application.routes.draw do
   match "complaint/create" => "complaint#create", :via => [:get, :post]
   get "complaint/destroy"
   match "complaint" => "complaint#index", :via => [:get, :post]
+  match "complaint/ticket" => "complaint#ticket", :via => [:get, :post]
+
+  resources :complaint do
+    put 'toggle', :on => :member
+  end
+
+  match "user" => "user#index", :via => [:get, :post]
+
+  resources :user do
+    put 'toggle_admin', :on => :member
+  end
   
 
   # The priority is based upon order of creation:

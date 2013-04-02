@@ -3,6 +3,12 @@ class ComplaintController < ApplicationController
   before_filter CASClient::Frameworks::Rails::Filter
   before_filter :get_calnet_info
 
+  def toggle
+  	@c = Complaint.find(params[:id])
+  	@c.toggle!(:isResolved)
+  	redirect_to complaint_path
+  end
+
 	def index
     unless @current_user.nil?
       @user_complaints = Complaint.find_all_by_user_id(@current_user)
@@ -51,4 +57,5 @@ class ComplaintController < ApplicationController
 		@complaint.save
 		flash[:notice] = "Successfully marked complaint as unresolved."
 	end
+
 end
