@@ -13,9 +13,9 @@ describe NodeController do
       end
     end
 
-    describe "GET 'node/add_child' with valid name" do
+    describe "GET 'node/create' with valid name" do
       it "returns to the tree view of its parent" do
-        get 'add_child', { :parent => @root.id, :name => "blah" }
+        get 'create', { :parent => @root.id, :name => "blah" }
         response.should be_redirect
         response.should redirect_to(node_path(:id => @root.id))
       end
