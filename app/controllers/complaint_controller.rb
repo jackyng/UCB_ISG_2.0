@@ -13,9 +13,9 @@ class ComplaintController < ApplicationController
 	def index
     unless @current_user.nil?
     	if isAdmin(@current_user)
-      	@complaints = Complaint.find_all_by_user_id(@current_user)
+    		@complaints = Complaint.all()
       else
-      	@complaints = Complaint.all()
+      	@complaints = Complaint.find_all_by_user_id(@current_user)
       end
     end
   end
