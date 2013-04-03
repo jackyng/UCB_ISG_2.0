@@ -3,15 +3,30 @@
   <div id="banner"></div> 
   <div id="body" class="container-fluid">
     <div class="row-fluid">
-      <div id="sidebar" class="span7">
+      <div id="sidebar" class="span16">
         <div class="well sidebar-nav">
-          <div id="treecontrol">
-            <a class="btn btn-small btn-primary disabled" title="Collapse the entire tree below" href="#">Collapse All</a> 
-            <a class="btn btn-small btn-primary disabled" title="Expand the entire tree below" href="#">Expand All</a>
+          <div id="a_view">
+            <div id="treecontrol">
+              <a class="btn btn-small btn-primary disabled" title="Collapse the entire tree below" href="#">Collapse All</a> 
+              <a class="btn btn-small btn-primary disabled" title="Expand the entire tree below" href="#">Expand All</a>
+              <a class="btn btn-small btn-primary disabled" id="toggle_btn" title="Toggle between User and Admin Views" href="#">Change View</a>
+            </div>
+            <ul id="my_tree" class="nav nav-list">
+              <%= display_segment(@root_node, @user_admin) %>
+            </ul>
           </div>
-          <ul id="my_tree" class="nav nav-list">
-            <%= display_segment(@root_node, @user_admin) %>
-          </ul>
+          <div id="u_view" style="display:none">
+            <div id="treecontrol_two">
+              <a class="btn btn-small btn-primary disabled" title="Collapse the entire tree below" href="#">Collapse All</a> 
+              <a class="btn btn-small btn-primary disabled" title="Expand the entire tree below" href="#">Expand All</a>
+              <a class="btn btn-small btn-primary disabled" id="toggle_btn_two" title="Toggle between User and Admin Views" href="#">Change View</a>
+            </div>
+            <ul id="my_tree_two" class="nav nav-list">
+              <% if @user_admin %>
+                <%= display_segment(@root_node, false) %>
+              <% end %>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

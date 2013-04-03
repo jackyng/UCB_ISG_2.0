@@ -8,7 +8,7 @@ class NodeController < ApplicationController
   before_filter CASClient::Frameworks::Rails::Filter, :except => :index
 
   before_filter :get_calnet_info
-  
+
   def index
     id = if params[:id]
       params[:id]
