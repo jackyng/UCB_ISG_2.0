@@ -1,4 +1,5 @@
 class ComplaintController < ApplicationController
+	include ApplicationHelper
 	# This requires the user to be authenticated for viewing all pages.
   before_filter CASClient::Frameworks::Rails::Filter
   before_filter :get_calnet_info
@@ -11,7 +12,11 @@ class ComplaintController < ApplicationController
 
 	def index
     unless @current_user.nil?
-      @user_complaints = Complaint.find_all_by_user_id(@current_user)
+    	if isAdmin(@current_user)
+      	@complaints = Complaint.find_all_by_user_id(@current_user)
+      else
+      	@complaints = Complaint.all()
+      end
     end
   end
 
@@ -38,10 +43,6 @@ class ComplaintController < ApplicationController
 
     flash[:notice] = "Successfully removed complaint '#{complaint_title}'."
     redirect_to complaint_path
-	end
-
-	def list_all
-		@complaints = Complaint.all()
 	end
 
 	def mark_as_resolved

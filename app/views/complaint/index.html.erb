@@ -10,8 +10,8 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% unless @user_complaints.blank? %>
-			<% @user_complaints.each do |complaint| %> 
+		<% unless @complaints.blank? %>
+			<% @complaints.each do |complaint| %> 
 				<tr class=<%=getRowColor(complaint.isResolved)%> >
 					<td><%= complaint.created_at %></td>
 					<td><%= complaint.ip_address %></td>
