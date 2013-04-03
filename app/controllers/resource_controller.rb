@@ -8,7 +8,7 @@ class ResourceController < ApplicationController
     end
 
     @node = Node.find(params[:node_id])
-    @resource = @node.resources.new(:name => params[:name], :url => params[:url], :count => 0)
+    @resource = @node.resources.new(:name => params[:name], :url => params[:url])
     if @resource.save
       flash[:notice] = "Resource created"
       flash[:error] = ""
