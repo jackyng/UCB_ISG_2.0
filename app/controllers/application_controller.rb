@@ -31,4 +31,11 @@ class ApplicationController < ActionController::Base
       flash[:error] = "Can't connect to LDAP to get user's name"
     end
   end
+
+  def check_admin_privilege
+    if @current_user.nil? or !@current_user.isAdmin?
+      flash[:error] = "Error: You don't have the privilege to perform this action"
+      redirect_to :root
+    end
+  end
 end
