@@ -17,13 +17,14 @@ module ComplaintHelper
 
 	def displayContent(id)
 		current_complaint = Complaint.find_by_id(id)
-		content = "<span><h1>#{h(current_complaint.title)}</h1></span>"
-		content << "<span><div id=complaint>#{h(current_complaint.description)}</div></span>"
+		content = "<h2>#{h(current_complaint.title)}</h2>"
+		content << "<h5>Description:</h5>"
+		content << "<div class=complaint>#{h(current_complaint.description)}</div>"
 		content.html_safe
 	end
 
 	def backbutton()
-		back = "<span><a href=\"#{h(complaint_path)}\" data-method=\"get\">Back</a></span>"
+		back = "<a class=\"btn btn-small btn-primary\" href=\"#{h(complaint_path)}\" data-method=\"get\">Back</a>"
 		back.html_safe
 	end
 

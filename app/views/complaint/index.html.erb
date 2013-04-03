@@ -24,7 +24,7 @@
 						<%= link_to("Resolved", toggle_complaint_path(complaint), :method => :put, :title => "This resolves the complaint") %>
 						<% end %>
 					</th>
-					<th><button onclick="displayTicket(<%= complaint.id %>)" type="button">Show Content</button></th>
+					<th><button class="btn btn-small btn-info" onclick="displayTicket(<%= complaint.id %>)" type="button">Show Content</button></th>
 				</tr>
 			<% end %>
 		<% end %>
