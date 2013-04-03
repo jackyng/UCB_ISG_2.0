@@ -78,7 +78,6 @@ textarea {
 
 /* content */
 
-
 /* footer */
 footer {
   margin-top: 45px;
@@ -122,9 +121,11 @@ input {
 
 /* complaint */
 
-#complaint {
-  padding-top: 25px;
-  padding-bottom: 35px;
+.complaint {
+  background: #eee;
+  border: solid 2px;
+  padding: 10px;
+  margin-bottom: 15px; 
 }
 
 /* miscellaneous */
