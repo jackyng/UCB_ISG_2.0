@@ -15,7 +15,7 @@ class Node < ActiveRecord::Base
   has_ancestry
   has_many :resources
 
- 	attr_accessible :name
+ 	attr_accessible :name, :parent
   validates :name, :presence => true
   validates_with ValidateUniqueNameAmongSiblings
 end
