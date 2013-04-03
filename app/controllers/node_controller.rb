@@ -8,6 +8,7 @@ class NodeController < ApplicationController
   before_filter CASClient::Frameworks::Rails::Filter, :except => :index
 
   before_filter :get_calnet_info
+  before_filter :check_admin_privilege, :only => [:create, :destroy]
 
   def index
     id = if params[:id]
@@ -42,7 +43,7 @@ class NodeController < ApplicationController
     new_child.parent = Node.find(params[:parent])
     if new_child.save
       flash[:notice] = "Successfully created subtopic '#{new_child.name}' under '#{new_child.parent.name}'"
-      redirect_to node_path(:id => new_child.parent)
+      redirect_to :root
     end
   end
  
@@ -57,7 +58,7 @@ class NodeController < ApplicationController
       @node.destroy
       flash[:notice] = "Successfully removed topic."
     end
-    redirect_to node_path(:id => parent_id)
+    redirect_to :root
   end
 
 end
