@@ -24,5 +24,6 @@ RSpec.configure do |config|
     Resource.delete_all
     User.delete_all
     Complaint.delete_all
+    CASClient::Frameworks::Rails::Filter.fake(nil, nil)
   end
 end
