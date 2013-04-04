@@ -6,10 +6,16 @@ describe ResourceController do
   end
 
   context "success request" do
+    before(:each) do
+      User.create(:calnetID => 181758, :isAdmin => true)
+      CASClient::Frameworks::Rails::Filter.fake('181758')
+    end
+
     describe "GET 'resource/create'" do
       it "create a new resource under a topic and redirect to that topic path" do
         get 'create', { :name => "169", :url => "169.edu", :node_id => @root.id }
         resource = Resource.where(:name => "169", :url => "169.edu")[0]
+        resource.should_not be_nil
 
         @root.resources.should include(resource)
         response.should be_redirect
