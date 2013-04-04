@@ -7,8 +7,8 @@ describe NodeController do
     CASClient::Frameworks::Rails::Filter.fake('181758')
   end
 
-  describe "success request" do
-    context "GET 'node/index' without logging in" do
+  describe "good request:" do
+    context "GET 'node/index' without logging in -" do
       it "returns http success" do
         CASClient::Frameworks::Rails::Filter.fake(nil, nil)
         get 'index'
@@ -22,7 +22,7 @@ describe NodeController do
       end
     end
 
-    context "admin logged in" do
+    context "admin" do
       it "GET 'node/create' with valid name should returns to the tree view of its parent" do
         get 'create', { :parent => @root.id, :name => "blah" }
         response.should be_redirect
@@ -41,8 +41,8 @@ describe NodeController do
     end
   end
 
-  describe "admin makes bad request" do
-    context "GET 'node/create' with root name" do
+  describe "admin makes bad request:" do
+    context "GET 'node/create' with root name -" do
       it "render 'node/create' with error message" do
         get 'create', { :parent => @root.id, :name => Isg2::Application::ROOT_NODE_NAME }
         response.should be_success
@@ -50,7 +50,7 @@ describe NodeController do
       end
     end
 
-    context "GET 'node/create' with same name from sibling node" do
+    context "GET 'node/create' with same name from sibling node -" do
       it "render 'node/create' with error message" do
         2.times { get 'create', { :parent => @root.id, :name => "blah" } }
         response.should be_success
@@ -58,7 +58,7 @@ describe NodeController do
       end
     end
 
-    context "GET 'node/destroy' to destroy root node" do
+    context "GET 'node/destroy' to destroy root node -" do
       it "stays on root_url with error message" do
         get 'destroy', { :node_id => @root.id }
         response.should be_redirect
@@ -66,7 +66,7 @@ describe NodeController do
       end
     end
 
-    context "GET 'node/destroy' to destroy node with children" do
+    context "GET 'node/destroy' to destroy node with children -" do
       it "stays on root_url with error message" do
         get 'create', { :parent => @root.id, :name => "1" } # add child
 
@@ -81,7 +81,7 @@ describe NodeController do
   end
 
   describe "non-admin makes bad request:" do
-    context "GET 'node/create'" do
+    context "GET 'node/create' -" do
       it "stays on root_url with error message" do
         @user.update_attributes(:isAdmin => false)
         get 'create', { :parent => @root.id, :name => "1" }
@@ -89,7 +89,7 @@ describe NodeController do
       end
     end
 
-    context "GET 'node/destroy'" do
+    context "GET 'node/destroy' -" do
       it "stays on root_url with error message" do
         get 'create', { :parent => @root.id, :name => "1" }
         child = Node.find_by_name("1")
