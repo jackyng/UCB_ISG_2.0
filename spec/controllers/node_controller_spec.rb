@@ -9,6 +9,10 @@ describe NodeController do
   describe "success request" do
     context "GET 'node/index' without logging in" do
       it "returns http success" do
+        # TODO it sometimes redirect to gateway_url, but sometimes it doesn't.
+        # This issue might just be due to my laptop...
+        # pending
+
         get 'index'
         response.should be_redirect
         gateway_url = "https://auth.berkeley.edu/cas/login?service=http%3A%2F%2Ftest.host%2F&gateway=true"
