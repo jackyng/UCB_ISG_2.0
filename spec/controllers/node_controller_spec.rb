@@ -3,15 +3,14 @@ require 'spec_helper'
 describe NodeController do
   before(:each) do
     @root = Node.create(:name => Isg2::Application::ROOT_NODE_NAME)
-    User.create(:calnetID => 181758, :isAdmin => true)
+    @user = User.create(:calnetID => 181758, :isAdmin => true)
+    CASClient::Frameworks::Rails::Filter.fake('181758')
   end
 
-  describe "success request" do
-    context "GET 'node/index' without logging in" do
+  describe "good request:" do
+    context "GET 'node/index' without logging in -" do
       it "returns http success" do
-        # TODO it sometimes redirect to gateway_url, but sometimes it doesn't.
-        # This issue might just be due to my laptop...
-
+        CASClient::Frameworks::Rails::Filter.fake(nil, nil)
         get 'index'
         response.should be_redirect
         gateway_url = "https://auth.berkeley.edu/cas/login?service=http%3A%2F%2Ftest.host%2F&gateway=true"
@@ -23,11 +22,7 @@ describe NodeController do
       end
     end
 
-    context "admin logged in" do
-      before(:each) do
-        CASClient::Frameworks::Rails::Filter.fake('181758')
-      end
-
+    context "admin" do
       it "GET 'node/create' with valid name should returns to the tree view of its parent" do
         get 'create', { :parent => @root.id, :name => "blah" }
         response.should be_redirect
@@ -46,12 +41,8 @@ describe NodeController do
     end
   end
 
-  describe "admin makes bad request" do
-    before(:each) do
-      CASClient::Frameworks::Rails::Filter.fake('181758')
-    end
-
-    context "GET 'node/create' with root name" do
+  describe "admin makes bad request:" do
+    context "GET 'node/create' with root name -" do
       it "render 'node/create' with error message" do
         get 'create', { :parent => @root.id, :name => Isg2::Application::ROOT_NODE_NAME }
         response.should be_success
@@ -59,7 +50,7 @@ describe NodeController do
       end
     end
 
-    context "GET 'node/create' with same name from sibling node" do
+    context "GET 'node/create' with same name from sibling node -" do
       it "render 'node/create' with error message" do
         2.times { get 'create', { :parent => @root.id, :name => "blah" } }
         response.should be_success
@@ -67,16 +58,16 @@ describe NodeController do
       end
     end
 
-    context "GET 'node/destroy' to destroy root node" do
-      it "stays on node_path with error message" do
+    context "GET 'node/destroy' to destroy root node -" do
+      it "stays on root_url with error message" do
         get 'destroy', { :node_id => @root.id }
         response.should be_redirect
         flash[:error].should match /can't remove the root topic/
       end
     end
 
-    context "GET 'node/destroy' to destroy node with children" do
-      it "stays on node_path with error message" do
+    context "GET 'node/destroy' to destroy node with children -" do
+      it "stays on root_url with error message" do
         get 'create', { :parent => @root.id, :name => "1" } # add child
 
         child = Node.find_by_name("1")
@@ -90,8 +81,23 @@ describe NodeController do
   end
 
   describe "non-admin makes bad request:" do
-    context "non-admin tries to add child" do
-      it "render root_url with error message"
+    context "GET 'node/create' -" do
+      it "stays on root_url with error message" do
+        @user.update_attributes(:isAdmin => false)
+        get 'create', { :parent => @root.id, :name => "1" }
+        flash[:error].should match /Error: You don't have the privilege to perform this action/
+      end
+    end
+
+    context "GET 'node/destroy' -" do
+      it "stays on root_url with error message" do
+        get 'create', { :parent => @root.id, :name => "1" }
+        child = Node.find_by_name("1")
+
+        @user.update_attributes(:isAdmin => false)
+        get 'destroy', { :node_id => child.id }
+        flash[:error].should match /Error: You don't have the privilege to perform this action/
+      end
     end
   end
 end

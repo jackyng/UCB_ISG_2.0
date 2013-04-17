@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :get_calnet_info
   helper_method :name_for_calnet_id
 
   private
@@ -33,6 +34,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_admin_privilege
+    get_calnet_info if @current_user.nil?
     if @current_user.nil? or !@current_user.isAdmin?
       flash[:error] = "Error: You don't have the privilege to perform this action"
       redirect_to :root

@@ -1,6 +1,5 @@
 class UserController < ApplicationController
   before_filter CASClient::Frameworks::Rails::Filter
-  before_filter :get_calnet_info
 
   def toggle_admin
   	@c = User.find(params[:id])

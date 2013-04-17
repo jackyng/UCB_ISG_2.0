@@ -2,7 +2,6 @@ class ComplaintController < ApplicationController
 	include ApplicationHelper
 	# This requires the user to be authenticated for viewing all pages.
   before_filter CASClient::Frameworks::Rails::Filter
-  before_filter :get_calnet_info
 
   def toggle
   	@c = Complaint.find(params[:id])

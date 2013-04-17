@@ -7,7 +7,6 @@ class NodeController < ApplicationController
   # This requires the user to be authenticated for viewing allother pages.
   before_filter CASClient::Frameworks::Rails::Filter, :except => :index
 
-  before_filter :get_calnet_info
   before_filter :check_admin_privilege, :only => [:create, :destroy]
 
   def index
