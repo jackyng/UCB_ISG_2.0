@@ -11,7 +11,6 @@ describe NodeController do
       it "returns http success" do
         # TODO it sometimes redirect to gateway_url, but sometimes it doesn't.
         # This issue might just be due to my laptop...
-        pending
 
         get 'index'
         response.should be_redirect

@@ -1,0 +1,21 @@
+<% provide(:title, 'Complaint Chart') %>
+<div id="chartRangeFilter_dashboard_div" style="border: 1px solid #ccc">
+  <table class="columns">
+    <tr>
+      <td>
+        <div id="chartRangeFilter_chart_div" style="width: 915px; height: 300px;"></div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div id="chartRangeFilter_control_div" style="width: 915px; height: 50px;"></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<%= backbutton() %>
+
+<script type="text/javascript">
+  drawChart();
+</script>

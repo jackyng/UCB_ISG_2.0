@@ -59,4 +59,36 @@ class ComplaintController < ApplicationController
 		flash[:notice] = "Successfully marked complaint as unresolved."
 	end
 
+	def getComplaintData
+		data = {}
+		totalComplaints = {}
+		totalResolved = {}
+		totalUnresolved = {}
+		Complaint.all().each do |complaint| 
+			date = complaint.created_at.to_date.to_s.gsub('-', '/')
+			if totalComplaints[date]
+				totalComplaints[date] += 1
+				if totalResolved[date] && complaint.isResolved
+					totalResolved[date] += 1
+				elsif totalUnresolved[date] && !complaint.isResolved
+					totalUnresolved[date] += 1
+				end
+			else
+				totalComplaints[date] = 1
+				if complaint.isResolved
+					totalResolved[date] = 1
+					totalUnresolved[date] = 0
+				else
+					totalUnresolved[date] = 1
+					totalResolved[date] = 0
+				end
+			end
+		end
+		data[:totalComplaints] = totalComplaints
+		data[:totalResolved] = totalResolved
+		data[:totalUnresolved] = totalUnresolved
+		respond_to do |format|
+			format.json {render :json => data}
+		end
+	end
 end

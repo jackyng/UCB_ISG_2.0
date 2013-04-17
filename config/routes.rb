@@ -14,6 +14,8 @@ Isg2::Application.routes.draw do
   get "complaint/destroy"
   match "complaint" => "complaint#index", :via => [:get, :post]
   match "complaint/ticket" => "complaint#ticket", :via => [:get, :post]
+  match "complaint/chart" => "complaint#chart", :via => [:get]
+  match "complaint/getComplaintData" => "complaint#getComplaintData", :via => [:get]
 
   resources :complaint do
     put 'toggle', :on => :member

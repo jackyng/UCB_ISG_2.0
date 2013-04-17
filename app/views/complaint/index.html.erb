@@ -1,5 +1,11 @@
-<% provide(:title, 'User Complaints Management') %>
-<%= button_to "Submit a Ticket", complaint_create_path, :method => "get", :class => "btn btn-large btn-primary" %>
+<% provide(:title, 'Complaints Management') %>
+
+<table>
+	<tr>
+		<th><button class="btn btn-primary" onclick="displayTicketForm()" type="button">Submit Ticket</button></th>
+		<th><button class="btn btn-primary" onclick="displayChart()" type="button">Display Chart</button></th>
+	</tr>
+</table>
 <table class="table table-stripped table-hover table-condensed">
 	<thead>
 		<tr>

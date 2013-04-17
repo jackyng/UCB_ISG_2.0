@@ -1,4 +1,7 @@
 class ResourceController < ApplicationController
+  before_filter :get_calnet_info
+  before_filter :check_admin_privilege, :only => [:create, :destroy]
+  
   def create
     if params[:node_id].nil?
       redirect_to root_url and return

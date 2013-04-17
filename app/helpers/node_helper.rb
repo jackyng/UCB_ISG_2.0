@@ -1,32 +1,25 @@
 module NodeHelper
 	def display_segment(node, isAdmin)
+    node_id = "node_" + node.id.to_s()
     if (node.depth > 0)     
         html = "<li class=\"closed\">"
+        html << "<span draggable=\"true\" id=\"#{h(node_id)}\" class=\"tree_nodes\"><i class=\"icon-book\"></i>#{h(node.name)}</span>"
     else 
-        html = "<li class=\"opened\">"
-    end
-    html << "<span><i class=\"icon-book\"></i>#{h(node.name)}</span>"
-    add_child_path = node_create_path(:parent => node)
-    remove_child_path = node_destroy_path(:node_id => node.id)
-    add_resource_path = resource_create_path(:node_id => node.id)
-    if (isAdmin) 
-        html << "<span><a href=\"#{h(add_child_path)}\" class=\"tree_func\" data-method=\"get\">Add child</a></span>"
-        if (node.depth > 0)
-            html << "<span><a href=\"#{h(remove_child_path)}\" class=\"tree_func\" data-method=\"get\">Remove child</a></span>"
+        unless isAdmin
+            html = "<li class=\"opened\">"
+        else
+            html = "<li id=\"isAdmin\" class=\"opened\">"
         end
-        html << "<span><a href=\"#{h(add_resource_path)}\" class=\"tree_func\" data-method=\"get\">Add resource </a></span>"
+        html << "<span id=\"#{h(node_id)}\" class=\"root_node\"><i class=\"icon-book\"></i>#{h(node.name)}</span>"
     end
     html << "<ul>"
     node.children.each{|child_node|
       html << display_segment(child_node, isAdmin)
     }
     node.resources.each{|resource|
+        resource_id = "resource_" + resource.id.to_s()
     	html << "<li>"
-        html << "<a href=\"#{h(resource.url)}\" class=\"iframe\"><i class=\"icon-file\"></i>#{h(resource.name)}</a>"
-    	if (isAdmin)
-            remove_resource_path = resource_destroy_path(:id => resource.id)
-            html << "<span><a href=\"#{h(remove_resource_path)}\" class=\"tree_func\" data-method=\"get\">Remove resource</a></span>"
-        end
+        html << "<a id=\"#{h(resource_id)}\" href=\"#{h(resource.url)}\" class=\"resources iframe\"><i class=\"icon-file\"></i>#{h(resource.name)}</a>"
         html << "</li>"
     }
     html << "</ul></li>"
