@@ -61,5 +61,6 @@ module Isg2
 
     # Global variables
     ROOT_NODE_NAME = "ISG_root"
+    ROOT_NODE_DESCRIPTION = "This is the root node"
   end
 end

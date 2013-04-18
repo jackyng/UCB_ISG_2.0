@@ -13,10 +13,11 @@ class NodeController < ApplicationController
     id = if params[:id]
       params[:id]
     else
-      root = Node.find_or_create_by_name(Isg2::Application::ROOT_NODE_NAME)
-      root.id
+      @root_node = Node.find_by_name(Isg2::Application::ROOT_NODE_NAME)
+      @root_node ||= Node.create(name: Isg2::Application::ROOT_NODE_NAME, description: Isg2::Application::ROOT_NODE_DESCRIPTION)
+      @root_node.id
     end
-    @root_node = Node.find_by_name(Isg2::Application::ROOT_NODE_NAME)
+    @root_node ||= Node.find_by_name(Isg2::Application::ROOT_NODE_NAME)
     @node = Node.find(id)
     @children = @node.children
     @ancestors = @node.ancestors
@@ -38,7 +39,7 @@ class NodeController < ApplicationController
       return
     end
 
-    new_child = Node.new(:name => params[:name])
+    new_child = Node.new(name: params[:name], description: params[:description])
     new_child.parent = Node.find(params[:parent])
     if new_child.save
       flash[:notice] = "Successfully created subtopic '#{new_child.name}' under '#{new_child.parent.name}'"
@@ -59,5 +60,4 @@ class NodeController < ApplicationController
     end
     redirect_to :root
   end
-
 end
