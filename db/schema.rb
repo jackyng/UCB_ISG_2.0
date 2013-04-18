@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130418085935) do
+ActiveRecord::Schema.define(:version => 20130418112113) do
 
   create_table "admins", :force => true do |t|
     t.string   "fullname"
@@ -54,6 +54,16 @@ ActiveRecord::Schema.define(:version => 20130418085935) do
     t.string   "ancestry"
     t.string   "description"
   end
+
+  create_table "queries", :force => true do |t|
+    t.integer  "admin_id"
+    t.text     "description"
+    t.text     "query_string"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "queries", ["admin_id"], :name => "index_queries_on_admin_id"
 
   create_table "requests", :force => true do |t|
     t.string   "ip_address"
