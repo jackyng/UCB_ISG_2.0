@@ -35,12 +35,13 @@ describe Message do
     subject.save.should == true
   end
 
-  it "should not save with nil or negative depth" do
+  it "should save without setting manually depth" do
     subject.depth = nil
-    subject.save.should == false
-    subject.errors.should include(:depth)
-    subject.errors[:depth].should include("can't be blank")
+    subject.save.should == true
+    subject.depth.should == 0
+  end
 
+  it "should not save negative depth" do
     subject.depth = -1
     subject.save.should == false
     subject.errors.should include(:depth)

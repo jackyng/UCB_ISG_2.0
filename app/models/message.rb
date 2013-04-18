@@ -24,4 +24,12 @@ class Message < ActiveRecord::Base
   validates :content, :depth, :presence => true
   validates :depth, :numericality => { :greater_than_or_equal_to => 0 }
   validates_with AuthorValidator
+
+  before_save :default_values
+  before_create :default_values
+  before_validation :default_values
+  def default_values
+    self.depth = 0 if self.depth.nil?
+    return
+  end
 end
