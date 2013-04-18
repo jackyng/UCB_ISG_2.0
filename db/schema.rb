@@ -11,24 +11,33 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130327043813) do
+ActiveRecord::Schema.define(:version => 20130417225715) do
+
+  create_table "admins", :force => true do |t|
+    t.string   "fullname"
+    t.integer  "calnetID"
+    t.string   "email"
+    t.datetime "last_request_time"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
 
   create_table "complaints", :force => true do |t|
     t.string   "title"
-    t.string   "description"
     t.string   "ip_address"
     t.string   "user_email"
-    t.boolean  "isResolved"
     t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "status"
   end
 
   create_table "nodes", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "ancestry"
+    t.string   "description"
   end
 
   create_table "resources", :force => true do |t|
@@ -38,14 +47,16 @@ ActiveRecord::Schema.define(:version => 20130327043813) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "node_id"
+    t.text     "content"
   end
 
   create_table "users", :force => true do |t|
-    t.boolean  "isAdmin"
     t.integer  "calnetID"
     t.string   "email"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "fullname"
+    t.datetime "last_request_time"
   end
 
 end
