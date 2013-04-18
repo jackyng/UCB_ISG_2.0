@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   validates_with NilOrNonEmptyEmailValidator
 
   before_save :default_values
+  before_create :default_values
   before_validation :default_values
   def default_values
     unless self.calnetID.nil?
