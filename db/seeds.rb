@@ -19,7 +19,7 @@ def create_resources(node)
   end
 end
 
-# create_child(5, $root)
+create_child(5, $root)
 
 # Creating admins
 Admin.create(calnetID: 192881, email: "pathma@eecs.berkeley.edu")
@@ -42,7 +42,7 @@ if ldap.bind
   ).each do |entry|
     calnetID = entry.uid.first.to_i
     User.create(calnetID: calnetID)
-    `echo #{calnetID} >> calnet_test_ids.txt` # If you want to see the whole list of test id's
+    # `echo #{calnetID} >> calnet_test_ids.txt` # If you want to see the whole list of test id's
   end
 else
   puts "Can't connect to LDAP to get user's name"
