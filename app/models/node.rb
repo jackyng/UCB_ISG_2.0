@@ -1,4 +1,4 @@
-class ValidateUniqueNameAmongSiblings < ActiveModel::Validator
+class UniqueNameAmongSiblingsValidator < ActiveModel::Validator
   def validate(record)
     unless record.parent.nil?
       record.parent.children.each do |child|
@@ -15,7 +15,7 @@ class Node < ActiveRecord::Base
   has_ancestry
   has_many :resources
 
- 	attr_accessible :name, :parent
-  validates :name, :presence => true
-  validates_with ValidateUniqueNameAmongSiblings
+ 	attr_accessible :name, :description, :parent
+  validates :name, :description, :presence => true
+  validates_with UniqueNameAmongSiblingsValidator
 end
