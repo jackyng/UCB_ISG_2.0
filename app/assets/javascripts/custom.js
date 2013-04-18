@@ -1,6 +1,5 @@
 $(document).ready(function() {
 	$("#my_tree").treeview({control: "#treecontrol"});
-	$("#my_tree_two").treeview({control: "#treecontrol_two"});
 	$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
 });
 
@@ -91,6 +90,7 @@ function drawChart() {
     });
   }
 }
+
 //Show the ticket form
 function displayTicketForm(id) {
   var url = "/complaint/create";
