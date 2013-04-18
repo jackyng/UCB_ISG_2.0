@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Complaint do
   before(:each) do
-    User.create(:calnetID => 181758)
+    User.create(calnetID: 181758)
   end
 
   subject {
@@ -19,16 +19,23 @@ describe Complaint do
   it { should respond_to :status }
   it { should respond_to :user }
   it { should respond_to :user_id }
+  it { should respond_to :admin }
+  it { should respond_to :admin_id }
   it { should_not respond_to :description }
   it { should_not respond_to :isResolved }
 
   context "should save with valid required arguments" do
-    it "without optional user_email" do
+    it "without optional user_email or :admin_id" do
       subject.save.should == true
     end
 
-    it "with optional email" do
+    it "with optional user_email" do
       subject.user_email = "gau@example.com"
+      subject.save.should == true
+    end
+
+    it "with optional admin_id" do
+      subject.admin = Admin.create(calnetID: 181860, email: "test_admin@isg2.berkeley.edu")
       subject.save.should == true
     end
 
