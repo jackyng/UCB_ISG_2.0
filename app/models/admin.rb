@@ -3,6 +3,7 @@ class Admin < ActiveRecord::Base
   has_many :messages
   has_many :queries
   has_many :announcements
+  has_many :faqs
 
   attr_accessible :calnetID, :email, :fullname, :last_request_time
   validates :calnetID, :email, :presence => true, :uniqueness => true
