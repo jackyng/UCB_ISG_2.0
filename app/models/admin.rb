@@ -1,5 +1,6 @@
 class Admin < ActiveRecord::Base
   has_many :complaints
+  has_many :messages
 
   attr_accessible :calnetID, :email, :fullname, :last_request_time
   validates :calnetID, :email, :presence => true, :uniqueness => true
