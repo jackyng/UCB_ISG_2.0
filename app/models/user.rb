@@ -10,6 +10,7 @@ end
 
 class User < ActiveRecord::Base
   has_many :complaints
+  has_many :messages
 
   attr_accessible :calnetID, :fullname, :email, :last_request_time
 
