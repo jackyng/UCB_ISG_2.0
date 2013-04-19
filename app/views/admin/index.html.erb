@@ -47,7 +47,7 @@
           <td><%= admin.calnetID %></td>
           <td><%= admin.email %></td>
           <th>
-            <%= link_to("Remove Admin", admin_destroy_path(admin), :method => :post, :title => "This removes the admin") %> 
+            <%= link_to("Remove Admin", admin_destroy_path(id: admin), :method => :post, :title => "This removes the admin") %> 
           </th>
         </tr>
       <% end %>

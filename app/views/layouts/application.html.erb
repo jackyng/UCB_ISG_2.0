@@ -11,13 +11,17 @@
   <%= render 'layouts/shim' %>
 </head>
 <body>
-	<%= render 'layouts/header' %>
-	<div class="container">
-  	<%= flash[:notice] %>
-  	<%= flash[:error] %>
-  	<%= yield %>
+  <%= render 'layouts/header' %>
+  <div class="container">
+    <%= flash[:notice] %>
+    <%= flash[:error] %>
+    <%= yield %>
   </div>
   <%= render 'layouts/footer' %>
   <%= debug(params) if Rails.env.development? %>
+  <pre>
+    <%= @user.inspect %>
+    <%= @admin.inspect %>
+  </pre>
 </body>
 </html>

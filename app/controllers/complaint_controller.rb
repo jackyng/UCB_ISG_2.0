@@ -24,19 +24,16 @@ class ComplaintController < ApplicationController
 			:title => params[:title],
       :user_email => params[:user_email],
 			:ip_address => @remote_ip,
-			:status => "new",
-			:user => @user		
+			:user => @user,	
+			:status => "new"	
 	  )
-    if new_complaint.save 
-    # 	new_message = new_complaint.messages.new(
-    # 		:complaint => new_complaint,
-	  	# 	:depth => 0,
-	  	# 	:content => params[:description]
-	  	# )
-	  	# if new_message.save
-      	flash[:notice] = "Successfully submitted complaint '#{new_complaint.title}'."
+
+    if new_complaint.save
+      flash[:notice] = "Successfully submitted complaint '#{new_complaint.title}'."
+      new_message = Message.new(:user => @user, :content => params[:description], :complaint => new_complaint, :depth => 0)
+      if new_message.save
       	redirect_to complaint_path
-      # end
+      end
   	end
 	end
 
@@ -58,17 +55,17 @@ class ComplaintController < ApplicationController
 			date = complaint.created_at.to_date.to_s.gsub('-', '/')
 			if totalComplaints[date]
 				totalComplaints[date] += 1
-				if totalResolved[date] && complaint.isResolved
+				if totalResolved[date] and complaint.status == "completed"
 					totalResolved[date] += 1
-				elsif totalUnresolved[date] && !complaint.isResolved
+				elsif totalUnresolved[date] and complaint.status == "new"
 					totalUnresolved[date] += 1
 				end
 			else
 				totalComplaints[date] = 1
-				if complaint.isResolved
+				if complaint.status == "completed"
 					totalResolved[date] = 1
 					totalUnresolved[date] = 0
-				else
+				elsif complaint.status == "new"
 					totalUnresolved[date] = 1
 					totalResolved[date] = 0
 				end

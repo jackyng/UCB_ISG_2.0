@@ -1,9 +1,7 @@
-<h2>Complaint Form</h2>
-<%= form_tag "/complaint/create" do %>
+<h2>Announcement Form</h2>
+<%= form_tag "/announcement/create" do %>
   <%= label_tag :title, 'Title: ' %>
   <%= text_field_tag :title %><br />
-  <%= label_tag :user_email, 'Your email: ' %>
-  <%= email_field_tag :user_email %><br />
   <%= label_tag :description, 'Description: ' %>
   <%= text_area_tag :description, nil, :rows => "10", :cols => "25"%><br />
   <%= submit_tag 'Submit' ,:class => "btn btn-large btn-primary" %>
