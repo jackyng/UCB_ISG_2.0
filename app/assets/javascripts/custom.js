@@ -171,7 +171,7 @@ $(function(){
               switch (key) 
               {
                 case "delete":
-                  url = "/node/destroy?node_id=" + resource_id;
+                  url = "/resource/destroy?id=" + resource_id;
                   $(location).attr('href', url);
                   break;
               }

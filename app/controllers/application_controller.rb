@@ -8,9 +8,11 @@ class ApplicationController < ActionController::Base
     @remote_ip = request.remote_ip
     @login_url = CASClient::Frameworks::Rails::Filter.login_url(self)
     @calnet_id = session[:cas_user]
+    @user_admin = false
 
     unless @calnet_id.nil?
       @admin = Admin.find_by_calnetID(@calnet_id)
+      @user_admin = true
       if @admin.nil?
         @user = User.find_by_calnetID(@calnet_id)
         if @user.nil?
