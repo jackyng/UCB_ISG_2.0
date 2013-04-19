@@ -69,4 +69,46 @@ class NodeController < ApplicationController
     end
     redirect_to :root
   end
+
+  def getData
+    root = Node.find_by_name(Isg2::Application::ROOT_NODE_NAME)
+    data = {}
+    data[:nodes] = getNodes(root)
+    data[:edges] = getEdges(root)
+    respond_to do |format|
+      format.json {render :json => data}
+    end
+  end
+
+  private
+  def getNodes(node) 
+    clr = {
+      :root => "red",
+      :node => "#b2b19d",
+      :resource => "#922E00"
+    }
+    data = {}
+    if node == Node.find_by_name(Isg2::Application::ROOT_NODE_NAME)
+      data[node.name] = {:color => clr[:root], :shape => "dot", :alpha => 1}
+    elsif node.parent == Node.find_by_name(Isg2::Application::ROOT_NODE_NAME)
+      data[node.name] = {:color => clr[:node], :shape => "dot", :alpha => 1}
+    else
+      data[node.name] = {:color => clr[:node], :shape => "dot", :alpha => 0}
+    end
+    node.children.each do |child|
+      data = data.merge(getNodes(child))
+    end
+    return data
+  end
+
+  def getEdges(node)
+    data = {}
+    children = {}
+    node.children.each do |child|
+      children = children.merge({child.name => {}})
+      data = data.merge(getEdges(child))
+    end
+    data[node.name] = children
+    return data
+  end
 end
