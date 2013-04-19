@@ -15,26 +15,36 @@ class ComplaintController < ApplicationController
     if @admin
       @complaints = Complaint.all()
     elsif @user
-      @complaints = Complaint.find_by_user_id(@user)
+      @complaints = Complaint.find_all_by_user_id(@user)
+    else
+      flash[:error] = "Must login to view your list of complaints"
     end
   end
 
 	def create
-		new_complaint = Complaint.new(
-			:title => params[:title],
-      :user_email => params[:user_email],
-			:ip_address => @remote_ip,
-			:user => @user,	
-			:status => "new"	
-	  )
+    if params[:title] and params[:description]
+  		new_complaint = Complaint.new(
+  			:title => params[:title],
+        :user_email => params[:user_email],
+  			:ip_address => @remote_ip,
+  			:user => @user,	
+  			:status => "new"	
+  	  )
+      first_message = Message.new(
+        :user => @user,
+        :content => params[:description],
+        :complaint => new_complaint,
+        :depth => 0
+      )
 
-    if new_complaint.save
-      flash[:notice] = "Successfully submitted complaint '#{new_complaint.title}'."
-      new_message = Message.new(:user => @user, :content => params[:description], :complaint => new_complaint, :depth => 0)
-      if new_message.save
+      if new_complaint.save and first_message.save
+        flash[:notice] = "Successfully submitted complaint '#{new_complaint.title}'."
       	redirect_to complaint_path
-      end
-  	end
+      else
+        flash[:error] = new_complaint.errors.map {|k,v| "#{k.to_s} #{v}"}.join(". ")
+        flash[:error] << first_message.errors.map {|k,v| "#{k.to_s} #{v}"}.join(". ")
+    	end
+    end
 	end
 
 	def destroy
