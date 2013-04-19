@@ -47,6 +47,13 @@ class NodeController < ApplicationController
       redirect_to :root
     end
   end
+
+  def edit
+    @node = Node.find(params[:node_id])
+  end
+
+  def update
+  end
  
   def destroy
     @node = Node.find(params[:node_id])
