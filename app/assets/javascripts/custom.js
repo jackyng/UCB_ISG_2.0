@@ -154,12 +154,17 @@ $(function(){
                   url = "/node/destroy?node_id=" + node_id;
                   $(location).attr('href', url);
                   break;
+                case "edit":
+                  url = "/node/edit?node_id=" + node_id;
+                  $(location).attr('href', url);
+                  break;
               }
           },
           items: {
               "new child": {name: "Add a child" },
               "new resource": {name: "Add a resource" },
               "delete": {name: "Remove node"}
+              "edit": {name: "Edit node"}
           }
       });
 
