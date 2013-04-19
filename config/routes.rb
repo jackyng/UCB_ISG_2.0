@@ -1,18 +1,11 @@
 Isg2::Application.routes.draw do
   root to: "node#index"
 
-<<<<<<< HEAD
   match "node" => "node#index", via: [:get, :post]
   match "node/create" => "node#create", via: [:get, :post]
+  match "node/edit" => "node#edit", via: [:get, :post]
   match "node/graphview" => "node#graphview", via: [:get]
   match "node/getData" => "node#getData", via: [:get]
-=======
-  match "node" => "node#index", :via => [:get, :post]
-  match "node/create" => "node#create", :via => [:get, :post]
->>>>>>> 3c8cb5b34dcb14daaf5e71ad6fa4e0e67c2bbffe
-  match "node/edit" => "node#edit", via: [:get, :post]
-  match "node/graphview" => "node#graphview", :via => [:get]
-  match "node/getData" => "node#getData", :via => [:get]
   get "node/destroy"
 
   match "resource/create" => "resource#create", via: [:get, :post]
