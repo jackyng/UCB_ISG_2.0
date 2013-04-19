@@ -48,6 +48,21 @@ describe Message do
     subject.errors[:depth].should include("must be greater than or equal to 0")
   end
 
+  it "should start from depth 0 for a complaint" do
+    subject.depth = 3
+    subject.save.should == false
+    subject.errors.should include(:depth)
+    subject.errors[:depth].should include("No messages in complaint yet, so this message must start at depth 0")
+  end
+
+  it "should not save non-continuous depths" do
+    subject.save
+    message = Message.new(admin: @admin, complaint: @complaint, content: "blah", depth: 100)
+    message.save.should == false
+    message.errors.should include(:depth)
+    message.errors[:depth].should include("Messages' depths of the same complaint must be continuous")
+  end
+
   it "should not save with nil or empty content" do
     [nil, ""].each do |content|
       subject.content = content

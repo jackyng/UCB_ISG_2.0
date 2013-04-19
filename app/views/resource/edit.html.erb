@@ -1,0 +1,9 @@
+<h2>Edit Resource</h2>
+<%= form_tag "/resource/edit" do %>
+  <%= label_tag :name, 'Name: ' %>
+  <%= text_field_tag :name, find_resource_param(params[:id], 'name') %><br />
+  <%= label_tag :url, 'URL: ' %>
+  <%= url_field_tag :url, find_resource_param(params[:id], 'url') %><br />
+  <%= hidden_field_tag :id, params[:id] %>
+  <%= submit_tag 'Edit', :class => "btn btn-large btn-primary" %>
+<% end %>

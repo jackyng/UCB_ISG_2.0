@@ -3,19 +3,19 @@ class ComplaintController < ApplicationController
 	# This requires the user to be authenticated for viewing all pages.
   before_filter CASClient::Frameworks::Rails::Filter
 
-  def toggle
-  	@c = Complaint.find(params[:id])
-  	@c.toggle!(:isResolved)
-  	redirect_to complaint_path
+  def update_status
+    @c = Complaint.find(params[:id])
+    unless @c.update_attributes(status: params[:status])
+      flash[:error] = "Couldn't update status of complaint #{@c.id} to '#{params[:status]}'"
+    end
+    redirect_to complaint_path
   end
 
 	def index
-    unless @current_user.nil?
-    	if isAdmin(@current_user)
-    		@complaints = Complaint.all()
-      else
-      	@complaints = Complaint.find_all_by_user_id(@current_user)
-      end
+    if @admin
+      @complaints = Complaint.all()
+    elsif @user
+      @complaints = Complaint.find_by_user_id(@user)
     end
   end
 
