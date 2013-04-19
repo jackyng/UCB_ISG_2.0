@@ -56,20 +56,6 @@ class ComplaintController < ApplicationController
     redirect_to complaint_path
 	end
 
-	def mark_as_resolved
-		@complaint = Complaint.find(params[:complaint_id])
-		@complaint.isResolved = true
-		@complaint.save
-		flash[:notice] = "Successfully marked complaint as resolved."
-	end
-
-	def mark_as_unresolved
-		@complaint = Complaint.find(params[:complaint_id])
-		@complaint.isResolved = false
-		@complaint.save
-		flash[:notice] = "Successfully marked complaint as unresolved."
-	end
-
 	def getComplaintData
 		data = {}
 		totalComplaints = {}
@@ -79,17 +65,17 @@ class ComplaintController < ApplicationController
 			date = complaint.created_at.to_date.to_s.gsub('-', '/')
 			if totalComplaints[date]
 				totalComplaints[date] += 1
-				if totalResolved[date] && complaint.isResolved
+				if totalResolved[date] and complaint.status == "completed"
 					totalResolved[date] += 1
-				elsif totalUnresolved[date] && !complaint.isResolved
+				elsif totalUnresolved[date] and complaint.status == "new"
 					totalUnresolved[date] += 1
 				end
 			else
 				totalComplaints[date] = 1
-				if complaint.isResolved
+				if complaint.status == "completed"
 					totalResolved[date] = 1
 					totalUnresolved[date] = 0
-				else
+				elsif complaint.status == "new"
 					totalUnresolved[date] = 1
 					totalResolved[date] = 0
 				end

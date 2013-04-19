@@ -84,7 +84,7 @@ function drawChart() {
           numOfComplaints = totalComplaints[key];
           numOfResolved = totalResolved[key];
           numOfUnresoleved = totalUnresolved[key];
-          data.addRow([date, numOfComplaints, numOfUnresoleved, numOfResolved]);
+          data.addRow([date, numOfComplaints, numOfResolved, numOfUnresoleved]);
         }
         dashboard.bind(control, chart);
         dashboard.draw(data);
