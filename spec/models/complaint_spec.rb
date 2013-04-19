@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+# TODO add more tests for messages
+
 describe Complaint do
   before(:each) do
     User.create(calnetID: 181758)
@@ -21,6 +23,7 @@ describe Complaint do
   it { should respond_to :user_id }
   it { should respond_to :admin }
   it { should respond_to :admin_id }
+  it { should respond_to :messages }
   it { should_not respond_to :description }
   it { should_not respond_to :isResolved }
 

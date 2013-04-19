@@ -1,6 +1,7 @@
 class Complaint < ActiveRecord::Base
   belongs_to :user
   belongs_to :admin
+  has_many :messages
 
   attr_accessible :ip_address, :status, :title, :user, :admin, :user_email
 
