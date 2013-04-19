@@ -1,0 +1,11 @@
+<h2>Edit Announcement</h2>
+<%= form_tag "/announcement/edit" do %>
+  <%= label_tag :title, 'Title: ' %>
+  <%= text_field_tag :title, find_announcement_param(params[:nid], 'title') %><br />
+  <%= label_tag :description, 'Description: ' %>
+  <%= text_area_tag :description, find_announcement_param(params[:nid], 'desp'), :rows => "10", :cols => "25"%><br />
+  <%= hidden_field_tag :nid, params[:nid] %>
+  <%= submit_tag 'Edit', :class => "btn btn-large btn-primary" %>
+  &nbsp; &nbsp;
+  <a class="btn btn-large btn-primary" href="/announcement" data-method="get">Back</a>
+<% end %>
