@@ -11,12 +11,12 @@
 			<form class="navbar-form pull-right" method="post" action=<%=@login_url%>>
 		  	<% if @user %>
 			  	Welcome, <%= @user.fullname %>!
-	  			(<a href=<%=user_logout_path%>>Sign out</a>)
+	  			(<a href=<%=logout_path%>>Sign out</a>)
 	  			<br>
 	  			<a href=<%=complaint_path%>>Manage Complaints</a>
 	  		<% elsif @admin %>
 	  			Welcome, Admin <%= @admin.fullname %>!
-	  			(<a href=<%=user_logout_path%>>Sign out</a>)
+	  			(<a href=<%=logout_path%>>Sign out</a>)
 	  			<br>
 	  			<a href=<%=complaint_path%>>Manage Complaints</a> |
 	  			<a href=<%=user_path%>>Add Admins</a>
