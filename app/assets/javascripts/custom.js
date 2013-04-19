@@ -127,11 +127,16 @@ $(function(){
                   url = "/resource/create?node_id=" + node_id;
                   $(location).attr('href', url);
                   break;
+                case "edit root":
+                  url = "/node/edit?node_id=" + node_id;
+                  $(location).attr('href', url);
+                  break;
               }
           },
           items: {
               "new child": {name: "Add a child" },
-              "new resource": {name: "Add a resource" }
+              "new resource": {name: "Add a resource" },
+              "edit root": {name: "Edit root" }
           }
       });
 

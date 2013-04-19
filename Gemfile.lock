@@ -31,9 +31,6 @@ GEM
     ancestry (1.3.0)
       activerecord (>= 2.3.14)
     arel (3.0.2)
-    best_in_place (2.1.0)
-      jquery-rails
-      rails (~> 3.1)
     bootstrap-sass (2.1.0.0)
     builder (3.0.4)
     coffee-rails (3.2.2)
@@ -133,7 +130,6 @@ PLATFORMS
 
 DEPENDENCIES
   ancestry
-  best_in_place
   bootstrap-sass (= 2.1)
   coffee-rails (~> 3.2.1)
   jquery-rails
