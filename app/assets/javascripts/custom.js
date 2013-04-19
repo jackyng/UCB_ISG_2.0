@@ -163,7 +163,7 @@ $(function(){
           items: {
               "new child": {name: "Add a child" },
               "new resource": {name: "Add a resource" },
-              "delete": {name: "Remove node"}
+              "delete": {name: "Remove node"},
               "edit": {name: "Edit node"}
           }
       });
@@ -179,10 +179,15 @@ $(function(){
                   url = "/resource/destroy?id=" + resource_id;
                   $(location).attr('href', url);
                   break;
+                case "edit":
+                  url = "/resource/edit?id=" + resource_id;
+                  $(location).attr('href', url);
+                  break;
               }
           },
           items: {
-              "delete": {name: "Remove resource" }
+              "delete": {name: "Remove resource" },
+              "edit": {name: "Edit resource" }
           }
       });
     }

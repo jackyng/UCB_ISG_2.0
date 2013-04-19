@@ -25,4 +25,13 @@ module NodeHelper
     html << "</ul></li>"
     html.html_safe
   end
+
+  def find_node_param(node_id, key)
+    @node = Node.find(node_id)
+    if (key == 'name')
+        return @node.name
+    else
+        return @node.description
+    end
+  end
 end
