@@ -23,15 +23,20 @@ class ComplaintController < ApplicationController
 		new_complaint = Complaint.new(
 			:title => params[:title],
       :user_email => params[:user_email],
-			:description => params[:description],
 			:ip_address => @remote_ip,
-			:isResolved => false,
-			:user => @current_user		
+			:status => "new",
+			:user => @user		
 	  )
-
-    if new_complaint.save
-      flash[:notice] = "Successfully submitted complaint '#{new_complaint.title}'."
-      redirect_to complaint_path
+    if new_complaint.save 
+    # 	new_message = new_complaint.messages.new(
+    # 		:complaint => new_complaint,
+	  	# 	:depth => 0,
+	  	# 	:content => params[:description]
+	  	# )
+	  	# if new_message.save
+      	flash[:notice] = "Successfully submitted complaint '#{new_complaint.title}'."
+      	redirect_to complaint_path
+      # end
   	end
 	end
 
@@ -42,20 +47,6 @@ class ComplaintController < ApplicationController
 
     flash[:notice] = "Successfully removed complaint '#{complaint_title}'."
     redirect_to complaint_path
-	end
-
-	def mark_as_resolved
-		@complaint = Complaint.find(params[:complaint_id])
-		@complaint.isResolved = true
-		@complaint.save
-		flash[:notice] = "Successfully marked complaint as resolved."
-	end
-
-	def mark_as_unresolved
-		@complaint = Complaint.find(params[:complaint_id])
-		@complaint.isResolved = false
-		@complaint.save
-		flash[:notice] = "Successfully marked complaint as unresolved."
 	end
 
 	def getComplaintData
