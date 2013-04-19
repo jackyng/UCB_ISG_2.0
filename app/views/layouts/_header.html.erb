@@ -9,19 +9,19 @@
 		    <li><a href="http://inst.eecs.berkeley.edu/faq.html">FAQ</a></li>
 		  </ul>
 			<form class="navbar-form pull-right" method="post" action=<%=@login_url%>>
-		  	<% if @current_user.nil? %>
-			  	<button type="submit" id="CALNET" class="btn">CalNet</button>
-	  		<% elsif isAdmin(@current_user) %>
-	  			Welcome, Admin!
-	  			(<a href=<%=user_logout_path%>>Sign out</a>)
-	  			<br>
-	  			<a href=<%=complaint_path%>>Manage Complaints</a> |
-	  			<a href=<%=user_path%>>Add Admins</a>
-	  		<% else %>
-	  			Welcome, <%= @user_fullname %>!
-	  			(<a href=<%=user_logout_path%>>Sign out</a>)
+		  	<% if @user %>
+			  	Welcome, <%= @user.fullname %>!
+	  			(<a href=<%=logout_path%>>Sign out</a>)
 	  			<br>
 	  			<a href=<%=complaint_path%>>Manage Complaints</a>
+	  		<% elsif @admin %>
+	  			Welcome, Admin <%= @admin.fullname %>!
+	  			(<a href=<%=logout_path%>>Sign out</a>)
+	  			<br>
+	  			<a href=<%=complaint_path%>>Manage Complaints</a> |
+	  			<a href=<%=admin_path%>>Add Admins</a>
+	  		<% else %>
+	  			<button type="submit" id="CALNET" class="btn">CalNet</button>
 	  		<% end %>
 		  </form>
 		</div>

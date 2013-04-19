@@ -1,34 +1,35 @@
 Isg2::Application.routes.draw do
-  root :to => "node#index"
+  root to: "node#index"
 
   match "node" => "node#index", :via => [:get, :post]
   match "node/create" => "node#create", :via => [:get, :post]
+  match "node/edit" => "node#edit", via: [:get, :post]
   match "node/graphview" => "node#graphview", :via => [:get]
   match "node/getData" => "node#getData", :via => [:get]
   get "node/destroy"
 
-  match "resource/create" => "resource#create", :via => [:get, :post]
+  match "resource/create" => "resource#create", via: [:get, :post]
+  match "resource/edit" => "resource#edit", via: [:get, :post]
   get "resource/destroy"
 
-  get "user/logout"
-
-  match "complaint/create" => "complaint#create", :via => [:get, :post]
+  match "complaint/create" => "complaint#create", via: [:get, :post]
   get "complaint/destroy"
-  match "complaint" => "complaint#index", :via => [:get, :post]
-  match "complaint/ticket" => "complaint#ticket", :via => [:get, :post]
-  match "complaint/chart" => "complaint#chart", :via => [:get]
-  match "complaint/getComplaintData" => "complaint#getComplaintData", :via => [:get]
+  match "complaint" => "complaint#index", via: [:get, :post]
+  match "complaint/ticket" => "complaint#ticket", via: [:get, :post]
+  match "complaint/chart" => "complaint#chart", via: [:get]
+  match "complaint/getComplaintData" => "complaint#getComplaintData", via: [:get]
+  post "complaint/:id/update_status" => "complaint#update_status", as: :complaint_update_status
 
-  resources :complaint do
-    put 'toggle', :on => :member
-  end
+  get "logout" => "application#logout"
 
-  match "user" => "user#index", :via => [:get, :post]
-
-  resources :user do
-    put 'toggle_admin', :on => :member
-  end
+  match "admin" => "admin#index", via: :get
+  match "admin/create" => "admin#create", via: [:get, :post]
+  match "admin/destroy" => "admin#destroy", via: [:get, :post]
   
+  match "message" => "message#index", via: [:get, :post]
+  match "message/create" => "message#create", via: [:get, :post]
+  match "message/:id/reply" => "message#reply", as: :message_reply, via: [:get, :post]
+  match "message/destroy" => "message#destroy", via: [:get, :post]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

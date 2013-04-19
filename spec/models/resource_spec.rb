@@ -6,6 +6,7 @@ describe Resource do
   it { should respond_to :name }
   it { should respond_to :url }
   it { should respond_to :count }
+  it { should respond_to :content }
 
   it "should save with valid arguments" do
     subject.save.should == true

@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe NodeController do
   before(:each) do
-    @root = Node.create(:name => Isg2::Application::ROOT_NODE_NAME)
-    @user = User.create(:calnetID => 181758, :isAdmin => true)
-    CASClient::Frameworks::Rails::Filter.fake('181758')
+    @root = Node.create(name: Isg2::Application::ROOT_NODE_NAME, description: Isg2::Application::ROOT_NODE_DESCRIPTION)
+    @user  = User.create(calnetID: 181758)
+    @admin = Admin.create(calnetID: 181860, email: "test_admin@isg2.berkeley.edu")
   end
 
   describe "good request:" do
@@ -13,8 +13,7 @@ describe NodeController do
         CASClient::Frameworks::Rails::Filter.fake(nil, nil)
         get 'index'
         response.should be_redirect
-        gateway_url = "https://auth.berkeley.edu/cas/login?service=http%3A%2F%2Ftest.host%2F&gateway=true"
-        response.should redirect_to gateway_url
+        response.redirect_url.should match /^https:\/\/auth.berkeley.edu\/cas\/login\?service=.+test.+host.+gateway=true$/
 
         # TODO It should eventually redirect back to the index page
         # thus, need to follow redirect twice
@@ -23,16 +22,18 @@ describe NodeController do
     end
 
     context "admin" do
+      before(:each) do
+        CASClient::Frameworks::Rails::Filter.fake(@admin.calnetID.to_s)
+      end
+
       it "GET 'node/create' with valid name should returns to the tree view of its parent" do
-        get 'create', { :parent => @root.id, :name => "blah" }
+        get 'create', { parent: @root.id, name: "blah", description: "blahblah" }
         response.should be_redirect
         response.should redirect_to :root
       end
 
       it "GET 'node/destroy' existing non-root node should returns to the tree view of its parent" do
-        n = Node.new(:name => "blah")
-        n.parent = @root
-        n.save
+        n = Node.create(parent: @root, name: "blah", description: "blahblah")
 
         get 'destroy', { :node_id => n.id }
         response.should be_redirect
@@ -42,9 +43,13 @@ describe NodeController do
   end
 
   describe "admin makes bad request:" do
+    before(:each) do
+      CASClient::Frameworks::Rails::Filter.fake(@admin.calnetID.to_s)
+    end
+
     context "GET 'node/create' with root name -" do
       it "render 'node/create' with error message" do
-        get 'create', { :parent => @root.id, :name => Isg2::Application::ROOT_NODE_NAME }
+        get 'create', { parent: @root.id, name: Isg2::Application::ROOT_NODE_NAME, description: "root" }
         response.should be_success
         flash[:error].should match /Error: illegal topic name \"#{Isg2::Application::ROOT_NODE_NAME}\"/
       end
@@ -52,7 +57,7 @@ describe NodeController do
 
     context "GET 'node/create' with same name from sibling node -" do
       it "render 'node/create' with error message" do
-        2.times { get 'create', { :parent => @root.id, :name => "blah" } }
+        2.times { get 'create', { parent: @root.id, name: "blah", description: "blahblah" } }
         response.should be_success
         flash[:error].should match /Error: illegal topic name.*Name already belongs to a node at the same level/
       end
@@ -68,11 +73,11 @@ describe NodeController do
 
     context "GET 'node/destroy' to destroy node with children -" do
       it "stays on root_url with error message" do
-        get 'create', { :parent => @root.id, :name => "1" } # add child
+        get 'create', { parent: @root.id, name: "1", description: "this is node 1"} # add child
 
         child = Node.find_by_name("1")
-        get 'create', { :parent => child.id, :name => "1.1" } # add grandchild
-        get 'destroy', { :node_id => child.id } # remove child
+        get 'create', { parent: child.id, name: "1.1", description: "this is 1.1" } # add grandchild
+        get 'destroy', { node_id: child.id } # remove child
 
         response.should be_redirect
         flash[:error].should match /can't remove a topic with subtopics/
@@ -83,18 +88,27 @@ describe NodeController do
   describe "non-admin makes bad request:" do
     context "GET 'node/create' -" do
       it "stays on root_url with error message" do
-        @user.update_attributes(:isAdmin => false)
-        get 'create', { :parent => @root.id, :name => "1" }
+        CASClient::Frameworks::Rails::Filter.fake(nil, nil)
+        get 'create', { parent: @root.id, name: "1", description: "this is node 1"}
+        response.should be_redirect
+        response.redirect_url.should match /^https:\/\/auth.berkeley.edu\/cas\/login\?service=.+node.+create/
+
+        CASClient::Frameworks::Rails::Filter.fake(@user.calnetID.to_s)
+        get 'create', { parent: @root.id, name: "1", description: "this is node 1"}
         flash[:error].should match /Error: You don't have the privilege to perform this action/
       end
     end
 
     context "GET 'node/destroy' -" do
       it "stays on root_url with error message" do
-        get 'create', { :parent => @root.id, :name => "1" }
-        child = Node.find_by_name("1")
+        child = Node.create(parent: @root, name: "1", description: "this is node 1")
 
-        @user.update_attributes(:isAdmin => false)
+        CASClient::Frameworks::Rails::Filter.fake(nil, nil)
+        get 'destroy', { :node_id => child.id }
+        response.should be_redirect
+        response.redirect_url.should match /^https:\/\/auth.berkeley.edu\/cas\/login\?service=.+node.+destroy/
+
+        CASClient::Frameworks::Rails::Filter.fake(@user.calnetID.to_s)
         get 'destroy', { :node_id => child.id }
         flash[:error].should match /Error: You don't have the privilege to perform this action/
       end

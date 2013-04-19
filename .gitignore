@@ -14,6 +14,8 @@
 /log/*.log
 /tmp
 *.pyc
+.DS_Store
+calnet_test_ids.txt
 
 #Ignore SimpleCov results 
 coverage

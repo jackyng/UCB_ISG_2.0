@@ -1,15 +1,18 @@
 class Complaint < ActiveRecord::Base
   belongs_to :user
-  attr_accessible :description, :ip_address, :isResolved, :title, :user, :user_email
+  belongs_to :admin
+  has_many :messages
 
-  validates :description, :ip_address, :title, :user, :presence => true
-  validates :isResolved, :inclusion => { :in => [true, false] }
+  attr_accessible :ip_address, :status, :title, :user, :admin, :user_email
+
+  validates :ip_address, :status, :title, :user, :presence => true
+  validates :status, :inclusion => { :in => ["new", "read", "assigned", "in progress", "completed"] }
 
   before_save :default_values
   before_create :default_values
   before_validation :default_values
   def default_values
-    self.isResolved = false if self.isResolved.nil?
+    self.status = "new" if self.status.nil?
     return
   end
 end

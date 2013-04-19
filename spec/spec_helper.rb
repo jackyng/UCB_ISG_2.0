@@ -23,10 +23,9 @@ RSpec.configure do |config|
   config.order = 'random'
 
   config.after(:each) do
-    Node.delete_all
-    Resource.delete_all
-    User.delete_all
-    Complaint.delete_all
+    ActiveRecord::Base.connection.tables.each do |table|
+      table.singularize.camelize.constantize.delete_all unless table == "schema_migrations"
+    end
     CASClient::Frameworks::Rails::Filter.fake(nil, nil)
   end
 end

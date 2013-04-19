@@ -9,9 +9,12 @@ module ApplicationHelper
     end
   end
 
-  def isAdmin(user_id)
-  	user = User.find(user_id)
-  	return user.isAdmin
+  def isAdmin(admin_id)
+  	admin = Admin.find(admin_id)
+  	if admin.nil?
+      return false
+    else
+      return true
+    end
   end
-
 end

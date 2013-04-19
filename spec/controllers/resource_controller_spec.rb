@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe ResourceController do
   before(:each) do
-    @root = Node.create(:name => Isg2::Application::ROOT_NODE_NAME)
-    @user = User.create(:calnetID => 181758, :isAdmin => true)
-    CASClient::Frameworks::Rails::Filter.fake('181758')
+    @root = Node.create(name: Isg2::Application::ROOT_NODE_NAME, description: Isg2::Application::ROOT_NODE_DESCRIPTION)
+    @user  = User.create(calnetID: 181758)
+    @admin = Admin.create(calnetID: 181860, email: "test_admin@isg2.berkeley.edu")
+    CASClient::Frameworks::Rails::Filter.fake(@admin.calnetID.to_s)
   end
 
   context "admins make good requests:" do
@@ -62,7 +63,12 @@ describe ResourceController do
   context "non-admins can't make requests to ResourceController:" do
     describe "GET 'resource/create' -" do
       it "return to root with error message" do
-        @user.update_attributes(:isAdmin => false)
+        CASClient::Frameworks::Rails::Filter.fake(nil, nil)
+        get 'create', :name => "169", :url => '169.edu', :node_id => @root.id
+        response.should be_redirect
+        response.redirect_url.should match /^https:\/\/auth.berkeley.edu\/cas\/login\?service=.+resource.+create/
+
+        CASClient::Frameworks::Rails::Filter.fake(@user.calnetID.to_s)
         get 'create', :name => "169", :url => '169.edu', :node_id => @root.id
         flash[:error].should match /Error: You don't have the privilege to perform this action/
       end
@@ -70,10 +76,14 @@ describe ResourceController do
 
     describe "GET 'resource/destroy -" do
       it "return to root with error message" do
-        get 'create', :name => "169", :url => '169.edu', :node_id => @root.id
-        @user.update_attributes(:isAdmin => false)
+        resource = Resource.create(:name => "169", :url => '169.edu', :node => @root)
 
-        resource = Resource.where(:name => "169", :url => "169.edu")[0]
+        CASClient::Frameworks::Rails::Filter.fake(nil, nil)
+        get 'destroy', :id => resource.id
+        response.should be_redirect
+        response.redirect_url.should match /^https:\/\/auth.berkeley.edu\/cas\/login\?service=.+resource.+destroy/
+
+        CASClient::Frameworks::Rails::Filter.fake(@user.calnetID.to_s)
         get 'destroy', :id => resource.id
         flash[:error].should match /Error: You don't have the privilege to perform this action/
       end
