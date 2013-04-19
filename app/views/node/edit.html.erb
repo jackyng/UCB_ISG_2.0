@@ -1,0 +1,9 @@
+<h2>Edit Node</h2>
+<%= form_tag "/node/edit" do %>
+  <%= label_tag :name, 'Name: ' %>
+  <%= text_field_tag :name, find_node_param(params[:node_id], 'name') %><br />
+  <%= label_tag :description, 'Description: ' %>
+  <%= text_area_tag :description, find_node_param(params[:node_id], 'desp'), :rows => "10", :cols => "25"%><br />
+  <%= hidden_field_tag :node_id, params[:node_id] %>
+  <%= submit_tag 'Edit', :class => "btn btn-large btn-primary" %>
+<% end %>

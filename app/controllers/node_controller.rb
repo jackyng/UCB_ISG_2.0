@@ -1,4 +1,5 @@
 class NodeController < ApplicationController
+  respond_to :html, :json
   # This will allow the user to view the index page without authentication
   # but will process CAS authentication data if the user already
   # has an SSO session open.
@@ -44,6 +45,13 @@ class NodeController < ApplicationController
     new_child.parent = Node.find(params[:parent])
     if new_child.save
       flash[:notice] = "Successfully created subtopic '#{new_child.name}' under '#{new_child.parent.name}'"
+      redirect_to :root
+    end
+  end
+
+  def edit
+    @node = Node.find(params[:node_id])
+    if @node.update_attributes(name: params[:name], description: params[:description])
       redirect_to :root
     end
   end

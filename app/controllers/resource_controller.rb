@@ -28,6 +28,13 @@ class ResourceController < ApplicationController
     end
   end
 
+  def edit
+    @resource = Resource.find(params[:id])
+    if @resource.update_attributes(name: params[:name], url: params[:url])
+      redirect_to :root
+    end
+  end
+
   def destroy
     @resource = Resource.find(params[:id])
     node_id = @resource.node_id

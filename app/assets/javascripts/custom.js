@@ -127,11 +127,16 @@ $(function(){
                   url = "/resource/create?node_id=" + node_id;
                   $(location).attr('href', url);
                   break;
+                case "edit root":
+                  url = "/node/edit?node_id=" + node_id;
+                  $(location).attr('href', url);
+                  break;
               }
           },
           items: {
               "new child": {name: "Add a child" },
-              "new resource": {name: "Add a resource" }
+              "new resource": {name: "Add a resource" },
+              "edit root": {name: "Edit root" }
           }
       });
 
@@ -154,12 +159,17 @@ $(function(){
                   url = "/node/destroy?node_id=" + node_id;
                   $(location).attr('href', url);
                   break;
+                case "edit":
+                  url = "/node/edit?node_id=" + node_id;
+                  $(location).attr('href', url);
+                  break;
               }
           },
           items: {
               "new child": {name: "Add a child" },
               "new resource": {name: "Add a resource" },
-              "delete": {name: "Remove node"}
+              "delete": {name: "Remove node"},
+              "edit": {name: "Edit node"}
           }
       });
 
@@ -174,10 +184,15 @@ $(function(){
                   url = "/resource/destroy?id=" + resource_id;
                   $(location).attr('href', url);
                   break;
+                case "edit":
+                  url = "/resource/edit?id=" + resource_id;
+                  $(location).attr('href', url);
+                  break;
               }
           },
           items: {
-              "delete": {name: "Remove resource" }
+              "delete": {name: "Remove resource" },
+              "edit": {name: "Edit resource" }
           }
       });
     }
