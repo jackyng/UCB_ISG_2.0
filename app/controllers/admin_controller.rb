@@ -9,16 +9,16 @@ class AdminController < ApplicationController
         flash[:error] = "Need an email to be an admin"
         redirect_to admin_path and return
       end
-      @new_admin = Admin.new(calnetID: params[:new_calnetID], email: params[:email], last_request_time: Time.now)
+      @new_admin = Admin.new(fullname: params[:fullname], calnetID: params[:calnetID], email: params[:email], last_request_time: Time.now)
       if @new_admin.save
-        u = User.find_by_calnetID(params[:new_calnetID])
+        u = User.find_by_calnetID(params[:calnetID])
         u.destroy unless u.nil?
         flash[:notice] = "Successfully added admin '#{@new_admin.fullname}'"
       else
         flash[:error] = @new_admin.errors.values.join(". ")
       end
+      redirect_to admin_path
     end
-    redirect_to admin_path
   end
 
   def destroy
