@@ -4,6 +4,7 @@ Isg2::Application.routes.draw do
   match "node" => "node#index", :via => [:get, :post]
   match "node/create" => "node#create", :via => [:get, :post]
   match "node/graphview" => "node#graphview", :via => [:get]
+  match "node/getData" => "node#getData", :via => [:get]
   get "node/destroy"
 
   match "resource/create" => "resource#create", :via => [:get, :post]
