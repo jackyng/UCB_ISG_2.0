@@ -3,6 +3,10 @@ class ApplicationController < ActionController::Base
 
   before_filter :setup_session_info
 
+  def logout
+    CASClient::Frameworks::Rails::Filter.logout(self)
+  end
+
   private
   def setup_session_info
     @remote_ip = request.remote_ip
