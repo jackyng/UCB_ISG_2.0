@@ -1,28 +1,55 @@
 <% provide(:title, 'Users List') %>
 
+
+<h2>Users</h2>
+<br>
 <table class="table table-stripped table-hover table-condensed">
 	<thead>
 		<tr>
 			<th>Full Name</th>
 			<th>Calnet ID</th>
 			<th>Email</th>
-			<th>Admin</th>
 		</tr>
 	</thead>
 	<tbody>
 		<% unless @users.blank? %>
 			<% @users.each do |user| %> 
-				<tr class=<%=getRowColor(user.isAdmin)%> >
-					<td><%= name_for_calnet_id(user.calnetID) %></td>
+				<tr class=<%=getRowColor(false)%> >
+					<td><%= user.fullname %></td>
 					<td><%= user.calnetID %></td>
 					<td><%= user.email %></td>
-					<td><%= isAdmin?(user.isAdmin) %></td>
 					<th>
-						<% if user.isAdmin %>
-						<%= link_to("Remove Admin", toggle_admin_user_path(user), :method => :put, :title => "This removes the admin") %> 
-						<% else %>
-						<%= link_to("Add Admin", toggle_admin_user_path(user), :method => :put, :title => "This adds the admin") %>
-						<% end %>
+						<%= link_to("Add Admin", add_admin_user_path(user), :method => :put, :title => "This adds the admin") %>
+					</th>
+				</tr>
+			<% end %>
+		<% end %>
+	</tbody>
+</table>
+
+<br>
+<br>
+<br>
+
+<h2>Admins</h2>
+<br>
+<table class="table table-stripped table-hover table-condensed">
+	<thead>
+		<tr>
+			<th>Full Name</th>
+			<th>Calnet ID</th>
+			<th>Email</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% unless @admins.blank? %>
+			<% @admins.each do |admin| %> 
+				<tr class=<%=getRowColor(true)%> >
+					<td><%= admin.fullname %></td>
+					<td><%= admin.calnetID %></td>
+					<td><%= admin.email %></td>
+					<th>
+						<%= link_to("Remove Admin", remove_admin_user_path(admin), :method => :put, :title => "This removes the admin") %> 
 					</th>
 				</tr>
 			<% end %>

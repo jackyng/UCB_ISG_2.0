@@ -21,6 +21,10 @@ Isg2::Application.routes.draw do
 
   match "user" => "user#index", via: [:get, :post]
 
+  resources :user do
+    put 'add_admin', :on => :member
+    put 'remove_admin', :on => :member
+  end
   post "admin/create" => "admin#create"
   
   match "message" => "message#index", via: [:get, :post]
