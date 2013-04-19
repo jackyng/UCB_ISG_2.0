@@ -9,8 +9,6 @@ Isg2::Application.routes.draw do
   match "resource/create" => "resource#create", via: [:get, :post]
   get "resource/destroy"
 
-  get "user/logout"
-
   match "complaint/create" => "complaint#create", via: [:get, :post]
   get "complaint/destroy"
   match "complaint" => "complaint#index", via: [:get, :post]
@@ -19,13 +17,11 @@ Isg2::Application.routes.draw do
   match "complaint/getComplaintData" => "complaint#getComplaintData", via: [:get]
   post "complaint/:id/update_status" => "complaint#update_status", as: :complaint_update_status
 
-  match "user" => "user#index", via: [:get, :post]
+  get "logout" => "application#logout"
 
-  resources :user do
-    put 'add_admin', :on => :member
-    put 'remove_admin', :on => :member
-  end
-  post "admin/create" => "admin#create"
+  match "admin" => "admin#index", via: :get
+  match "admin/create" => "admin#create", via: [:get, :post]
+  match "admin/destroy" => "admin#destroy", via: [:get, :post]
   
   match "message" => "message#index", via: [:get, :post]
   match "message/create" => "message#create", via: [:get, :post]
