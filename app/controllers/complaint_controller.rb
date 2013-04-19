@@ -23,15 +23,17 @@ class ComplaintController < ApplicationController
 		new_complaint = Complaint.new(
 			:title => params[:title],
       :user_email => params[:user_email],
-			:description => params[:description],
 			:ip_address => @remote_ip,
-			:isResolved => false,
-			:user => @current_user		
+			:user => @user,	
+			:status => "new"	
 	  )
 
     if new_complaint.save
       flash[:notice] = "Successfully submitted complaint '#{new_complaint.title}'."
-      redirect_to complaint_path
+      new_message = Message.new(:user => @user, :content => params[:description], :complaint => new_complaint, :depth => 0)
+      if new_message.save
+      	redirect_to complaint_path
+      end
   	end
 	end
 

@@ -4,7 +4,6 @@ class AdminController < ApplicationController
   before_filter :check_admin_privilege
 
   def create
-    p params
     if params[:calnetID]
       if params[:email].nil?
         flash[:error] = "Need an email to be an admin"

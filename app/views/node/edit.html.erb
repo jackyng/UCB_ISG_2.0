@@ -6,4 +6,6 @@
   <%= text_area_tag :description, find_node_param(params[:node_id], 'desp'), :rows => "10", :cols => "25"%><br />
   <%= hidden_field_tag :node_id, params[:node_id] %>
   <%= submit_tag 'Edit', :class => "btn btn-large btn-primary" %>
+  &nbsp; &nbsp;
+  <a class="btn btn-large btn-primary" href="/" data-method="get">Back</a>
 <% end %>

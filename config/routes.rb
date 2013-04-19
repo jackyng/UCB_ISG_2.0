@@ -4,6 +4,7 @@ Isg2::Application.routes.draw do
   match "node" => "node#index", via: [:get, :post]
   match "node/create" => "node#create", via: [:get, :post]
   match "node/graphview" => "node#graphview", via: [:get]
+  match "node/getData" => "node#getData", :via => [:get]
   match "node/edit" => "node#edit", via: [:get, :post]
   get "node/destroy"
 
@@ -29,6 +30,11 @@ Isg2::Application.routes.draw do
   match "message/create" => "message#create", via: [:get, :post]
   match "message/:id/reply" => "message#reply", as: :message_reply, via: [:get, :post]
   match "message/destroy" => "message#destroy", via: [:get, :post]
+
+  match "announcement" => "announcement#index", via: [:get, :post]
+  match "announcement/create" => "announcement#create", via: [:get, :post]
+  match "announcement/edit" => "announcement#edit", via: [:get, :post]
+  match "announcement/notice" => "announcement#notice", via: [:get, :post]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

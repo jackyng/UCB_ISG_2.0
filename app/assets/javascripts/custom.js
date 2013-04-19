@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	$("#my_tree").treeview({control: "#treecontrol"});
 	$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+  $("#announcement_feed").vTicker();
 });
 
 //Display complaint chart
@@ -92,14 +93,26 @@ function drawChart() {
 }
 
 //Show the ticket form
-function displayTicketForm(id) {
+function displayTicketForm() {
   var url = "/complaint/create";
+  $(location).attr('href', url);
+}
+
+//Show the announcement form
+function displayNoticeForm() {
+  var url = "/announcement/create";
   $(location).attr('href', url);
 }
 
 //Show the ticket content
 function displayTicket(id) {
   var url = "/complaint/ticket?cid=" + id;
+  $(location).attr('href', url);
+}
+
+//Show the ticket content
+function displayNotice(id) {
+  var url = "/announcement/edit?nid=" + id;
   $(location).attr('href', url);
 }
 
