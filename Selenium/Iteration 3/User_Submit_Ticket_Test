@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>Navigating Treeview Test</title>
+<title>User_Submit_Ticket_Test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Navigating Treeview Test</td></tr>
+<tr><td rowspan="1" colspan="3">User_Submit_Ticket_Test</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -17,78 +17,88 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>id=node_1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=node_1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=node_2</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=node_3</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=node_83</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=node_123</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=node_244</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=node_285</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=node_245</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=node_246</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Expand All</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Collapse All</td>
+	<td>clickAndWait</td>
+	<td>link=Manage Complaints</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=ISG 2.0</td>
+	<td>css=button.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=title</td>
+	<td>Dance Princess</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=description</td>
+	<td>Napkins</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=commit</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Expand All</td>
+	<td>//tr[2]/td[5]/div/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//a[contains(text(),'read')])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Collapse All</td>
+	<td>xpath=(//a[contains(text(),'Update')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//a[contains(text(),'in progress')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//button[@type='button'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Reply</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=content</td>
+	<td>Water</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=commit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//button[@type='button'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Back</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//a[contains(text(),'Update')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//a[contains(text(),'completed')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -98,14 +108,10 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=About Us</td>
+	<td>link=Manage Complaints</td>
 	<td></td>
 </tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=FAQ</td>
-	<td></td>
-</tr>
+
 </tbody></table>
 </body>
 </html>

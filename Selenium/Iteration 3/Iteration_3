@@ -8,10 +8,11 @@
 <body>
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
 <tr><td><b>Test Suite</b></td></tr>
-<tr><td><a href="Navigating Treeview Test">Navigating Treeview Test</a></td></tr>
-<tr><td><a href="Add Admins Test">Add Admins Test</a></td></tr>
-<tr><td><a href="Announcements Test">Announcements Test</a></td></tr>
-<tr><td><a href="Complaints Test">Complaints Test</a></td></tr>
+<tr><td><a href="Navigating_Treeview_Test">Navigating_Treeview_Test</a></td></tr>
+<tr><td><a href="Add_Admins_Test_2">Add_Admins_Test_2</a></td></tr>
+<tr><td><a href="Announcements_Test">Announcements_Test</a></td></tr>
+<tr><td><a href="Complaints_Test">Complaints_Test</a></td></tr>
+<tr><td><a href="User_Submit_Ticket_Test">User_Submit_Ticket_Test</a></td></tr>
 </tbody></table>
 </body>
 </html>
