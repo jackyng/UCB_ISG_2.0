@@ -1,7 +1,7 @@
 $(document).ready(function() {
+  //$("#announcement_feed").vTicker();
 	$("#my_tree").treeview({control: "#treecontrol"});
 	$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-  $("#announcement_feed").vTicker();
 });
 
 //Display complaint chart
@@ -116,6 +116,7 @@ function displayNotice(id) {
   $(location).attr('href', url);
 }
 
+//Show a complaint chart
 function displayChart() {
   var url = "/complaint/chart";
   $(location).attr('href', url);

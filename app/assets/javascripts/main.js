@@ -7,6 +7,7 @@
   // }  
   
   var Renderer = function(elt){
+    alert()
     var dom = $(elt)
     var canvas = dom.get(0)
     var ctx = canvas.getContext("2d");
@@ -304,7 +305,6 @@
   }
   
   $(document).ready(function(){
-    /*
     var CLR = {
       branch:"#b2b19d",
       code:"orange",
@@ -348,22 +348,20 @@
         }
       }
     }
-    */
+    
 
     var sys = arbor.ParticleSystem()
     sys.parameters({stiffness:900, repulsion:1000, gravity:true, dt:0.015})
     sys.renderer = Renderer("#viewport")
-    //sys.graft(theUI)
-
-    
+    sys.graft(theUI)
+/*
     $.ajax({
       url: "/node/getData",
       dataType: "json",
       }).success(function(data) {
         sys.graft(data)
     });
-    
-
+*/    
     var nav = Nav("#nav")
     $(sys.renderer).bind('navigate', nav.navigate)
     $(nav).bind('mode', sys.renderer.switchMode)
