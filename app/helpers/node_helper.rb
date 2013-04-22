@@ -36,12 +36,15 @@ module NodeHelper
   end
 
   def display_recent_annc()
-    html_code = ""
-    Announcement.last(5).reverse.each do |notice|
-        html_code << "<li>"
-        html_code << "<a href=\"#{h(announcement_notice_path(id: notice.id))}\">#{h(notice.title)}</a>"
-        html_code << "</li>"
+    if Announcement.count != 0
+        html_code = "<div id=\"announcement_feed\"><ul>"
+        Announcement.last(5).reverse.each do |notice|
+            html_code << "<li>"
+            html_code << "<a href=\"#{h(announcement_notice_path(id: notice.id))}\">#{h(notice.title)}</a>"
+            html_code << "</li>"
+        end
+        html_code << "</ul></div>"
+        html_code.html_safe
     end
-    html_code.html_safe
   end
 end
