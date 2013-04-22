@@ -2,7 +2,7 @@ $root = Node.create(name: "ISG_root", description: "This is the root node")
 
 def create_child(level=2, parent=$root)
   return if level <= 0
-  3.times do |i|
+  2.times do |i|
     name = parent == $root ? "t#{i}" : "#{parent.name}.#{i}"
     child = Node.create(name: name, description: "This is node '#{name}'", parent: parent)
     create_resources(child)
@@ -20,7 +20,7 @@ def create_resources(node)
 end
 
 print "[progress update] creating nodes and resources......."
-create_child(5, $root)
+create_child(3, $root)
 puts "done"
 
 print "[progress update] creating admins...................."

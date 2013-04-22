@@ -1,12 +1,14 @@
 <% provide(:title, 'Home') %>
+<head>
+  <%= javascript_include_tag 'jquery.vticker', 'custom1' %>
+</head>
 <div id="container">
+  <div id="banner"></div>
   <div id="announcement_feed">
   <ul>
     <%= display_recent_annc() %>
   </ul>
-  </div>
-  <br>
-  <div id="banner"></div> 
+  </div> 
   <div id="body" class="container-fluid">
     <div class="row-fluid">
       <div id="sidebar" class="span16">
@@ -30,9 +32,5 @@
   </div>
 </div>
 
-<script type="text/javascript">
-  $(document).ready(function() {
-    $("#announcement_feed").vTicker();
-  }
-</script>
+
 
