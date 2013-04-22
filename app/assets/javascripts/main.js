@@ -46,13 +46,13 @@
           var w = Math.max(20, 20+gfx.textWidth(node.name) )
           if (node.data.alpha===0) return
           if (node.data.shape=='dot'){
-            gfx.oval(pt.x-w/2, pt.y-w/2, w, w, {fill:node.data.color, alpha:node.data.alpha})
-            gfx.text(node.name, pt.x, pt.y+7, {color:"white", align:"center", font:"Arial", size:12})
-            gfx.text(node.name, pt.x, pt.y+7, {color:"white", align:"center", font:"Arial", size:12})
+            gfx.oval(pt.x-w/2, pt.y-w/2, w-10, w-10, {fill:node.data.color, alpha:node.data.alpha})
+            gfx.text(node.name, pt.x-3, pt.y+3, {color:"white", align:"center", font:"Arial", size:11})
+            gfx.text(node.name, pt.x-3, pt.y+3, {color:"white", align:"center", font:"Arial", size:11})
           }else{
             gfx.rect(pt.x-w/2, pt.y-8, w, 20, 4, {fill:node.data.color, alpha:node.data.alpha})
-            gfx.text(node.name, pt.x, pt.y+9, {color:"white", align:"center", font:"Arial", size:12})
-            gfx.text(node.name, pt.x, pt.y+9, {color:"white", align:"center", font:"Arial", size:12})
+            gfx.text(node.name, pt.x, pt.y+9, {color:"white", align:"center", font:"Arial", size:11})
+            gfx.text(node.name, pt.x, pt.y+9, {color:"white", align:"center", font:"Arial", size:11})
           }
         })
       },
@@ -76,6 +76,13 @@
         var children = $.map(sys.getEdgesFrom(newSection), function(edge){
           return edge.target
         })
+        sys.eachNode(function(node){
+          if (node.name != "ISG_root") {
+            sys.tweenNode(node, 0, {alpha:0})
+          }
+        })
+
+        var parent = sys.getEdgesFrom(newSection)[0].source
         for (var i = 0; i < children.length; i++) {
           sys.tweenNode(children[i], 0.5, {alpha:1})
           children[i].p.x = parent.p.x + .05*Math.random() - .025
@@ -140,7 +147,7 @@
                  window.status = ''
               }
             }
-            else if (sys.getNode(nearest.node.name) != undefined && nearest.distance < 10) {
+            else if (sys.getNode(nearest.node.name) != undefined && nearest.distance < 20) {
               if (nearest.node.name!=_section){
                 _section = nearest.node.name
                 that.switchSection(_section)
@@ -363,7 +370,7 @@
     */
 
     var sys = arbor.ParticleSystem()
-    sys.parameters({stiffness:900, repulsion:5000, gravity:true, dt:0.015})
+    sys.parameters({stiffness:600, repulsion:5000, gravity:true, dt:0.015})
     sys.renderer = Renderer("#viewport")
     //sys.graft(theUI)
 
