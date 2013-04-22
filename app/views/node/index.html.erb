@@ -4,11 +4,13 @@
 </head>
 <div id="container">
   <div id="banner"></div>
-  <div id="announcement_feed">
-  <ul>
-    <%= display_recent_annc() %>
-  </ul>
-  </div> 
+  <% if @anncs.nil? %>
+    <div id="announcement_feed">
+    <ul>
+      <%= display_recent_annc() %>
+    </ul>
+    </div>
+  <% end %> 
   <div id="body" class="container-fluid">
     <div class="row-fluid">
       <div id="sidebar" class="span16">

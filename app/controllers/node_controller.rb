@@ -24,6 +24,7 @@ class NodeController < ApplicationController
     @children = @node.children
     @ancestors = @node.ancestors
     @resources = @node.resources
+    @anncs = Announcement.all()
   end
 
   def create
