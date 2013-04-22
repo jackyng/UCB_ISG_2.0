@@ -78,7 +78,7 @@
         })
         sys.eachNode(function(node){
           if (node.name != "ISG_root") {
-            sys.tweenNode(node, 0, {alpha:0})
+            sys.tweenNode(node, 0, {color:"#b2b19d", alpha:0})
           }
         })
 
@@ -99,15 +99,25 @@
 
       sys.eachNode(function(node){
           var nowVisible = ($.inArray(node, children)>=0)
-          var newAlpha
+          var newAlpha, newColor
           if (nowVisible || node == parent || node == grandparent) {
             newAlpha = 1
+            if (node == parent) {
+              newColor = "orange"
+            }
+            else if (node == grandparent) {
+              newColor = "red"
+            }
+            else {
+              newColor = "#b2b19d"
+            }
           }
           else {
             newAlpha = 0
+            newColor = "#b2b19d"
           }
           var dt = (nowVisible) ? .5 : .5
-          sys.tweenNode(node, dt, {alpha:newAlpha})
+          sys.tweenNode(node, dt, {color:newColor, alpha:newAlpha})
 
           if (newAlpha==1){
             node.p.x = parent.p.x + .05*Math.random() - .025
@@ -150,6 +160,7 @@
             else if (sys.getNode(nearest.node.name) != undefined && nearest.distance < 20) {
               if (nearest.node.name!=_section){
                 _section = nearest.node.name
+                var color = "red"
                 that.switchSection(_section)
               }
               dom.removeClass('linkable')
