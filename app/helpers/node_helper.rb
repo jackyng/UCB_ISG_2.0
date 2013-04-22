@@ -37,30 +37,9 @@ module NodeHelper
 
   def display_recent_annc()
     html_code = ""
-    notices = Announcement.last(5).reverse
-    if notices[0]
+    Announcement.last(5).reverse.each do |notice|
         html_code << "<li>"
-        html_code << "<a href=\"#{h(announcement_notice_path(id: notices[0].id))}\">#{h(notices[0].title)}</a>"
-        html_code << "</li>"
-    end
-    if notices[1]
-        html_code << "<li>"
-        html_code << "<a href=\"#{h(announcement_notice_path(id: notices[1].id))}\">#{h(notices[1].title)}</a>"
-        html_code << "</li>"
-    end
-    if notices[2]
-        html_code << "<li>"
-        html_code << "<a href=\"#{h(announcement_notice_path(id: notices[2].id))}\">#{h(notices[2].title)}</a>"
-        html_code << "</li>"
-    end
-    if notices[3]
-        html_code << "<li>"
-        html_code << "<a href=\"#{h(announcement_notice_path(id: notices[3].id))}\">#{h(notices[3].title)}</a>"
-        html_code << "</li>"
-    end
-    if notices[4]
-        html_code << "<li>"
-        html_code << "<a href=\"#{h(announcement_notice_path(id: notices[4].id))}\">#{h(notices[4].title)}</a>"
+        html_code << "<a href=\"#{h(announcement_notice_path(id: notice.id))}\">#{h(notice.title)}</a>"
         html_code << "</li>"
     end
     html_code.html_safe
