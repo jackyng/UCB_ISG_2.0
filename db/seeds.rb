@@ -19,9 +19,50 @@ def create_resources(node)
   end
 end
 
+
+
 print "[progress update] creating nodes and resources......."
-create_child(3, $root)
+# create_child(3, $root)
+software = Node.create(name: "Hardware", parent: $root, description: "Got hardware problems?")
+hardware = Node.create(name: "Software", parent: $root, description: "Got software problems?")
+class_account = Node.create(name: "Class Account", parent: $root, description: "Class account info")
+servers = Node.create(name: "Servers", parent: $root, description: "Server problems?")
+labs = Node.create(name: "Labs", parent: $root, description: "Lab problems?")
+
+licenses = Node.create(name: "Licenses", parent: software, description: "License info")
+licenses.resources.create(name: "Eclipse", url: "http://inst.eecs.berkeley.edu/cgi-bin/pub.cgi?file=eclipse.help")
+licenses.resources.create(name: "Microsoft", url: "http://msdnaa.eecs.berkeley.edu/")
+os = Node.create(name: "Operating Systems", parent: software, description: "OS info")
+os.resources.create(name: "Windows", url: "http://inst.eecs.berkeley.edu/cgi-bin/pub.cgi?file=microsoft.help")
+os.resources.create(name: "UNIX", url: "http://inst.eecs.berkeley.edu/cgi-bin/pub.cgi?file=software.help")
+
+keyboards = Node.create(name: "Keyboards", parent: hardware, description: "Keyboards problems")
+mice = Node.create(name: "Mice", parent: hardware, description: "Mice problems")
+monitors = Node.create(name: "Monitors", parent: hardware, description: "Monitors problems")
+esg_equiments = Node.create(name: "ESG Equipments", parent: hardware, description: "Problems with ESG (lab) equiments?")
+
+cs = Node.create(name: "CS classes", parent: class_account, description: "List of all CS classes")
+ee = Node.create(name: "EE classes", parent: class_account, description: "List of all EE classes")
+cs_classes = ["3S", "9A", "9B", "9C", "9D", "9E", "9F", "9G", "9H", "47A", "47B", "47C", "61A", "61B", "61C", 98, 150, 152, 160, 161, 162, 164, 169, 170, 172, 174, 184, 186, 188, 192, 194, 198]
+ee_classes = ["20n", 40, 42, 43, 98, 100, 105, 117, 119, 120, 122, 126, 130, 134, "137B", 140, 141, 142, 143, "C145", 149, 192, 194, 197, 198]
+cs_classes.each do |n|
+  Node.create(name: "CS #{n}", parent: cs, description: "CS #{n} website")
+end
+ee_classes.each do |n|
+  Node.create(name: "EE #{n}", parent: ee, description: "EE #{n} website")
+end
+
+iserver = Node.create(name: "iserver", parent: servers, description: "iserver info")
+bcom = Node.create(name: "bcom", parent: servers, description: "bcom info")
+icluster = Node.create(name: "icluster", parent: servers, description: "icluster info")
+star = Node.create(name: "star", parent: servers, description: "star server info")
+nova = Node.create(name: "nova", parent: servers, description: "nova server info")
+
+power_failure = Node.create(name: "Power failure", parent: labs, description: "Power failure problems?")
+projectors = Node.create(name: "Projectors", parent: labs, description: "Projectors problems?")
 puts "done"
+
+
 
 print "[progress update] creating admins...................."
 # Creating admins
@@ -31,6 +72,8 @@ Admin.create(calnetID: 765055, email: "minh.luong@berkeley.edu")
 Admin.create(calnetID: 968746, email: "bennyhuynh311@berkeley.edu")
 Admin.create(calnetID: 948976, email: "jimmywu126@gmail.com")
 puts "done"
+
+
 
 # Create normal users from the test calnet id's
 print "[progress update] creating normal users.............."
@@ -53,6 +96,8 @@ else
   puts "Can't connect to LDAP to get user's name"
 end
 puts "done"
+
+
 
 # Create complaints and first messages
 print "[progress update] creating complaints................"
