@@ -23,8 +23,8 @@ end
 
 print "[progress update] creating nodes and resources......."
 # create_child(3, $root)
-software = Node.create(name: "Hardware", parent: $root, description: "Got hardware problems?")
-hardware = Node.create(name: "Software", parent: $root, description: "Got software problems?")
+hardware = Node.create(name: "Hardware", parent: $root, description: "Got hardware problems?")
+software = Node.create(name: "Software", parent: $root, description: "Got software problems?")
 class_account = Node.create(name: "Class Account", parent: $root, description: "Class account info")
 servers = Node.create(name: "Servers", parent: $root, description: "Server problems?")
 labs = Node.create(name: "Labs", parent: $root, description: "Lab problems?")
