@@ -72,22 +72,33 @@
       },
       
       switchSection:function(newSection){
-        var parent = sys.getEdgesFrom(newSection)[0].source
-        var grandparent = sys.getEdgesTo(parent)[0].source
+      if (newSection == "ISG_root") {
         var children = $.map(sys.getEdgesFrom(newSection), function(edge){
           return edge.target
         })
-        
-        sys.eachNode(function(node){
+        for (var i = 0; i < children.length; i++) {
+          sys.tweenNode(children[i], 0.5, {alpha:1})
+          children[i].p.x = parent.p.x + .05*Math.random() - .025
+          children[i].p.y = parent.p.y + .05*Math.random() - .025
+          children[i].tempMass = .001
+        }
+      }
+      else {
+      var parent = sys.getEdgesFrom(newSection)[0].source
+      var grandparent = sys.getEdgesTo(parent)[0].source
+      var children = $.map(sys.getEdgesFrom(newSection), function(edge){
+        return edge.target
+      })
+
+      sys.eachNode(function(node){
           var nowVisible = ($.inArray(node, children)>=0)
           var newAlpha
-          if (nowVisible || node === parent || node === grandparent) {
+          if (nowVisible || node == parent || node == grandparent) {
             newAlpha = 1
           }
           else {
             newAlpha = 0
           }
-
           var dt = (nowVisible) ? .5 : .5
           sys.tweenNode(node, dt, {alpha:newAlpha})
 
@@ -97,6 +108,7 @@
             node.tempMass = .001
           }
         })
+      }
       },
       
       
@@ -128,7 +140,7 @@
                  window.status = ''
               }
             }
-            else if (sys.getNode(nearest.node.name) !== undefined) {
+            else if (sys.getNode(nearest.node.name) != undefined && nearest.distance < 10) {
               if (nearest.node.name!=_section){
                 _section = nearest.node.name
                 that.switchSection(_section)
@@ -351,7 +363,7 @@
     */
 
     var sys = arbor.ParticleSystem()
-    sys.parameters({stiffness:900, repulsion:1000, gravity:true, dt:0.015})
+    sys.parameters({stiffness:900, repulsion:5000, gravity:true, dt:0.015})
     sys.renderer = Renderer("#viewport")
     //sys.graft(theUI)
 
