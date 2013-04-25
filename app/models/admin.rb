@@ -38,9 +38,8 @@ class Admin < ActiveRecord::Base
         else
           self.errors[:ldap] << "Cannot find calnetID #{calnetID} in LDAP"
         end
-      else
-        self.errors[:ldap] << "Can't connect to LDAP to get user's name"
       end
     end
+    return ""
   end
 end

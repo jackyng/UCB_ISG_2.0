@@ -1,6 +1,6 @@
 class NilOrNonEmptyEmailValidator < ActiveModel::Validator
   def validate(record)
-    if not record.email.nil? and record.email == ""
+    if record.email and record.email == ""
       record.errors[:email] << "Email cannot be an empty string"
       return false
     end
@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   before_validation :default_values
   def default_values
     unless self.calnetID.nil?
-      self.fullname = ldap_lookup(self.calnetID) if self.fullname.nil?
+      self.fullname = ldap_lookup(self.calnetID) if self.fullname.nil? or self.fullname.empty?
     end
     return
   end
@@ -47,9 +47,8 @@ class User < ActiveRecord::Base
         else
           self.errors[:ldap] << "Cannot find calnetID #{calnetID} in LDAP"
         end
-      else
-        self.errors[:ldap] << "Can't connect to LDAP to get user's name"
       end
     end
+    return ""
   end
 end
