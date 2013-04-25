@@ -1,12 +1,25 @@
 class ComplaintController < ApplicationController
-	include ApplicationHelper
 	# This requires the user to be authenticated for viewing all pages.
   before_filter CASClient::Frameworks::Rails::Filter
 
+  before_filter :check_admin_privilege, only: [:chart, :getComplaintData]
+  before_filter :setup_session_info # Somehow before_filter in application_controller doesn't work
+
   def update_status
-    @c = Complaint.find(params[:id])
-    unless @c.update_attributes(status: params[:status])
-      flash[:error] = "Couldn't update status of complaint #{@c.id} to '#{params[:status]}'"
+    begin
+      @complaint = Complaint.find(params[:id])
+    rescue
+      flash[:error] = "Could not find complaint with id '#{params[:id]}'"
+      redirect_to complaint_path and return
+    end
+    if params[:status]
+      unless @complaint.update_attributes(status: params[:status])
+        flash[:error] = "Couldn't update status of complaint #{@complaint.id} to '#{params[:status]}'"
+      else
+        flash[:notice] = "Status of Complaint '#{@complaint.title}' updated."
+      end
+    else
+      flash[:error] = "Parameter status missing"
     end
     redirect_to complaint_path
   end
@@ -22,33 +35,50 @@ class ComplaintController < ApplicationController
   end
 
 	def create
-    if params[:title] and params[:description]
-  		new_complaint = Complaint.new(
-  			:title => params[:title],
-        :user_email => params[:user_email],
-  			:ip_address => @remote_ip,
-  			:user => @user,	
-  			:status => "new"	
-  	  )
-      first_message = Message.new(
-        :user => @user,
-        :content => params[:description],
-        :complaint => new_complaint,
-        :depth => 0
-      )
+    if @admin
+      flash[:error] = "Only normal user can create complaint"
+    elsif @user
+      if params[:title] and params[:description]
+    		new_complaint = @user.complaints.new(
+    			:title => params[:title],
+          :user_email => params[:user_email],
+    			:ip_address => @remote_ip,
+    			:status => "new"	
+    	  )
+        unless new_complaint.save
+          flash[:error] = new_complaint.errors.map {|k,v| "#{k.to_s} error: #{v}"}.join(". ")
+          return
+        end
 
-      if new_complaint.save and first_message.save
-        flash[:notice] = "Successfully submitted complaint '#{new_complaint.title}'."
-      	redirect_to complaint_path
+        first_message = new_complaint.messages.new(
+          :user => @user,
+          :content => params[:description],
+        )
+        if first_message.save
+          flash[:notice] = "Successfully submitted complaint '#{new_complaint.title}'."
+        else
+          flash[:error] = first_message.errors.map {|k,v| "#{k.to_s} error: #{v}"}.join(". ")
+          new_complaint.destroy
+          return
+      	end
       else
-        flash[:error] = new_complaint.errors.map {|k,v| "#{k.to_s} #{v}"}.join(". ")
-        flash[:error] << first_message.errors.map {|k,v| "#{k.to_s} #{v}"}.join(". ")
-    	end
+        # Go to the form for creating complaints
+        return
+      end
+    else
+      flash[:error] = "Have to logged in as a normal user to submit ticket"
     end
+    redirect_to complaint_path
 	end
 
 	def destroy
-		@complaint = Complaint.find(params[:complaint_id])
+    begin
+		  @complaint = Complaint.find(params[:id])
+    rescue
+      flash[:error] = "Could not find complaint with id '#{params[:id]}'"
+      redirect_to complaint_path and return
+    end
+
 		complaint_title = @complaint.title
 		@complaint.destroy
 
