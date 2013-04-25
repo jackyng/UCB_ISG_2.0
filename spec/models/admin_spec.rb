@@ -36,4 +36,14 @@ describe Admin do
     u.save.should == false
     u.errors.should include(:calnetID)
   end
+
+  it "should not save wihtout valid calnetID" do
+    ldap = stub(bind: true, search: stub(first: nil))
+    Net::LDAP.stub(:new).and_return(ldap)
+    subject.save.should == false
+    subject.errors.should include(:ldap)
+    subject.errors[:ldap].should include("Cannot find calnetID #{subject.calnetID} in LDAP")
+    subject.errors.should include(:fullname)
+    subject.errors[:fullname].should include("can't be blank")
+  end
 end

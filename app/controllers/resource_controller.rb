@@ -3,35 +3,65 @@ class ResourceController < ApplicationController
   before_filter :check_admin_privilege
   
   def create
-    if params[:node_id].nil?
-      redirect_to root_url and return
+    unless params[:node_id]
+      flash[:error] = "Required a parent id to create a subtopic"
+      redirect_to :root and return
     end
-    if params[:name].nil? or params[:url].nil?
-      render :create and return
+    begin
+      @node = Node.find(params[:node_id])
+    rescue
+      flash[:error] = "Invalid parent id '#{params[:node_id]}' to create subtopic"
+      redirect_to :root and return
     end
 
-    @node = Node.find(params[:node_id])
-    @resource = @node.resources.new(:name => params[:name], :url => params[:url])
-    if @resource.save
-      flash[:notice] = "Resource created"
-      flash[:error] = ""
-      redirect_to node_path(:id => params[:node_id])
-    else
-      if not Resource.find_by_name(params[:name]).blank?
-        flash[:error] = "Another resource with same name already created!"
-      elsif not Resource.find_by_url(params[:url]).blank?
-        flash[:error] = "Another resource with same url already created!"
+    if params[:name] and params[:url]
+      @resource = @node.resources.new(:name => params[:name], :url => params[:url])
+
+      if @resource.save
+        flash[:notice] = "Resource created"
+        flash[:error] = ""
+        redirect_to :root
       else
-        flash[:error] = "Please check your name '#{params[:name]}' and/or url '#{params[:url]}'"
+        if not Resource.find_by_name(params[:name]).blank?
+          flash[:error] = "Another resource with same name already created!"
+        elsif not Resource.find_by_url(params[:url]).blank?
+          flash[:error] = "Another resource with same url already created!"
+        else
+          flash[:error] = "Please check your name '#{params[:name]}' and/or url '#{params[:url]}'"
+        end
+        flash[:notice] = ""
       end
-      flash[:notice] = ""
     end
   end
 
   def edit
-    @resource = Resource.find(params[:id])
-    if @resource.update_attributes(name: params[:name], url: params[:url])
+    begin
+      @resource = Resource.find(params[:id])
+    rescue
+      flash[:error] = "Need a valid resource id to edit; got '#{params[:id]}'"
+      redirect_to :root and return
+    end
+
+    updated = false
+    if params[:name] and params[:url]
+      if @resource.update_attributes(name: params[:name], url: params[:url])
+        updated = true
+      end
+    elsif params[:name]
+      if @resource.update_attributes(name: params[:name])
+        updated = true
+      end
+    elsif params[:url]
+      if @resource.update_attributes(url: params[:url])
+        updated = true
+      end
+    end
+
+    if updated
+      flash[:notice] = "Resource updated with name '#{@resource.name}' and url '#{@resource.url}'"
       redirect_to :root
+    else
+      flash[:error] = @resource.errors.map {|k,v| "#{k.to_s} error: #{v}"}.join(". ")
     end
   end
 
@@ -43,6 +73,6 @@ class ResourceController < ApplicationController
     else
       flash[:error] = "Please try again"
     end
-    redirect_to node_path(:id => node_id)
+    redirect_to :root
   end
 end
