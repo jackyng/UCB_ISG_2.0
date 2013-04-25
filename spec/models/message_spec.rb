@@ -29,7 +29,7 @@ describe Message do
   it { should respond_to :admin }
   it { should respond_to :admin_id }
   it { should respond_to :depth }
-  it { should respond_to :content } # TODO
+  it { should respond_to :content }
   
   it "should save with valid required arguments" do
     subject.save.should == true
