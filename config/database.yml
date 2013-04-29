@@ -1,7 +1,7 @@
 # http://stackoverflow.com/questions/1670154/convert-a-ruby-on-rails-app-from-sqlite-to-mysql
 # http://stackoverflow.com/questions/4546698/library-not-loaded-libmysqlclient-16-dylib-error-when-trying-to-run-rails-serv
 development:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   reconnect: false
   database: db/development
@@ -10,7 +10,7 @@ development:
   # password: admin
   socket: /tmp/mysql.sock
 test:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   reconnect: false
   database: db/test
@@ -20,7 +20,7 @@ test:
   socket: /tmp/mysql.sock
 
 production:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   reconnect: false
   database: db/production
