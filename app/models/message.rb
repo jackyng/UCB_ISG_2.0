@@ -24,21 +24,14 @@ class ContinuousDepthFromZeroValidator < ActiveModel::Validator
         record.errors[:depth] << "No messages in complaint yet, so this message must start at depth 0"
         return false
       end
-    elsif depths[0] != 0
-      record.errors[:depth] << "Messages of a complaint must start from depth 0"
-      return false
-    end
-
-    depths.each_index do |i|
-      if i == depths.count-1
-        if record.depth != depths[i]+1
-          record.errors[:depth] << "Messages' depths of the same complaint must be continuous"
-          return false
-        end
-      elsif depths[i] != depths[i+1]-1
-        record.errors[:depth] << "Messages' depths of the same complaint must be continuous"
+    elsif record.depth == 0
+      unless depths[0] == 0
+        record.errors[:depth] << "Messages of a complaint must start from depth 0"
         return false
       end
+    elsif record.depth != depths.last+1
+      record.errors[:depth] << "Messages' depths of the same complaint must be continuous"
+      return false
     end
     return true
   end

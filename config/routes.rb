@@ -14,11 +14,11 @@ Isg2::Application.routes.draw do
   get "resource/destroy"
 
   match "complaint/create" => "complaint#create", via: [:get, :post]
-  get "complaint/destroy"
+  delete "complaint/destroy"
   match "complaint" => "complaint#index", via: [:get, :post]
   match "complaint/ticket" => "complaint#ticket", via: [:get, :post]
-  match "complaint/chart" => "complaint#chart", via: [:get]
-  match "complaint/getComplaintData" => "complaint#getComplaintData", via: [:get]
+  get "complaint/chart"
+  get "complaint/getComplaintData"
   post "complaint/:id/update_status" => "complaint#update_status", as: :complaint_update_status
 
   get "logout" => "application#logout"
