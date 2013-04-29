@@ -81,7 +81,117 @@ class NodeController < ApplicationController
     end
   end
 
+  def import
+    content = params[:json_content]
+    errorMessage = ""
+    noticeMessage = ""
+    begin
+      unless content.nil?
+        json_content = JSON.parse(content)
+        json_content.each do |object| 
+          if object['node']
+            newNode = object['node']
+            tuple = createNewNode(newNode['name'], newNode['description'], params[:node_id], errorMessage, noticeMessage)
+            node_id = tuple[0]
+            errorMessage = tuple[1]
+            noticeMessage = tuple[2]
+            unless node_id.nil?
+              tuple = addChildren(newNode['children'], node_id, errorMessage, noticeMessage)
+              errorMessage = tuple[0]
+              noticeMessage = tuple[1]
+            end
+          elsif object['resource']
+            newResource = object['resource']
+            tuple = createNewResource(newResource['name'], newResource['url'], params[:node_id], errorMessage, noticeMessage)
+            errorMessage = tuple[0]
+            noticeMessage = tuple[1]
+          end
+        end
+        unless errorMessage.blank?
+          flash[:error] = errorMessage.html_safe
+        end
+        unless noticeMessage.blank?
+          flash[:notice] = noticeMessage.html_safe
+        end
+        redirect_to :root
+      end
+    rescue JSON::ParserError
+      flash[:error] = "Error: The json is not well-format"
+    end
+  end
+
   private
+  def addChildren(children, parent_id, errorMessage, noticeMessage)
+    if children.empty?
+      return
+    else
+      children.each do |object|
+        if object['node']
+          newNode = object['node']
+          tuple = createNewNode(newNode['name'], newNode['description'], parent_id, errorMessage, noticeMessage)
+          node_id = tuple[0]
+          errorMessage = tuple[1]
+          noticeMessage = tuple[2]
+          unless node_id.nil?
+            tuple = addChildren(newNode['children'], node_id, errorMessage, noticeMessage)
+            unless tuple.nil?
+              errorMessage = tuple[0]
+              noticeMessage = tuple[1]
+            end
+          end
+        elsif object['resource']
+          newResource = object['resource']
+          tuple = createNewResource(newResource['name'], newResource['url'], parent_id, errorMessage, noticeMessage)
+          errorMessage = tuple[0]
+          noticeMessage = tuple[1]
+        end
+      end
+      return [errorMessage, noticeMessage]
+    end
+  end
+
+  def createNewNode(name, description, parent_id, errorMessage, noticeMessage)
+    # Data validation
+    # If same name as root node, prevent creation
+    if name == Isg2::Application::ROOT_NODE_NAME
+      errorMessage += "Error: illegal topic name '" + Isg2::Application::ROOT_NODE_NAME + "'." + "</br>"
+      return [nil, errorMessage, noticeMessage]
+    end
+    # If name would be the same as one of its siblings, prevent creation
+    parent_node = Node.find(parent_id)
+    parent_name = parent_node.name
+    potential_siblings = parent_node.children
+    if potential_siblings.exists?(:name => name)
+      errorMessage += 'Error: illegal topic name "' + name + '". Name already belongs to a node at the same level.' + "</br>"
+      return [nil, errorMessage, noticeMessage]
+    end
+
+    new_child = Node.new(name: name, description: description)
+    new_child.parent = Node.find(parent_id)
+    if new_child.save
+      noticeMessage += "Successfully created subtopic '"+  name + "' under '" + parent_name + "'" + "</br>"
+      return [new_child.id, errorMessage, noticeMessage]
+    end
+  end
+
+  def createNewResource(name, url, node_id, errorMessage, noticeMessage)
+    node = Node.find(node_id)
+    parent_name = node.name
+    resource = node.resources.new(:name => name, :url => url)
+    if resource.save
+      noticeMessage += "Successfully created resource '" + name + "' under '" + parent_name + "'" + "</br>"
+    else
+      if not Resource.find_by_name(name).blank?
+        errorMessage += "Another resource with same name already created!" + "</br>"
+      elsif not Resource.find_by_url(url).blank?
+        errorMessage += "Another resource with same url already created!" + "</br>"
+      else
+        errorMessage += "Please check your name '" + name + "' and/or url '" + url  + "'" + "</br>"
+      end
+    end
+    return [errorMessage, noticeMessage]
+  end
+
   def getNodes(node) 
     clr = {
       :root => "red",

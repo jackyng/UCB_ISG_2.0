@@ -14,7 +14,6 @@ class ResourceController < ApplicationController
     @resource = @node.resources.new(:name => params[:name], :url => params[:url])
     if @resource.save
       flash[:notice] = "Resource created"
-      flash[:error] = ""
       redirect_to node_path(:id => params[:node_id])
     else
       if not Resource.find_by_name(params[:name]).blank?
@@ -24,7 +23,6 @@ class ResourceController < ApplicationController
       else
         flash[:error] = "Please check your name '#{params[:name]}' and/or url '#{params[:url]}'"
       end
-      flash[:notice] = ""
     end
   end
 

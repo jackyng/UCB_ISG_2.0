@@ -3,26 +3,38 @@
   <%= javascript_include_tag 'jquery.vticker', 'custom1' %>
 </head>
 <div id="container">
-  <div id="banner"></div>
+  <div class="hero-unit"></div>
+  <% if flash[:notice] %>
+        <div id='notice' class='alert alert-success'><%= flash[:notice] %></div>
+    <% end %>
+    <% if flash[:error] %>
+        <div id='error' class='alert alert-error'><%= flash[:error] %></div>
+  <% end %>
   <%= display_recent_annc() %>
   <div id="body" class="container-fluid">
     <div class="row-fluid">
-      <div id="sidebar" class="span16">
+      <div id="sidebar" class="span7">
         <div class="well sidebar-nav">
             <table>
               <tr>
-                <th id="treecontrol">
+                <td id="treecontrol">
                   <a class="btn btn-small btn-primary disabled" title="Collapse the entire tree below" href="#">Collapse All</a> 
                   <a class="btn btn-small btn-primary disabled" title="Expand the entire tree below" href="#">Expand All</a>
-                </th>
-                <th>
+                </td>
+                <td>
                   <a class="btn btn-small btn-primary disabled" href="/node/graphview">Graph View</a>
-                </th>
+                </td>
+                <td>
+                  <a class="btn btn-small btn-primary disabled" href="#">Drag and Drop Tree</a>
+                </td>
             </table>
             <ul id="my_tree" class="nav nav-list">
               <%= display_segment(@root_node, @user_admin) %>
             </ul>
         </div>
+      </div>
+      <div id="popular_bar" class="span5">
+        <h5> Popular Problems </h5>
       </div>
     </div>
   </div>

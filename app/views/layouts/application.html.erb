@@ -7,21 +7,20 @@
   <%= javascript_include_tag 'jquery.treeview', 'jquery.colorbox', 'jquery.contextMenu', 'jquery.ui.position', 'custom'%>
   <%= javascript_include_tag 'https://www.google.com/jsapi' %>
   <%= stylesheet_link_tag 'jquery.treeview.css', 'colorbox.css', 'jquery.contextMenu.css' %>
+  <%= stylesheet_link_tag 'http://openfontlibrary.org/face/railway-sans' %>
   <%= csrf_meta_tags %>
   <%= render 'layouts/shim' %>
 </head>
 <body>
   <%= render 'layouts/header' %>
   <div class="container">
-    <%= flash[:notice] %>
-    <%= flash[:error] %>
     <%= yield %>
   </div>
   <%= render 'layouts/footer' %>
   <%= debug(params) if Rails.env.development? %>
   <pre>
     <%= @user.inspect %>
-    <%= @anncs.inspect %>
+    <%= @json_content.inspect %>
   </pre>
 </body>
 </html>

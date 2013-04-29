@@ -3,7 +3,7 @@ module NodeHelper
     node_id = "node_" + node.id.to_s()
     if (node.depth > 0)     
         html = "<li class=\"closed\">"
-        html << "<span draggable=\"true\" id=\"#{h(node_id)}\" class=\"tree_nodes\"><i class=\"icon-book\"></i>#{h(node.name)}</span>"
+        html << "<span draggable=\"true\" id=\"#{h(node_id)}\" class=\"tree_nodes\" rel=\"tooltip\" data-original-title=\"#{h(node.description)}\"><i class=\"icon-book\"></i>#{h(node.name)}</span>"
     else 
         unless isAdmin
             html = "<li class=\"opened\">"
@@ -37,7 +37,7 @@ module NodeHelper
 
   def display_recent_annc()
     if Announcement.count != 0
-        html_code = "<div id=\"announcement_feed\"><ul>"
+        html_code = "<div class=\"alert alert-info\"id=\"announcement_feed\"><ul>"
         Announcement.last(5).reverse.each do |notice|
             html_code << "<li>"
             html_code << "<a href=\"#{h(announcement_notice_path(id: notice.id))}\">#{h(notice.title)}</a>"

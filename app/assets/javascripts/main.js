@@ -128,7 +128,6 @@
       }
       },
       
-      
       _initMouseHandling:function(){
         // no-nonsense drag and drop (thanks springy.js)
         selected = null;

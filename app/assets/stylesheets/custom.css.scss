@@ -18,6 +18,7 @@ html {
 
 body {
   padding-top: 60px;
+  font-family: 'Railway'
 }
 
 section {
@@ -47,17 +48,17 @@ textarea {
 }
 
 #CALNET {
-  margin-right: 5px;
-  color: #0066FF;
+  width: 100px;
+  background: #FFF;
+  color: #3366FF;
   font-weight:900;
+  border: solid 1px #3366FF;
 }
 
-#banner {
-  width: 800px;
-  height: 300px;
-  display: block;
-  margin: auto;
-  background-image:url(/assets/banner.png);  
+.hero-unit {
+  background-image: url(/assets/banner.jpg);  
+  width: 1020px; 
+  height: 300px;  
 }
 
 #body {
@@ -76,6 +77,13 @@ textarea {
 }
 
 /* content */
+#popular_bar {
+  background: #eec;
+  height: 20em;
+  h5 {
+    padding-left: 10px;
+  }
+}
 
 /* footer */
 footer {
@@ -110,25 +118,19 @@ input {
 }
 
 #notice {
-  color: #f00;
-  ul {
-    list-style: none;
-    margin: 0 0 18px 0;
-  }
+  width: 1095px;
 }
 
-#announcement_feed{
-  margin: auto;
-  margin-top: 15px;
-  padding: 1px;
-  width: 1050px;
-  border: solid 1px;
-  background: #f9c779;
+#error {
+  width: 1095px;
+}
+
+#announcement_feed{;
+  width: 1080px;
+  padding-left: 30px;
   li, a {
-    width: 1050px;
-    text-align: center;
-    font-size: 20px;
-    color: #454545;
+    padding-left: 10px;
+    font-size: 14px;
   }
 }
 
