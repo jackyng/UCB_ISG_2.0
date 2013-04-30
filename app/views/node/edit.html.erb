@@ -1,4 +1,10 @@
 <h2>Edit Node</h2>
+<% if flash[:notice] %>
+  <div id='notice' class='alert alert-success'><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:error] %>
+  <div id='error' class='alert alert-error'><%= flash[:error] %></div>
+<% end %>
 <%= form_tag "/node/edit" do %>
   <%= label_tag :name, 'Name: ' %>
   <%= text_field_tag :name, find_node_param(params[:node_id], 'name') %><br />
