@@ -182,9 +182,9 @@ class NodeController < ApplicationController
       noticeMessage += "Successfully created resource '" + name + "' under '" + parent_name + "'" + "</br>"
     else
       if not Resource.find_by_name(name).blank?
-        errorMessage += "Another resource with same name already created!" + "</br>"
+        errorMessage += "Another resource with same name '" + name + "' already created!" + "</br>"
       elsif not Resource.find_by_url(url).blank?
-        errorMessage += "Another resource with same url already created!" + "</br>"
+        errorMessage += "Another resource with same url '" + url + "' already created!" + "</br>"
       else
         errorMessage += "Please check your name '" + name + "' and/or url '" + url  + "'" + "</br>"
       end
