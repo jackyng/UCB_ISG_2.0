@@ -1,4 +1,10 @@
 <h2>Complaint Form</h2>
+<% if flash[:notice] %>
+  <div id='notice' class='alert alert-success'><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:error] %>
+  <div id='error' class='alert alert-error'><%= flash[:error] %></div>
+<% end %>
 <%= form_tag "/complaint/create" do %>
   <%= label_tag :title, 'Title: ' %>
   <%= text_field_tag :title %><br />
