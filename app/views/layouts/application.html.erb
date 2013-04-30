@@ -17,11 +17,13 @@
     <%= yield %>
   </div>
   <%= render 'layouts/footer' %>
-  <%= debug(params) if Rails.env.development? %>
-  <pre>
-    <%= @user.inspect %>
-    <%= @json_content.inspect %>
-  </pre>
+  <% if Rails.env.development? %>
+    <%= debug(params) %>
+    <pre>
+      <%= @user.inspect %>
+      <%= @json_content.inspect %>
+    </pre>
+  <% end %>
 </body>
 </html>
 
