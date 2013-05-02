@@ -1,0 +1,36 @@
+<h2>Run a SQL query</h2>
+<%= form_tag query_run_path do %>
+  <%= label_tag :query_string, 'SQL Query: ' %>
+  <%= text_area_tag :query_string, (@query ? @query.query_string : params[:query_string]), :rows => "5" %><br />
+  <%= submit_tag 'Run', :class => "btn btn-large btn-primary" %>
+  &nbsp; &nbsp;
+  <a class="btn btn-large btn-primary" href=<%=query_path%> data-method="get">Back</a>
+<% end %>
+
+<% if flash[:error] %>
+  <div id='error' class='alert alert-error'><%= flash[:error] %></div>
+<% end %>
+
+<% if @results %>
+  <table class="table table-stripped table-hover table-condensed">
+    <thead>
+      <% if @results.fields %>
+        <tr>
+          <% @results.fields.each do |header| %>
+            <th><%= header %></th>
+          <% end %>
+        </tr>
+      <% end %>
+    </thead>
+
+    <tbody>
+      <% @results.each do |row| %>
+        <tr>
+          <% row.each do |datum| %>
+            <td><%= datum %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

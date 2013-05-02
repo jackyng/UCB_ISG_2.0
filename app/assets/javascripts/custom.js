@@ -128,6 +128,11 @@ function displayChart() {
   $(location).attr('href', url);
 }
 
+// open a page with a get request
+function get_url(url) {
+  $(location).attr('href', url);
+}
+
 //Register right-clicked menu
 $(function(){
     var isAdmin =  $("#my_tree :first-child").attr('id');
