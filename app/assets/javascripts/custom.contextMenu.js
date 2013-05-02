@@ -1,6 +1,9 @@
 //Register right-clicked menu
 var NODE_CUT_ID = null;
 var NODE_CUT_NAME = null;
+var RESOURCE_CUT_ID = null;
+var RESOURCE_CUT_NAME = null;
+
 $(function(){
     var isAdmin =  $("#my_tree :first-child").attr('id');
     if (isAdmin == "isAdmin") {
@@ -84,18 +87,31 @@ $(function(){
                 case "cut":
                   NODE_CUT_ID = node_id;
                   NODE_CUT_NAME = node_name;
+                  RESOURCE_CUT_ID = null;
+                  RESOURCE_CUT_NAME = null;
                   break;
                 case "paste":
-                  if (NODE_CUT_ID == null) {
+                  if (NODE_CUT_ID == null && RESOURCE_CUT_ID == null) {
                     alert("There is nothing to paste");
                   }
-                  else {
+                  else if (NODE_CUT_ID != null) {
                     $('#pasteNode').modal();
                     $(".modal-body #node_id").val(node_id);
                     $(".modal-body .node_name").text(node_name);
                     $(".modal-body #source_id").val(NODE_CUT_ID);
                     $(".modal-body .source_name").text(NODE_CUT_NAME); 
                   }
+                  else if (RESOURCE_CUT_ID != null) {
+                    $('#pasteNode').modal();
+                    $(".modal-body #node_id").val(node_id);
+                    $(".modal-body .node_name").text(node_name);
+                    $(".modal-body #resource_id").val(RESOURCE_CUT_ID);
+                    $(".modal-body .resource_name").text(RESOURCE_CUT_NAME); 
+                  }
+                  NODE_CUT_ID = null;
+                  NODE_CUT_NAME = null;
+                  RESOURCE_CUT_ID = null;
+                  RESOURCE_CUT_NAME = null;
                   break;
               }
           },
@@ -130,10 +146,17 @@ $(function(){
                   $(".modal-body #name").val(resource_name);
                   $(".modal-body #url").val(url);
                   break;
+                case "cut":
+                  RESOURCE_CUT_ID = resource_id;
+                  RESOURCE_CUT_NAME = resource_name;
+                  NODE_CUT_ID = null;
+                  NODE_CUT_NAME = null;
+                  break;
               }
           },
           items: {
               "edit": {name: "Edit resource" },
+              "cut" : {name: "Cut"},
               "delete": {name: "Remove resource" }
           }
       });

@@ -210,8 +210,9 @@
     <div class="modal-body">
       <%= form_tag '/node/paste' do %>
         <%= hidden_field_tag :source_id %>
+        <%= hidden_field_tag :resource_id %>
         <%= hidden_field_tag :node_id %>
-        <p>Do you want to move the node '<span class="source_name"></span>' to under the node '<span class="node_name"></span>'?</p>
+        <p>Do you want to move the node/resource '<span class="source_name"></span><span class="resource_name"></span>' to under the node '<span class="node_name"></span>'?</p>
       </div>  
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

@@ -67,12 +67,27 @@ class NodeController < ApplicationController
   end
 
   def paste
-    source_node = Node.find(params[:source_id])
+    source_node = nil
+    resource = nil
+    if not params[:source_id].blank?
+      source_node = Node.find(params[:source_id])
+    end
+    if not params[:resource_id].blank?
+      resource = Resource.find(params[:resource_id])
+    end
     dst_node = Node.find(params[:node_id])
-    source_node.parent = dst_node
-    if source_node.save
-      flash[:notice] = "Successfully move the node '" + source_node.name + "' to under node '" + dst_node.name + "'."
-      redirect_to :root
+    if not source_node.nil?
+      source_node.parent = dst_node
+      if source_node.save
+        flash[:notice] = "Successfully move the node '" + source_node.name + "' to under node '" + dst_node.name + "'."
+        redirect_to :root
+      end
+    elsif not resource.nil? 
+      resource.node = dst_node
+      if resource.save
+        flash[:notice] = "Successfully move the resource '" + resource.name + "' to under node '" + dst_node.name + "'."
+        redirect_to :root
+      end 
     end
   end
  
