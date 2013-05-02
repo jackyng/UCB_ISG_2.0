@@ -1,0 +1,13 @@
+<h2>New Query Form</h2>
+
+<% if flash[:error] %>
+  <div id='error' class='alert alert-error'><%= flash[:error] %></div>
+<% end %>
+
+<%= form_tag query_create_path do %>
+  <%= label_tag :description, 'Description: ' %>
+  <%= text_field_tag :description %><br />
+  <%= label_tag :query_string, 'SQL Query: ' %>
+  <%= text_area_tag :query_string, nil, rows: "10", cols: "25" %><br />
+  <%= submit_tag 'Create', :class => "btn btn-large btn-primary" %>
+<% end %>

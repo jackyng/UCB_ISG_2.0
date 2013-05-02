@@ -38,6 +38,12 @@ Isg2::Application.routes.draw do
   match "announcement/edit" => "announcement#edit", via: [:get, :post]
   match "announcement/notice" => "announcement#notice", via: [:get, :post]
 
+  match "query" => "query#index", via: :get
+  match "query/create" => "query#create", via: [:get, :post]
+  delete "query/:id/destroy" => "query#destroy", as: :query_destroy
+  match "query/:id/edit" => "query#edit", as: :query_edit, via: [:get, :post]
+  match "query/run" => "query#run", as: :query_run, via: [:get, :post]
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
