@@ -30,3 +30,18 @@
 		<% end %>
 	</tbody>
 </table>
+
+<script type="text/javascript">
+	//Show the announcement form
+	function displayNoticeForm() {
+  		var url = "/announcement/create";
+  		$(location).attr('href', url);
+	}
+
+	//Show the announcement content
+	function displayNotice(id) {
+  		var url = "/announcement/edit?nid=" + id;
+  		$(location).attr('href', url);
+	}
+
+</script>

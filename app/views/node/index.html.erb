@@ -1,13 +1,14 @@
 <% provide(:title, 'Home') %>
 <head>
-  <%= javascript_include_tag 'jquery.vticker', 'custom1' %>
+  <%= javascript_include_tag 'jquery.treeview', 'jquery.colorbox', 'jquery.contextMenu', 'jquery.ui.position', 'custom.home', 'custom.contextMenu', 'jquery.vticker', 'custom.vTicker' %>
+  <%= stylesheet_link_tag 'jquery.treeview.css', 'colorbox.css', 'jquery.contextMenu.css' %>
 </head>
 <div id="container">
   <div class="hero-unit"></div>
   <% if flash[:notice] %>
         <div id='notice' class='alert alert-success'><%= flash[:notice] %></div>
-    <% end %>
-    <% if flash[:error] %>
+  <% end %>
+  <% if flash[:error] %>
         <div id='error' class='alert alert-error'><%= flash[:error] %></div>
   <% end %>
   <%= display_recent_annc() %>
@@ -39,6 +40,192 @@
     </div>
   </div>
 </div>
+
+<!-- Forms -->
+<% if @user_admin %>
+  <!-- Add new child -->
+  <div id="addNewNode" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addNewNode" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Add New Node</h3>
+    </div>
+    <div class="modal-body">
+      <%= form_tag "/node/create" do %>
+        <%= label_tag 'Node name: ' %>
+        <%= text_field_tag :name %><br />
+        <%= label_tag 'Node description: ' %>
+        <%= text_area_tag :description, nil, :rows => "10", :cols => "10"%><br />
+        <%= hidden_field_tag :parent %>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <%= submit_tag 'Add Node', :class => "btn btn-primary" %>
+      </div>
+      <% end %>   
+  </div>
+
+  <!-- Add new resource -->
+  <div id="addNewResource" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addNewResource" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Add New Resource</h3>
+    </div>
+    <div class="modal-body">
+      <%= form_tag "/resource/create" do %>
+        <%= label_tag 'Resource name: ' %>
+        <%= text_field_tag :name %><br/>
+        <%= label_tag 'URL: ' %>
+        <%= url_field_tag :url %><br/>
+        <%= hidden_field_tag :node_id %>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <%= submit_tag 'Add Resource', :class => "btn btn-primary" %>
+      </div>
+      <% end %>   
+  </div>
+
+  <!-- Delete Node -->
+  <div id="deleteNode" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="deleteNode" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Delele Node</h3>
+    </div>
+    <div class="modal-body">
+      <%= form_tag '/node/destroy', :method => :delete do %>
+        <%= hidden_field_tag :node_id %>
+        <p>Do you want to remove the node '<span class="node_name"></span>'?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <%= submit_tag 'Delete', :class => "btn btn-danger btn-primary" %>
+      </div>
+      <% end %>   
+  </div>
+
+  <!-- Delete All-->
+  <div id="deleteAll" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="deleteAll" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Delele All</h3>
+    </div>
+    <div class="modal-body">
+      <%= form_tag '/node/removeAll', :method => :delete do %>
+        <%= hidden_field_tag :node_id %>
+        <p>Do you want to remove all nodes and resources under the node '<span class="node_name"></span>'?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <%= submit_tag 'Delete', :class => "btn btn-danger btn-primary" %>
+      </div>
+      <% end %>   
+  </div> 
+
+  <!-- Edit node -->
+  <div id="editNode" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="editNode" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Edit Node</h3>
+    </div>
+    <div class="modal-body">
+      <%= form_tag "/node/edit" do %>
+        <%= label_tag 'Node name: ' %>
+        <%= text_field_tag :name %><br />
+        <%= label_tag 'Node description: ' %>
+        <%= text_area_tag :description, :rows => "10", :cols => "10"%><br />
+        <%= hidden_field_tag :node_id %>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <%= submit_tag 'Edit Node', :class => "btn btn-primary" %>
+      </div>
+      <% end %>   
+  </div>
+
+  <!-- Import JSON -->
+  <div id="importJSON" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="importJSON" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Import JSON File</h3>
+    </div>
+    <div class="modal-body">
+      <input type="file" id="files" name="file"/>
+      &nbsp; &nbsp;
+      <button id="file_upload_button" class="btn btn-small btn-primary">Upload</button>
+      </br></br>
+      <%= form_tag "/node/import" do %>
+        <%= label_tag 'JSON content: '%>
+        <%= text_area_tag :json_content, nil, :rows => "20", :cols => "20", :id => "json_content" %><br/>
+        <%= hidden_field_tag :node_id %>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <%= submit_tag 'Import', :class => "btn btn-primary" %>
+      </div>
+      <% end %>   
+  </div>
+
+  <!-- Edit Resource -->
+  <div id="editResource" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="editResource" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Edit Resource</h3>
+    </div>
+    <div class="modal-body">
+      <%= form_tag "/resource/edit" do %>
+        <%= label_tag 'Resource name: ' %>
+        <%= text_field_tag :name %><br />
+        <%= label_tag :url, 'URL: ' %>
+        <%= url_field_tag :url %><br />
+        <%= hidden_field_tag :resource_id %>   
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <%= submit_tag 'Edit Resource', :class => "btn btn-primary" %>
+      </div>
+      <% end %>   
+  </div>  
+
+  <!-- Delete Resource -->
+  <div id="deleteResource" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="deleteResource" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Delete Resource</h3>
+    </div>
+    <div class="modal-body">
+      <%= form_tag '/resource/destroy', :method => :delete do %>
+        <%= hidden_field_tag :resource_id %>
+        <p>Do you want to remove resource '<span class="resource_name"></span>'?</p>
+      </div>  
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <%= submit_tag 'Delete', :class => "btn btn-danger btn-primary" %>
+      </div>
+      <% end %>   
+  </div>  
+
+<script type="text/javascript">
+  function readFile() {
+    var files = document.getElementById('files').files;
+    if (!files.length) {
+      alert('Please select a file!');
+      return;
+    }
+    var file = files[0];
+    var reader = new FileReader();
+    reader.onloadend = function(evt) {
+      if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+        document.getElementById('json_content').value = evt.target.result;
+      }
+    };
+    reader.readAsText(file);
+  }
+  $('#file_upload_button').click(function() {
+    readFile();
+  });
+ </script>
+<% end %>
+
 
 
 

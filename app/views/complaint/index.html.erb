@@ -1,5 +1,4 @@
 <% provide(:title, 'Complaints Management') %>
-
 <table>
 	<tr>
 		<th><button class="btn btn-primary" onclick="displayTicketForm()" type="button">Submit Ticket</button></th>
@@ -47,3 +46,24 @@
 		<% end %>
 	</tbody>
 </table>
+
+<script type="text/javascript">
+
+	//Show the ticket form
+	function displayTicketForm() {
+	  var url = "/complaint/create";
+	  $(location).attr('href', url);
+	}
+
+	//Show the ticket content
+	function displayTicket(id) {
+	  var url = "/complaint/ticket?cid=" + id;
+	  $(location).attr('href', url);
+	}
+
+	//Show a complaint chart
+	function displayChart() {
+	  var url = "/complaint/chart";
+	  $(location).attr('href', url);
+	}
+</script>

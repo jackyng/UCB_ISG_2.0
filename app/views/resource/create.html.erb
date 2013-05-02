@@ -1,9 +1,16 @@
+<% provide(:title, 'Add New Resource') %>
 <h2>Add New Resource </h2>
+<% if flash[:error] %>
+  <div id='error' class='alert alert-error'><%= flash[:error] %></div>
+<% end %>
+<h4><%= 'Path: ../' + Node.find(params[:node_id]).parent.name + "/" + Node.find(params[:node_id]).name + "/" %></h4>
 <%= form_tag "/resource/create" do %>
-  <%= label_tag :name, 'Name: ' %>
+  <%= label_tag :name, 'Resource Name: ' %>
   <%= text_field_tag :name %><br />
   <%= label_tag :url, 'URL: ' %>
   <%= url_field_tag :url %><br />
   <%= hidden_field_tag :node_id, params[:node_id] %>
-  <%= submit_tag 'Add', :class => "btn btn-large btn-primary" %>
+  <%= submit_tag 'Add Resource', :class => "btn btn-primary" %>
+  &nbsp; &nbsp;
+  <%= backButton() %>
 <% end %>

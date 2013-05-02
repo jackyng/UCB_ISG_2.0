@@ -17,4 +17,9 @@ module ApplicationHelper
       return true
     end
   end
+
+  def backButton()
+    back = "<a class=\"btn btn-primary\" href=\"#{h(root_path)}\" data-method=\"get\">Back</a>"
+    back.html_safe
+  end
 end

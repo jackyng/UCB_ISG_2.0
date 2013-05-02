@@ -7,12 +7,12 @@ Isg2::Application.routes.draw do
   match "node/graphview" => "node#graphview", via: [:get]
   match "node/getData" => "node#getData", via: [:get]
   match "node/import" => "node#import", via: [:get, :post]
-  get "node/removeAll"
-  get "node/destroy"
+  delete "node/removeAll"
+  delete "node/destroy"
 
   match "resource/create" => "resource#create", via: [:get, :post]
   match "resource/edit" => "resource#edit", via: [:get, :post]
-  get "resource/destroy"
+  delete "resource/destroy"
 
   match "complaint/create" => "complaint#create", via: [:get, :post]
   delete "complaint/destroy"

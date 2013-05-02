@@ -1,4 +1,5 @@
-<h2>Import a JSON file</h2>
+<% provide(:title, 'Import JSON Data') %>
+<h2>Import JSON File</h2>
 <h4>Node: <%= find_node_param(params[:node_id], 'name')%></h4>
 
 <% if flash[:notice] %>
@@ -19,7 +20,7 @@
   <%= hidden_field_tag :node_id, params[:node_id] %>
   <%= submit_tag 'Import', :class => "btn btn-primary" %>
   &nbsp; &nbsp;
-  <a class="btn btn-primary" href="/" data-method="get">Back</a>
+  <%= backButton() %>
 <% end %>
 
 <script type="text/javascript">

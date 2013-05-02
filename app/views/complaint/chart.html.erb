@@ -1,4 +1,7 @@
 <% provide(:title, 'Complaint Chart') %>
+<head>
+  <%= javascript_include_tag 'https://www.google.com/jsapi', 'custom.complaintChart' %>
+</head>
 <div id="chartRangeFilter_dashboard_div" style="border: 1px solid #ccc">
   <table class="columns">
     <tr>
@@ -13,7 +16,7 @@
     </tr>
   </table>
 </div>
-
+<br/>
 <%= backbutton() %>
 
 <script type="text/javascript">

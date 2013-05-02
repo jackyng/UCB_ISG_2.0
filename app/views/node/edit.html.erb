@@ -1,17 +1,15 @@
+<% provide(:title, 'Edit Node') %>
 <h2>Edit Node</h2>
-<% if flash[:notice] %>
-  <div id='notice' class='alert alert-success'><%= flash[:notice] %></div>
-<% end %>
 <% if flash[:error] %>
   <div id='error' class='alert alert-error'><%= flash[:error] %></div>
 <% end %>
 <%= form_tag "/node/edit" do %>
-  <%= label_tag :name, 'Name: ' %>
+  <%= label_tag :name, 'Node name: ' %>
   <%= text_field_tag :name, find_node_param(params[:node_id], 'name') %><br />
-  <%= label_tag :description, 'Description: ' %>
-  <%= text_area_tag :description, find_node_param(params[:node_id], 'desp'), :rows => "10", :cols => "25"%><br />
+  <%= label_tag :description, 'Node description: ' %>
+  <%= text_area_tag :description, find_node_param(params[:node_id], 'desp'), :rows => "10", :cols => "10"%><br />
   <%= hidden_field_tag :node_id, params[:node_id] %>
-  <%= submit_tag 'Edit', :class => "btn btn-large btn-primary" %>
+  <%= submit_tag 'Edit node', :class => "btn btn-primary" %>
   &nbsp; &nbsp;
-  <a class="btn btn-large btn-primary" href="/" data-method="get">Back</a>
+  <%= backButton() %>
 <% end %>
