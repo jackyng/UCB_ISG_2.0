@@ -39,7 +39,7 @@ class NodeController < ApplicationController
     potential_siblings = parent_node.children
     if parent_node.name == params[:name]
       flash[:error] = 'Error: illegal topic name "' + params[:name] + '". Parent and children cannot have the same name.'
-      return
+      return 
     end
     if potential_siblings.exists?(:name => params[:name])
       flash[:error] = 'Error: illegal topic name "' + params[:name] + '". Name already belongs to a node at the same level.'
@@ -56,7 +56,12 @@ class NodeController < ApplicationController
 
   def edit
     @node = Node.find(params[:node_id])
+    name = @node.name
     if @node.update_attributes(name: params[:name], description: params[:description])
+      flash[:notice] = "Successfully edit the node '" + name + "'."
+      redirect_to :root
+    else
+      flash[:notice] = "Update nothing!"
       redirect_to :root
     end
   end
@@ -106,6 +111,10 @@ class NodeController < ApplicationController
 
   def import
     content = params[:json_content]
+    if content.blank? and request.post?
+      flash[:error] = "Error: The JSON content is empty! Please fill out the content."
+      return
+    end
     errorMessage = ""
     noticeMessage = ""
     begin

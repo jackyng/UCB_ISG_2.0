@@ -34,9 +34,9 @@ class ResourceController < ApplicationController
 
   def edit
     begin
-      @resource = Resource.find(params[:id])
+      @resource = Resource.find(params[:resource_id])
     rescue
-      flash[:error] = "Need a valid resource id to edit; got '#{params[:id]}'"
+      flash[:error] = "Need a valid resource id to edit; got '#{params[:resource_id]}'"
       redirect_to :root and return
     end
 
@@ -64,10 +64,10 @@ class ResourceController < ApplicationController
   end
 
   def destroy
-    @resource = Resource.find(params[:id])
+    @resource = Resource.find(params[:resource_id])
     node_id = @resource.node_id
     if @resource.destroy
-      flash[:notice] = "Resource removed"
+      flash[:notice] = "Resource '" + @resource.name + "' removed"
     else
       flash[:error] = "Please try again"
     end

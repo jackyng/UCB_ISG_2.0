@@ -1,9 +1,13 @@
+<% provide(:title, 'Edit Resource') %>
 <h2>Edit Resource</h2>
+<% if flash[:error] %>
+  <div id='error' class='alert alert-error'><%= flash[:error] %></div>
+<% end %>
 <%= form_tag "/resource/edit" do %>
   <%= label_tag :name, 'Name: ' %>
   <%= text_field_tag :name, find_resource_param(params[:id], 'name') %><br />
   <%= label_tag :url, 'URL: ' %>
   <%= url_field_tag :url, find_resource_param(params[:id], 'url') %><br />
-  <%= hidden_field_tag :id, params[:id] %>
-  <%= submit_tag 'Edit', :class => "btn btn-large btn-primary" %>
+  <%= hidden_field_tag :resource_id, params[:id] %>
+  <%= submit_tag 'Edit Resource', :class => "btn btn-primary" %>
 <% end %>

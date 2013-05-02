@@ -4,10 +4,7 @@
   <title><%= full_title(yield(:title)) %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
-  <%= javascript_include_tag 'jquery.treeview', 'jquery.colorbox', 'jquery.contextMenu', 'jquery.ui.position', 'custom'%>
-  <%= javascript_include_tag 'https://www.google.com/jsapi' %>
-  <%= stylesheet_link_tag 'jquery.treeview.css', 'colorbox.css', 'jquery.contextMenu.css' %>
-  <%= stylesheet_link_tag 'http://openfontlibrary.org/face/railway-sans' %>
+  <%= stylesheet_link_tag 'custom', 'http://fonts.googleapis.com/css?family=Raleway:400,500,600,300' %>
   <%= csrf_meta_tags %>
   <%= render 'layouts/shim' %>
 </head>
