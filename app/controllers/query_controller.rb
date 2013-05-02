@@ -99,8 +99,6 @@ class QueryController < ApplicationController
         begin
           @results = db_conn.execute(params[:query_string])
         rescue Exception => error
-          p "*"*1000
-          p error.message
           flash[:error] = error.message
           respond_to do |format|
             format.json { render json: {error: flash[:error]} }
