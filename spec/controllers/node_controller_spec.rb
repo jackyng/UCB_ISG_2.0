@@ -80,7 +80,7 @@ describe NodeController do
         get 'destroy', { node_id: child.id } # remove child
 
         response.should be_redirect
-        flash[:error].should match /can't remove a topic with subtopics/
+        flash[:error].should match /can't remove a topic '.+' with subtopics/
       end
     end
   end
