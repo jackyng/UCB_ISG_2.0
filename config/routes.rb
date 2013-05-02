@@ -7,6 +7,7 @@ Isg2::Application.routes.draw do
   match "node/graphview" => "node#graphview", via: [:get]
   match "node/getData" => "node#getData", via: [:get]
   match "node/import" => "node#import", via: [:get, :post]
+  post "/node/paste"
   delete "node/removeAll"
   delete "node/destroy"
 

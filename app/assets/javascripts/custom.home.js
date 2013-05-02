@@ -10,21 +10,3 @@ $(document).ready(function() {
   });
 });
 
-//Show the ticket form
-function displayTicketForm() {
-  var url = "/complaint/create";
-  $(location).attr('href', url);
-}
-
-//Show the ticket content
-function displayTicket(id) {
-  var url = "/complaint/ticket?cid=" + id;
-  $(location).attr('href', url);
-}
-
-//Show a complaint chart
-function displayChart() {
-  var url = "/complaint/chart";
-  $(location).attr('href', url);
-}
-

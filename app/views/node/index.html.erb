@@ -25,9 +25,6 @@
                 <td>
                   <a class="btn btn-small btn-primary disabled" href="/node/graphview">Graph View</a>
                 </td>
-                <td>
-                  <a class="btn btn-small btn-primary disabled" href="#">Drag and Drop Tree</a>
-                </td>
             </table>
             <ul id="my_tree" class="nav nav-list">
               <%= display_segment(@root_node, @user_admin) %>
@@ -203,6 +200,26 @@
       </div>
       <% end %>   
   </div>  
+
+  <!-- Patse Node -->
+  <div id="pasteNode" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="pasteNode" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Paste Node</h3>
+    </div>
+    <div class="modal-body">
+      <%= form_tag '/node/paste' do %>
+        <%= hidden_field_tag :source_id %>
+        <%= hidden_field_tag :node_id %>
+        <p>Do you want to move the node '<span class="source_name"></span>' to under the node '<span class="node_name"></span>'?</p>
+      </div>  
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <%= submit_tag 'Move', :class => "btn btn-danger btn-primary" %>
+      </div>
+      <% end %>   
+  </div>  
+
 
 <script type="text/javascript">
   function readFile() {

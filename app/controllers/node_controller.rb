@@ -65,6 +65,16 @@ class NodeController < ApplicationController
       redirect_to :root
     end
   end
+
+  def paste
+    source_node = Node.find(params[:source_id])
+    dst_node = Node.find(params[:node_id])
+    source_node.parent = dst_node
+    if source_node.save
+      flash[:notice] = "Successfully move the node '" + source_node.name + "' to under node '" + dst_node.name + "'."
+      redirect_to :root
+    end
+  end
  
   def destroy
     @node = Node.find(params[:node_id])
