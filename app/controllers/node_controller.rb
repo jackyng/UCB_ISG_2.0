@@ -37,6 +37,10 @@ class NodeController < ApplicationController
     # If name would be the same as one of its siblings, prevent creation
     parent_node = Node.find(params[:parent])
     potential_siblings = parent_node.children
+    if parent_node.name == params[:name]
+      flash[:error] = 'Error: illegal topic name "' + params[:name] + '". Parent and children cannot have the same name.'
+      return
+    end
     if potential_siblings.exists?(:name => params[:name])
       flash[:error] = 'Error: illegal topic name "' + params[:name] + '". Name already belongs to a node at the same level.'
       return
@@ -59,14 +63,33 @@ class NodeController < ApplicationController
  
   def destroy
     @node = Node.find(params[:node_id])
-    parent_id = @node.parent.id unless @node.parent.nil?
     if @node.name == Isg2::Application::ROOT_NODE_NAME
       flash[:error] = "Error: can't remove the root topic."
     elsif @node.has_children?
-      flash[:error] = "Error: can't remove a topic with subtopics."
+      flash[:error] = "Error: can't remove a topic '" + @node.name + "' with subtopics."
     else
       @node.destroy
-      flash[:notice] = "Successfully removed topic."
+      flash[:notice] = "Successfully removed topic '" + @node.name + "'."
+    end
+    redirect_to :root
+  end
+
+  def removeAll
+    @node = Node.find(params[:node_id])
+    if @node.name == Isg2::Application::ROOT_NODE_NAME
+      flash[:error] = "Error: can't remove the root topic."
+      return
+    end
+    errorMessage = ""
+    noticeMessage = ""
+    tuple = removeChildren(@node, errorMessage, noticeMessage)
+    errorMessage = tuple[0]
+    noticeMessage = tuple[1]
+    unless errorMessage.blank?
+      flash[:error] = errorMessage.html_safe
+    end
+    unless noticeMessage.blank?
+      flash[:notice] = noticeMessage.html_safe
     end
     redirect_to :root
   end
@@ -160,6 +183,10 @@ class NodeController < ApplicationController
     # If name would be the same as one of its siblings, prevent creation
     parent_node = Node.find(parent_id)
     parent_name = parent_node.name
+    if parent_name == name
+      errorMessage += 'Error: illegal topic name "' + name + '". Parent and children cannot have the same name.' + "</br>"
+      return
+    end
     potential_siblings = parent_node.children
     if potential_siblings.exists?(:name => name)
       errorMessage += 'Error: illegal topic name "' + name + '". Name already belongs to a node at the same level.' + "</br>"
@@ -190,6 +217,44 @@ class NodeController < ApplicationController
       end
     end
     return [errorMessage, noticeMessage]
+  end
+
+  def removeChildren(node, errorMessage, noticeMessage)
+    unless node.resources.empty?
+      node.resources.each do |res|
+        res_name = res.name
+        if res.destroy
+          noticeMessage += "Successfully remove the resource '" + res_name + "' under the node '" + node.name + "'." + "</br>"
+        else
+          errorMessage +=  "Error: Fail to remove the resource '" + res_name + "' under the node '" + node.name + "'." + "</br>"
+        end
+      end
+    end
+    if node.has_children?
+      node.children.each do |child|
+        tuple = removeChildren(child, errorMessage, noticeMessage)
+        errorMessage = tuple[0]
+        noticeMessage = tuple[1]
+      end
+      node_name = node.name
+      if node.destroy
+        noticeMessage += "Successfully remove the node '" + node_name + "'." + "</br>"
+        return [errorMessage, noticeMessage]
+      else
+        errorMessage += "Error: Fail to remove the node '" + node_name + "'." + "</br>"
+        return [errorMessage, noticeMessage]
+      end
+    else
+      node_name = node.name
+      parent_name = node.parent.name
+      if node.destroy
+        noticeMessage += "Successfully remove the node '" + node_name + "' under the node '" + parent_name + "'." + "</br>"
+        return [errorMessage, noticeMessage]
+      else
+        errorMessage += "Error: Fail to remove the node '" + node_name + "' under the node '" + parent_name + "'." + "</br>"
+        return [errorMessage, noticeMessage]
+      end
+    end
   end
 
   def getNodes(node) 

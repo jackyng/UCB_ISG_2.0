@@ -1,4 +1,10 @@
 <h2>Reply message</h2>
+<% if flash[:notice] %>
+  <div id='notice' class='alert alert-success'><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:error] %>
+  <div id='error' class='alert alert-error'><%= flash[:error] %></div>
+<% end %>
 <%= form_tag message_reply_path(params[:id]) do %>
   <%= label_tag :content, 'Content: ' %>
   <%= text_field_tag :content %><br />

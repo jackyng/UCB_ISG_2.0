@@ -6,13 +6,14 @@ gem 'rails', '3.2.8'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'yaml_db'
-gem 'mysql2'
-# group :development, :test do
-# 	gem 'sqlite3'
-# end
-# group :production do
-# 	gem 'pg', '0.12.2'
-# end
+#gem 'mysql2'
+group :development, :test do
+ 	#gem 'sqlite3'
+ 	gem 'mysql2'
+end
+group :production do
+	gem 'pg', '0.12.2'
+end
 
 gem 'json'
 
