@@ -33,10 +33,10 @@ describe ResourceController do
         get 'create', { :name => "169", :url => "169.edu", :node_id => @root.id }
         resource = Resource.where(:name => "169", :url => "169.edu")[0]
 
-        get 'destroy', id: resource.id
+        get 'destroy', resource_id: resource.id
         response.should be_redirect
         response.should redirect_to :root
-        flash[:notice].should == "Resource removed"
+        flash[:notice].should == "Resource '#{resource.name}' removed"
         @root.resources.should_not include(resource)
       end
     end
@@ -44,22 +44,22 @@ describe ResourceController do
     describe "GET/POST 'resource/edit'" do
       it "edit the resource and return to root path" do
         resource = @root.resources.create(name: "169furd", url: "169furd.edu")
-        get 'edit', { id: resource.id }
+        get 'edit', { resource_id: resource.id }
         response.should be_success
 
-        post 'edit' , { id: resource.id, name: "169f" }
+        post 'edit' , { resource_id: resource.id, name: "169f" }
         response.should be_redirect
         response.should redirect_to :root
         flash[:notice].should == "Resource updated with name '169f' and url '169furd.edu'"
         flash[:error].should be_blank
 
-        post 'edit' , { id: resource.id, url: "169f.edu" }
+        post 'edit' , { resource_id: resource.id, url: "169f.edu" }
         response.should be_redirect
         response.should redirect_to :root
         flash[:notice].should == "Resource updated with name '169f' and url '169f.edu'"
         flash[:error].should be_blank
 
-        post 'edit' , { id: resource.id, name: "169", url: "169.edu" }
+        post 'edit' , { resource_id: resource.id, name: "169", url: "169.edu" }
         response.should be_redirect
         response.should redirect_to :root
         flash[:notice].should == "Resource updated with name '169' and url '169.edu'"
@@ -113,23 +113,23 @@ describe ResourceController do
       it "return to the form with errors if valid id" do
         resource = @root.resources.create(name: "169furd", url: "169furd.edu")
         [nil, resource.id+1].each do |id|
-          post 'edit' , { id: id }
+          post 'edit', { resource_id: id }
           response.should be_redirect
           response.should redirect_to :root
           flash[:error].should == "Need a valid resource id to edit; got '#{id}'"
         end
 
-        post 'edit' , { id: resource.id, name: "" }
+        post 'edit', { resource_id: resource.id, name: "" }
         response.should be_success
         flash[:notice].should be_blank
         flash[:error].should == "name error: can't be blank"
 
-        post 'edit' , { id: resource.id, url: "" }
+        post 'edit', { resource_id: resource.id, url: "" }
         response.should be_success
         flash[:notice].should be_blank
         flash[:error].should == "url error: can't be blank"
 
-        post 'edit' , { id: resource.id, name: "", url: "" }
+        post 'edit', { resource_id: resource.id, name: "", url: "" }
         response.should be_success
         flash[:notice].should be_blank
         flash[:error].should include "name error: can't be blank"
@@ -142,7 +142,7 @@ describe ResourceController do
         resource = @root.resources.create(name: "169", url: '169.edu')
         stubbed_resource = stub(destroy: false, node_id: resource.id+1)
         Resource.stub(:find).and_return(stubbed_resource)
-        get 'destroy', { id: resource.id+1 }
+        get 'destroy', { resource_id: resource.id+1 }
         flash[:error].should == "Please try again"
       end
     end
@@ -167,12 +167,12 @@ describe ResourceController do
         resource = @root.resources.create(name: "169", url: '169.edu')
 
         CASClient::Frameworks::Rails::Filter.fake(nil, nil)
-        get 'destroy', id: resource.id
+        get 'destroy', resource_id: resource.id
         response.should be_redirect
         response.redirect_url.should match /^https:\/\/auth.berkeley.edu\/cas\/login\?service=.+resource.+destroy/
 
         CASClient::Frameworks::Rails::Filter.fake(@user.calnetID.to_s)
-        get 'destroy', id: resource.id
+        get 'destroy', resource_id: resource.id
         flash[:error].should match /Error: You don't have the privilege to perform this action/
       end
     end

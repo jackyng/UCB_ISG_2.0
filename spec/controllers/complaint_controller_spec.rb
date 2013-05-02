@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ComplaintController do
   before(:each) do
-    @root = Node.create(:name => Isg2::Application::ROOT_NODE_NAME)
+    @root = Node.create(name: Isg2::Application::ROOT_NODE_NAME, description: Isg2::Application::ROOT_NODE_DESCRIPTION)
     @user = User.create(calnetID: 181758)
     @admin = Admin.create(calnetID: 181860, email: "test_admin@isg2.berkeley.edu")
     @complaint = @user.complaints.create(

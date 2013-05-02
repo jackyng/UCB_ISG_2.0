@@ -1,6 +1,6 @@
 class Resource < ActiveRecord::Base
   belongs_to :node
-  attr_accessible :node, :count, :name, :url, :content
+  attr_accessible :node, :count, :name, :url, :content, :description
 
   validates :name, :url, :presence => true, :uniqueness => true
   validates :count, :presence => true

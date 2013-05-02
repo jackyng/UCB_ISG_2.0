@@ -73,4 +73,11 @@ class ResourceController < ApplicationController
     end
     redirect_to :root
   end
+
+  def open
+    @resource = Resource.find(params[:id])
+    @resource.count += 1
+    @resource.save
+    redirect_to @resource.url
+  end
 end
