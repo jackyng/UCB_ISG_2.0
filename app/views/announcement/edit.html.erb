@@ -1,17 +1,30 @@
+<% provide(:title, 'Edit announcement') %>
+
 <h2>Edit Announcement</h2>
 <% if flash[:notice] %>
   <div id='notice' class='alert alert-success'><%= flash[:notice] %></div>
 <% end %>
-<% if flash[:error] %>
-  <div id='error' class='alert alert-error'><%= flash[:error] %></div>
+<% if flash[:error] or !flash[:errors].blank? %>
+  <div id='error' class='alert alert-error'>
+    <ul>
+      <% if flash[:error] %>
+        <li><%= flash[:error] %></li>
+      <% end %>
+      <% if flash[:errors] %>
+        <% flash[:errors].each do |error| %>
+          <li>error</li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
-<%= form_tag "/announcement/edit" do %>
+
+<%= form_tag announcement_edit_path(@announcement.id) do %>
   <%= label_tag :title, 'Title: ' %>
-  <%= text_field_tag :title, find_announcement_param(params[:nid], 'title') %><br />
+  <%= text_field_tag :title, @announcement.title %><br />
   <%= label_tag :description, 'Description: ' %>
-  <%= text_area_tag :description, find_announcement_param(params[:nid], 'desp'), :rows => "10", :cols => "25"%><br />
-  <%= hidden_field_tag :nid, params[:nid] %>
-  <%= submit_tag 'Edit', :class => "btn btn-primary" %>
+  <%= text_area_tag :description, @announcement.description, rows: "10", cols: "25"%><br />
+  <%= submit_tag 'Save announcement', class: "btn btn-primary" %>
   &nbsp; &nbsp;
-  <a class="btn btn-primary" href="/announcement" data-method="get">Back</a>
+  <%= link_to "Back", announcement_path, method: :get, class: "btn btn-primary" %>
 <% end %>

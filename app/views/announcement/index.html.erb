@@ -1,47 +1,61 @@
-<% provide(:title, 'Announcements Management') %>
+<% provide(:title, 'Announcements') %>
 
-<table>
-	<tr>
-		<th><button class="btn btn-primary" onclick="displayNoticeForm()" type="button">Add Announcement</button></th>
-	</tr>
-</table>
-<br>
-<table class="table table-stripped table-hover table-condensed">
-	<thead>
+<% if flash[:notice] %>
+  <div id='notice' class='alert alert-success'><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:error] or !flash[:errors].blank? %>
+  <div id='error' class='alert alert-error'>
+    <ul>
+      <% if flash[:error] %>
+        <li><%= flash[:error] %></li>
+      <% end %>
+      <% if flash[:errors] %>
+        <% flash[:errors].each do |error| %>
+          <li>error</li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<% if @admin %>
+	<table>
 		<tr>
-			<th>Submitted Date</th>
-			<th>Title</th>
+			<th>
+				<%= link_to "Add Announcement", announcement_create_path, class: "btn btn-primary" %>
+			</th>
 		</tr>
-	</thead>
-	<tbody>
-		<% unless @notices.blank? %>
-			<% @notices.each do |notice| %> 
-				<tr>
-					<td><%= notice.created_at %></td>
-					<td><%= notice.title %></td>
+	</table>
+	<br>
+<% end %>
 
-					<td>
-						<button class="btn btn-small btn-info" onclick="displayNotice(<%= notice.id %>)" type="button">
-							Edit Content
-						</button>
-					</td>
-				</tr>
-			<% end %>
-		<% end %>
-	</tbody>
-</table>
+<% unless @notices.blank? %>
+	<table class="table table-stripped table-hover table-condensed">
+		<thead>
+			<tr>
+				<th>Submitted Date</th>
+				<th>Title</th>
+				<th>Shown on homepage?</th>
+			</tr>
+		</thead>
+		<tbody>
+				<% @notices.each do |notice| %> 
+					<tr>
+						<td><%= notice.created_at %></td>
+						<td><%= notice.title %></td>
+						<td>
+							<a href=<%=announcement_toggle_show_path(notice.id)%> data-method="post">
+								<%= check_box_tag "", "", notice.shown_on_homepage %>
+							</a>
+						</td>
 
-<script type="text/javascript">
-	//Show the announcement form
-	function displayNoticeForm() {
-  		var url = "/announcement/create";
-  		$(location).attr('href', url);
-	}
-
-	//Show the announcement content
-	function displayNotice(id) {
-  		var url = "/announcement/edit?nid=" + id;
-  		$(location).attr('href', url);
-	}
-
-</script>
+						<td>
+							<%= link_to "Edit", announcement_edit_path(notice.id), class: "btn btn-small btn-info" %>
+						</td>
+					</tr>
+				<% end %>
+		</tbody>
+	</table>
+<% else %>
+	There are no announcements!
+<% end %>

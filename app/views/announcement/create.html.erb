@@ -1,16 +1,30 @@
-<h2>Announcement Form</h2>
+<% provide(:title, 'Create announcement') %>
+
+<h2>Create new announcement</h2>
 <% if flash[:notice] %>
   <div id='notice' class='alert alert-success'><%= flash[:notice] %></div>
 <% end %>
-<% if flash[:error] %>
-  <div id='error' class='alert alert-error'><%= flash[:error] %></div>
+<% if flash[:error] or !flash[:errors].blank? %>
+  <div id='error' class='alert alert-error'>
+    <ul>
+      <% if flash[:error] %>
+        <li><%= flash[:error] %></li>
+      <% end %>
+      <% if flash[:errors] %>
+        <% flash[:errors].each do |error| %>
+          <li>error</li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
-<%= form_tag "/announcement/create" do %>
+
+<%= form_tag announcement_create_path do %>
   <%= label_tag :title, 'Title: ' %>
   <%= text_field_tag :title %><br />
   <%= label_tag :description, 'Description: ' %>
-  <%= text_area_tag :description, nil, :rows => "10", :cols => "25"%><br />
-  <%= submit_tag 'Submit' ,:class => "btn btn-primary" %>
-   &nbsp; &nbsp;
-  <a class="btn btn-primary" href="/announcement" data-method="get">Back</a>
+  <%= text_area_tag :description, nil, rows: "10", cols: "25"%><br />
+  <%= submit_tag 'Submit', class: "btn btn-primary" %>
+  &nbsp; &nbsp;
+  <%= link_to "Back", announcement_path, method: :get, class: "btn btn-primary" %>
 <% end %>
