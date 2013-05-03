@@ -39,6 +39,11 @@
         </div>
       <div id="popular_bar" class="span5">
         <h5> Popular Problems </h5>
+        <ul>
+          <% @top_resources.each do |resource| %>
+            <li><%= link_to(resource.name, resource_open_path(resource.id), id: "resource_#{resource.id}", class: "resources iframe") %></li>
+          <% end %>
+        </ul>
       </div>
     </div>
     </div> 
