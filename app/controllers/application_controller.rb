@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :setup_session_info, if: lambda { @user.nil? and @admin.nil? }
+  before_filter :setup_session_info #, if: lambda { @user.nil? and @admin.nil? }
   before_filter :log_request_time
   before_filter :online_users
 
@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
     @login_url = CASClient::Frameworks::Rails::Filter.login_url(self)
     @calnet_id = session[:cas_user]
     @user_admin = false
+    flash[:errors] = []
 
     unless @calnet_id.nil?
       @admin = Admin.find_by_calnetID(@calnet_id)
