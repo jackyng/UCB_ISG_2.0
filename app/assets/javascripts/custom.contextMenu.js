@@ -132,6 +132,8 @@ $(function(){
           callback: function(key, opt) {
               var resource_id = opt.$trigger.attr("id").split("_")[1];
               var resource_name = opt.$trigger.text();
+              var url = opt.$trigger.attr("href");
+              var $tabs = $('#body').tabs();
               switch (key) 
               {
                 case "delete":
@@ -140,7 +142,6 @@ $(function(){
                   $(".modal-body .resource_name").text(resource_name);
                   break;
                 case "edit":
-                  var url = opt.$trigger.attr("href");
                   $('#editResource').modal();
                   $(".modal-body #resource_id").val(resource_id);
                   $(".modal-body #name").val(resource_name);
@@ -152,14 +153,37 @@ $(function(){
                   NODE_CUT_ID = null;
                   NODE_CUT_NAME = null;
                   break;
+                case "resource_tab_1":
+                  loadTabFrame("#tabs-2", url);
+                  $tabs.tabs("option", "active", 1);
+                  break;
+                case "resource_tab_2":
+                  loadTabFrame("#tabs-3", url);
+                  $tabs.tabs("option", "active", 2);
+                  break;
               }
           },
           items: {
               "edit": {name: "Edit resource" },
               "cut" : {name: "Cut"},
-              "delete": {name: "Remove resource" }
+              "delete": {name: "Remove resource" },
+              "resource_tab_1": {name: "Open in Resource 1 tab" },
+              "resource_tab_2": {name: "Open in Resource 2 tab" }
           }
       });
+    }
+    function loadTabFrame(tab, url) {
+      $(tab).html("");
+      if ($(tab).find("iframe").length == 0) {
+          var html = [];
+          html.push('<div class="tabIframeWrapper">');
+          html.push('<div class="openout"><a href="' + url + '"><img src="/assets/world.png" border="0" alt="Open" title="Remove iFrame" /></a></div><iframe class="iframetab" src="' + url + '">Load Failed?</iframe>');
+          html.push('</div>');
+          $(tab).append(html.join(""));
+          $(tab).find("iframe").height($(window).height()-80);
+          $(tab).find("iframe").width($(window).width()-210);
+      }
+      return false;
     }
 });
 

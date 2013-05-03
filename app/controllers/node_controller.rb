@@ -12,19 +12,10 @@ class NodeController < ApplicationController
   before_filter :check_admin_privilege, :only => [:create, :destroy]
 
   def index
-    id = if params[:id]
-      params[:id]
-    else
-      @root_node = Node.find_by_name(Isg2::Application::ROOT_NODE_NAME)
-      @root_node ||= Node.create(name: Isg2::Application::ROOT_NODE_NAME, description: Isg2::Application::ROOT_NODE_DESCRIPTION)
-      @root_node.id
-    end
-    @root_node ||= Node.find_by_name(Isg2::Application::ROOT_NODE_NAME)
-    @node = Node.find(id)
-    @children = @node.children
-    @ancestors = @node.ancestors
-    @resources = @node.resources
-    @anncs = Announcement.all()
+    @root_node = Node.find_by_name(Isg2::Application::ROOT_NODE_NAME)
+    @root_node ||= Node.create(name: Isg2::Application::ROOT_NODE_NAME, description: Isg2::Application::ROOT_NODE_DESCRIPTION)
+
+    @top_resources = Resource.order("count desc").first(5)
   end
 
   def create

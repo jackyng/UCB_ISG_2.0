@@ -5,10 +5,9 @@ gem 'rails', '3.2.8'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'yaml_db'
-#gem 'mysql2'
 group :development, :test do
  	#gem 'sqlite3'
+  gem 'yaml_db'
  	gem 'mysql2'
 end
 group :production do
@@ -34,6 +33,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -43,6 +43,8 @@ gem 'ancestry'
 
 gem 'rubycas-client'
 gem 'net-ldap'
+
+gem 'crom', :git => 'http://github.com/kgiszczak/crom'
 
 gem 'simplecov', :require => false, :group => :test
 
