@@ -80,15 +80,18 @@ class NodeController < ApplicationController
       source_node.parent = dst_node
       if source_node.save
         flash[:notice] = "Successfully move the node '" + source_node.name + "' to under node '" + dst_node.name + "'."
-        redirect_to :root
+      else
+        flash[:error] = "Error: Cannot perform cut and paste. Please try again!"
       end
     elsif not resource.nil? 
       resource.node = dst_node
       if resource.save
         flash[:notice] = "Successfully move the resource '" + resource.name + "' to under node '" + dst_node.name + "'."
-        redirect_to :root
+      else
+        flash[:error] = "Error: Cannot perform cut and paste. Please try again!"
       end 
     end
+    redirect_to :root
   end
  
   def destroy
