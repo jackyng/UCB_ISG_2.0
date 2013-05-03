@@ -28,6 +28,7 @@ Isg2::Application.routes.draw do
 
   get "admin" => "admin#index"
   match "admin/create" => "admin#create", via: [:get, :post]
+  match "admin/search" => "admin#search", via: [:get, :post]
   match "admin/destroy" => "admin#destroy", via: [:get, :post]
   
   match "message" => "message#index", via: [:get, :post]

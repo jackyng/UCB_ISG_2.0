@@ -40,4 +40,10 @@ module ComplaintHelper
 		back.html_safe
 	end
 
+	def displayAdmin(admin_id)
+		admin = Admin.find_by_id(admin_id)
+		html_code = "#{admin.fullname}"
+		html_code.html_safe
+	end
+
 end

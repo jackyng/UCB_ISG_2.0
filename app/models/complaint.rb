@@ -3,7 +3,7 @@ class Complaint < ActiveRecord::Base
   belongs_to :admin
   has_many :messages
 
-  attr_accessible :ip_address, :status, :title, :user, :admin, :user_email
+  attr_accessible :ip_address, :status, :title, :user, :admin, :user_email, :admin_id
 
   validates :ip_address, :status, :title, :user, :presence => true
   validates :status, :inclusion => { :in => ["new", "read", "assigned", "in progress", "completed"] }

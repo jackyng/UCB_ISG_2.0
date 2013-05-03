@@ -1,7 +1,9 @@
 <% provide(:title, 'Complaints Management') %>
 <table>
 	<tr>
-		<th><button class="btn btn-primary" onclick="displayTicketForm()" type="button">Submit Ticket</button></th>
+		<% unless @user_admin %>
+			<th><button class="btn btn-primary" onclick="displayTicketForm()" type="button">Submit Ticket</button></th>
+		<% end %>
 		<th><button class="btn btn-primary" onclick="displayChart()" type="button">Display Chart</button></th>
 	</tr>
 </table>
@@ -13,6 +15,7 @@
 			<th>IP_Address</th>
 			<th>Title</th>
 			<th>Status</th>
+			<th>Owner</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,17 +27,37 @@
 					<td><%= complaint.title %></td>
 					<td><%= complaint.status %></td>
 					<td>
-						<div class="btn-group">
-							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-								Update
-								<span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu">
-								<% ["new", "read", "assigned", "in progress", "completed"].each do |status| %>
-									<%= link_to status, complaint_update_status_path(complaint, status: status), method: :post %>
-								<% end %>
-							</ul>
-						</div>
+						<% if @user_admin %>
+							<% if complaint.status == "new" %>
+								<div class="btn-group">
+									<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+										Assign
+										<span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu">
+										<% @list_admins.each do |admin| %>
+											<%= link_to admin.fullname, complaint_assign_admin_path(complaint, status: "assigned", owner: admin), method: :post %>
+										<% end %>
+									</ul>
+								</div>
+							<% else %>
+								<%= displayAdmin(complaint.admin_id) %>
+							<% end %>
+						<% end %>
+					<td>
+						<% if @user_admin %>
+							<div class="btn-group">
+								<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+									Update
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu">
+									<% ["new", "assigned", "read", "in progress", "completed"].each do |status| %>
+										<%= link_to status, complaint_update_status_path(complaint, status: status), method: :post %>
+									<% end %>
+								</ul>
+							</div>
+						<% end %>
 					</td>
 					<td>
 						<button class="btn btn-small btn-info" onclick="displayTicket(<%= complaint.id %>)" type="button">
