@@ -90,7 +90,7 @@ class NodeController < ApplicationController
     if @node.name == Isg2::Application::ROOT_NODE_NAME
       flash[:error] = "Error: can't remove the root topic."
     elsif @node.has_children?
-      flash[:error] = "Error: can't remove a topic '" + @node.name + "' with subtopics."
+ 
     else
       @node.destroy
       flash[:notice] = "Successfully removed topic '" + @node.name + "'."
