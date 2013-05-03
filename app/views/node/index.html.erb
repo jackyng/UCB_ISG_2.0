@@ -13,27 +13,40 @@
   <% end %>
   <%= display_recent_annc() %>
   <div id="body" class="container-fluid">
-    <div class="row-fluid">
-      <div id="sidebar" class="span7">
-        <div class="well sidebar-nav">
-            <table>
-              <tr>
-                <td id="treecontrol">
-                  <a class="btn btn-small btn-primary disabled" title="Collapse the entire tree below" href="#">Collapse All</a> 
-                  <a class="btn btn-small btn-primary disabled" title="Expand the entire tree below" href="#">Expand All</a>
-                </td>
-                <td>
-                  <a class="btn btn-small btn-primary disabled" href="/node/graphview">Graph View</a>
-                </td>
-            </table>
-            <ul id="my_tree" class="nav nav-list">
-              <%= display_segment(@root_node, @user_admin) %>
-            </ul>
+    <ul>
+          <li><a href="#tabs-1">Tree</a></li>
+          <li><a href="#tabs-2">Resource 1</a></li>
+          <li><a href="#tabs-3">Resource 2</a></li>
+    </ul>
+    <div id="tabs-1">
+      <div class="row-fluid">
+        <div id="sidebar" class="span7">
+            <div class="well sidebar-nav">
+                <table>
+                  <tr>
+                    <td id="treecontrol">
+                      <a class="btn btn-small btn-primary disabled" title="Collapse the entire tree below" href="#">Collapse All</a> 
+                      <a class="btn btn-small btn-primary disabled" title="Expand the entire tree below" href="#">Expand All</a>
+                    </td>
+                    <td>
+                      <a class="btn btn-small btn-primary disabled" href="/node/graphview">Graph View</a>
+                    </td>
+                </table>
+                <ul id="my_tree" class="nav nav-list">
+                  <%= display_segment(@root_node, @user_admin) %>
+                </ul>
+            </div>
         </div>
-      </div>
       <div id="popular_bar" class="span5">
         <h5> Popular Problems </h5>
       </div>
+    </div>
+    </div> 
+    <div id="tabs-2">
+      To open a resource in this tab, right-click on a resource in the tree and click on "Open in Resource 1 tab" in the context menu.
+    </div>
+    <div id="tabs-3">
+      To open a resource in this tab, right-click on a resource in the tree and click on "Open in Resource 2 tab" in the context menu.
     </div>
   </div>
 </div>
