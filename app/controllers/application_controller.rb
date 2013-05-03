@@ -19,8 +19,9 @@ class ApplicationController < ActionController::Base
 
     unless @calnet_id.nil?
       @admin = Admin.find_by_calnetID(@calnet_id)
-      @user_admin = true
-      if @admin.nil?
+      unless @admin.nil?
+        @user_admin = true
+      else
         @user = User.find_by_calnetID(@calnet_id)
         if @user.nil?
           @user = User.create(calnetID: @calnet_id)
