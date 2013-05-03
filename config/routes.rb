@@ -23,6 +23,7 @@ Isg2::Application.routes.draw do
   get "complaint/chart"
   get "complaint/getComplaintData"
   post "complaint/:id/update_status" => "complaint#update_status", as: :complaint_update_status
+  post "complaint/:id/assign_admin" => "complaint#assign_admin", as: :complaint_assign_admin
 
   get "logout" => "application#logout"
 
