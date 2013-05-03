@@ -28,6 +28,13 @@ class User < ActiveRecord::Base
     return
   end
 
+  def update_name
+    begin
+      self.fullname = ldap_lookup(self.calnetID)
+    rescue Exception
+    end
+  end
+
   private
   def ldap_lookup(calnetID)
     unless calnetID.nil?

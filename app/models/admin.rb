@@ -18,6 +18,13 @@ class Admin < ActiveRecord::Base
     end
     return
   end
+  
+  def update_name
+    begin
+      self.fullname = ldap_lookup(self.calnetID)
+    rescue Exception
+    end
+  end
 
   private
   def ldap_lookup(calnetID)
