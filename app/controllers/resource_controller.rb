@@ -1,6 +1,6 @@
 class ResourceController < ApplicationController
   before_filter CASClient::Frameworks::Rails::Filter
-  before_filter :check_admin_privilege
+  before_filter :check_admin_privilege, :except => [:open]
   
   def create
     unless params[:node_id]
