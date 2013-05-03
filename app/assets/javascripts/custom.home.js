@@ -8,6 +8,6 @@ $(document).ready(function() {
         delay: { show: 500, hide: 100 }
       }) 
     });
-    $('#body').tabs();
+  $('#body').tabs();
 });
 
