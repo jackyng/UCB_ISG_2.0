@@ -1,0 +1,55 @@
+<% provide(:title, 'Search names to add to admin list') %>
+
+<h2>Add admin by name</h2>
+<br />
+
+<% if flash[:notice] %>
+  <div id='notice' class='alert alert-success'><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:error] or !flash[:errors].blank? %>
+  <div id='error' class='alert alert-error'>
+    <ul>
+      <% if flash[:error] %>
+        <li><%= flash[:error] %></li>
+      <% end %>
+      <% if flash[:errors] %>
+        <% flash[:errors].each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_tag admin_search_path do %>
+  <%= label_tag :first_name, 'First name: ' %>
+  <%= text_field_tag :first_name, params[:first_name] %>
+  <%= label_tag :last_name, 'Last name: ' %>
+  <%= text_field_tag :last_name, params[:last_name] %><br />
+  <%= submit_tag 'Search', class: "btn btn-primary" %>
+  &nbsp; &nbsp;
+  <%= link_to "Back", admin_path, method: :get, class: "btn btn-primary" %>
+<% end %>
+
+<% if @ldap_entries %>
+  <table class="table table-stripped table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Calnet ID</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @ldap_entries.each do |ldap_entry| %> 
+        <tr class=<%= Admin.find_by_calnetID(ldap_entry.uid.first).nil? ? "warning" : "success"%> >
+          <td><%= ldap_entry.displayName.first %></td>
+          <td><%= ldap_entry.uid.first %></td>
+          <td><%= ldap_entry.mail.first if ldap_entry.attribute_names.include?(:mail) %></td>
+          <td class="span2"></td>
+          <td><%= displayAddAdminLinkFromLDAP(ldap_entry) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
