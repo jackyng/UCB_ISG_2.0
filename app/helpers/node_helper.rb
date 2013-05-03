@@ -19,7 +19,8 @@ module NodeHelper
     node.resources.each{|resource|
         resource_id = "resource_" + resource.id.to_s()
     	html << "<li>"
-        html << "<a id=\"#{h(resource_id)}\" href=\"#{h(resource.url)}\" class=\"resources iframe\"><i class=\"icon-file\"></i>#{h(resource.name)}</a>"
+        html << "<i class=\"icon-file\"></i>"
+        html << link_to(resource.name, resource_open_path(resource.id), id: resource_id, class: "resources iframe")
         html << "</li>"
     }
     html << "</ul></li>"
