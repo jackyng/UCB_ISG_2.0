@@ -4,7 +4,9 @@
 		<% unless @user_admin %>
 			<th><button class="btn btn-primary" onclick="displayTicketForm()" type="button">Submit Ticket</button></th>
 		<% end %>
-		<th><button class="btn btn-primary" onclick="displayChart()" type="button">Display Chart</button></th>
+		<% if @user_admin %>
+			<th><button class="btn btn-primary" onclick="displayChart()" type="button">Display Chart</button></th>
+		<% end %>
 	</tr>
 </table>
 <br>

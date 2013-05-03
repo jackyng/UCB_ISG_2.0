@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <title>Test Suite</title>
+</head>
+<body>
+<table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
+<tr><td><b>Test Suite</b></td></tr>
+<tr><td><a href="User_Admin_Home_Test">User_Admin_Home_Test</a></td></tr>
+<tr><td><a href="User_Admin_Announcement_Test">User_Admin_Announcement_Test</a></td></tr>
+<tr><td><a href="Manage_Announcements_Test">Manage_Announcements_Test</a></td></tr>
+<tr><td><a href="Manage_Admins_Test">Manage_Admins_Test</a></td></tr>
+<tr><td><a href="Users_Manage_Complaints_Test">Users_Manage_Complaints_Test</a></td></tr>
+<tr><td><a href="Manage_Queries_Test">Manage_Queries_Test</a></td></tr>
+<tr><td><a href="Admins_Manage_Complaints_Test">Admins_Manage_Complaints_Test</a></td></tr>
+</tbody></table>
+</body>
+</html>
