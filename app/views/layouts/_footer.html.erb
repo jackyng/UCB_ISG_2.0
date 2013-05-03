@@ -1,5 +1,7 @@
 <footer class="footer">
   <small>
-   
+    <div id="online_counter">
+      <%= pluralize(@online_people, 'person') %> online, <%= pluralize(@online_registered, 'user') %> registered
+    </div>
   </small>
 </footer>

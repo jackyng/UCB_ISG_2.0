@@ -1,8 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :setup_session_info
-  # before_filter :log_request_time
+  before_filter :setup_session_info, if: lambda { @user.nil? and @admin.nil? }
+  before_filter :log_request_time
+  before_filter :online_users
 
   def logout
     CASClient::Frameworks::Rails::Filter.logout(self)
@@ -36,16 +37,27 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # def log_request_time
-  #   req = Request.find_by_ip_address(request.remote_ip)
-  #   if req.nil?
-  #     req = Request.create(ip_address: request.remote_ip)
-  #   end
+  def log_request_time
+    req = Request.find_by_ip_address(request.remote_ip)
+    if req.nil?
+      req = Request.create(ip_address: request.remote_ip)
+    end
 
-  #   if session[:cas_user]
-  #     req.isRegistered = true
-  #   end
-  #   req.request_time = Time.now
-  #   req.save
-  # end
+    if session[:cas_user]
+      req.isRegistered = true
+      setup_session_info if @user.nil? and @admin.nil?
+      if @user
+        User.find_by_calnetID(session[:cas_user]).update_attributes(last_request_time: Time.now)
+      elsif @admin
+        Admin.find_by_calnetID(session[:cas_user]).update_attributes(last_request_time: Time.now)
+      end
+    end
+    req.request_time = Time.now
+    req.save
+  end
+
+  def online_users
+    @online_people = Request.count
+    @online_registered = Request.find_all_by_isRegistered(true).count
+  end
 end
