@@ -6,8 +6,8 @@ development:
   reconnect: false
   database: db/development
   pool: 5
-  username: root
-  password: admin
+  # username: root
+  # password: admin
   socket: /tmp/mysql.sock
 test:
   adapter: mysql2
@@ -15,16 +15,15 @@ test:
   reconnect: false
   database: db/test
   pool: 5
-  username: root
-  password: admin
+  # username: root
+  # password: admin
   socket: /tmp/mysql.sock
-
 production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
   database: db/production
   pool: 5
-  username: root
-  password: admin
+  # username: root
+  # password: admin
   socket: /tmp/mysql.sock
