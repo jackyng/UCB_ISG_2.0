@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130502203331) do
+ActiveRecord::Schema.define(:version => 20130503040414) do
 
   create_table "admins", :force => true do |t|
     t.string   "fullname"
@@ -26,8 +26,9 @@ ActiveRecord::Schema.define(:version => 20130502203331) do
     t.integer  "admin_id"
     t.string   "title"
     t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.boolean  "shown_on_homepage"
   end
 
   add_index "announcements", ["admin_id"], :name => "index_announcements_on_admin_id"

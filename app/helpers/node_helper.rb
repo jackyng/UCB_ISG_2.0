@@ -37,9 +37,10 @@ module NodeHelper
   end
 
   def display_recent_annc()
-    if Announcement.count != 0
+    showing_announcements = Announcement.where(shown_on_homepage: true).order("created_at desc")
+    unless showing_announcements.blank?
         html_code = "<div class=\"alert alert-info\"id=\"announcement_feed\"><ul>"
-        Announcement.last(5).reverse.each do |notice|
+        showing_announcements.each do |notice|
             html_code << "<li>"
             html_code << "<a href=\"#{h(announcement_notice_path(id: notice.id))}\">#{h(notice.title)}</a>"
             html_code << "</li>"

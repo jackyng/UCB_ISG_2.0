@@ -17,6 +17,7 @@ describe Announcement do
   it { should respond_to :admin_id }
   it { should respond_to :title }
   it { should respond_to :description }
+  it { should respond_to :shown_on_homepage }
 
   it "should save with valid required arguments" do
     subject.save.should == true
