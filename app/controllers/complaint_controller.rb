@@ -54,7 +54,11 @@ class ComplaintController < ApplicationController
 
 	def index
     if @admin
-      @complaints = Complaint.all()
+      if params[:id]
+        @complaints = Complaint.find_all_by_admin_id(params[:id])
+      else
+        @complaints = Complaint.all()
+      end
       @list_admins= Admin.all()
     elsif @user
       @complaints = Complaint.find_all_by_user_id(@user)

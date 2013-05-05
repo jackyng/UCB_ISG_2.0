@@ -6,7 +6,21 @@
 		<% end %>
 		<% if @user_admin %>
 			<th><button class="btn btn-primary" onclick="displayChart()" type="button">Display Chart</button></th>
-		<% end %>
+			<th>
+			<div class="btn-group">
+				<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+					View
+					<span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<%= link_to "All", complaint_path %>
+					<% @list_admins.each do |admin| %>
+						<%= link_to admin.fullname, complaint_path(id: admin) %>
+					<% end %>
+				</ul>
+			</div>
+			</th>
+	<% end %>
 	</tr>
 </table>
 <br>
