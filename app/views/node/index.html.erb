@@ -59,7 +59,7 @@
       <p>To open a resource in this tab, right-click on a resource in the tree and click on "Open in Resource 2 tab" in the context menu.</p>
     </div>
     <div id="tabs-4">
-      <script>
+      <script type="text/javascript">
         (function() {
           var cx = '014884818165545854872:4squesghksu';
           var gcse = document.createElement('script');
@@ -71,7 +71,10 @@
           s.parentNode.insertBefore(gcse, s);
         })();
       </script>
-      <gcse:search></gcse:search>
+      <div>
+        <gcse:searchbox enableHistory="true" autoCompleteMaxCompletions="5" autoCompleteMatchType='any'></gcse:searchbox>
+        <gcse:searchresults refinementStyle="link"></gcse:searchresults>
+      </div>
     </div>
   </div>
 </div>
