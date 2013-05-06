@@ -50,7 +50,14 @@
 						</td>
 
 						<td>
-							<%= link_to "Edit", announcement_edit_path(notice.id), class: "btn btn-small btn-info" %>
+							<button class="btn btn-small btn-info" onclick="displayEditAnnouncement(<%= notice.id %>, '<%= j notice.title %>' , '<%= j notice.description %>' )" type="button">
+							Edit Notice
+						</button>
+						</td>
+						<td>
+							<button class="btn btn-small btn-danger" onclick="displayRemoveAnnouncement(<%= notice.id %>, '<%= j notice.title %>' )" type="button">
+							Remove
+						</button>
 						</td>
 					</tr>
 				<% end %>
@@ -59,3 +66,57 @@
 <% else %>
 	There are no announcements!
 <% end %>
+
+<!-- Remove Announement -->
+  <div id="removeAnnouncement" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="removeAnnouncement" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Remove Announcement</h3>
+    </div>
+    <div class="modal-body">
+      <%= form_tag "/", :method => :delete, id: "destroy_form" do %>
+        <p>Do you want to remove the announcement '<span class="announcement_name"></span>'?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <%= submit_tag 'Delete', :class => "btn btn-danger btn-primary" %>
+      </div>
+      <% end %>   
+  </div>
+
+<!-- Edit Announement -->
+  <div id="editAnnouncement" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="editAnnouncement" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Edit Announcement</h3>
+    </div>
+    <div class="modal-body">
+      <%= form_tag "/", id: "edit_form" do %>
+        <%= label_tag 'Title: ' %>
+  		<%= text_field_tag :title %><br />
+  		<%= label_tag 'Description: ' %>
+  		<%= text_area_tag :description, rows: "10", cols: "25"%><br />
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <%= submit_tag 'Save', :class => "btn btn-primary" %>
+      </div>
+      <% end %>   
+  </div>
+
+<script type="text/javascript">
+  	//Show the the comfirm for remove
+	function displayRemoveAnnouncement(id, title) {
+		$('#removeAnnouncement').modal();
+		$('#destroy_form').attr("action", '/announcement/'+id+'/destroy')
+		$('#removeAnnouncement .modal-body .announcement_name').text(title);	
+	}
+
+	//Show the edit form
+	function displayEditAnnouncement(id, title, description) {
+		$('#editAnnouncement').modal();
+		$('#edit_form').attr("action", '/announcement/'+id+'/edit')
+		$('#editAnnouncement .modal-body #title').val(title);
+		$('#editAnnouncement .modal-body #description').val(description);	
+	}
+</script>
