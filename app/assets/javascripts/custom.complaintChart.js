@@ -21,7 +21,7 @@ function drawChart() {
         'ui': {
           'chartType': 'LineChart',
           'chartOptions': {
-            'chartArea': {'width': '90%'},
+            'chartArea': {'width': '95%'},
             'hAxis': {'baselineColor': 'none'}
           },
           // Display a single series that shows the number of complaints.
@@ -41,10 +41,10 @@ function drawChart() {
       'containerId': 'chartRangeFilter_chart_div',
       'options': {
         // Use the same chart area width as the control for axis alignment.
-        'chartArea': {'height': '80%', 'width': '90%'},
+        'chartArea': {'height': '80%', 'width': '95%'},
         'hAxis': {'slantedText': false},
         'vAxis': {'viewWindow': {'min': 0, 'max': 30}},
-        'legend': {'position': 'left'}
+        'legend': {'position': 'none'}
       },
       // Convert the first column from 'date' to 'string'.
       'view': {
