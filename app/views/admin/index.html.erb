@@ -35,9 +35,27 @@
         <tr class="warning" >
           <td><%= user.fullname %></td>
           <td><%= user.calnetID %></td>
-          <td><%= user.email %></td>
-          <td class="span2"></td>
-          <td><%= displayAddAdminLink(user) %></td>
+
+          <% if user.email %>
+            <td>
+              <%= user.email %>
+            </td>
+            <td>
+              <%= link_to("Add Admin", admin_create_path(fullname: user.fullname, email: user.email, calnetID: user.calnetID), :method => :post, :title => "Make this user becomes an admin") %>
+            </td>
+          <% else %>
+            <%= form_tag admin_create_path, method: :get, class: "form-inline" do %>
+              <%= hidden_field_tag :fullname, user.fullname %>
+              <%= hidden_field_tag :calnetID, user.calnetID %>
+              <td>
+                <%= email_field_tag :email, nil, placeholder: "Email required!" %>
+              </td>
+              <td>
+                <%= submit_tag "Save email & add as Admin", class: "btn btn-small btn-primary" %>
+              </td>
+            <% end %>
+          <% end %>
+          
         </tr>
       <% end %>
     <% end %>
