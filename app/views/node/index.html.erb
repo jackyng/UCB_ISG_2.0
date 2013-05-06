@@ -18,6 +18,7 @@
           <li><a href="#tabs-2">Resource 1</a></li>
           <li><a href="#tabs-3">Resource 2</a></li>
           <li><a href="#tabs-4">Search</a></li>
+          <li><a href="#tabs-5">Announcements</a></li>
     </ul>
     <div id="tabs-1">
       <div class="row-fluid">
@@ -75,6 +76,9 @@
         <gcse:searchbox enableHistory="true" autoCompleteMaxCompletions="5" autoCompleteMatchType='any'></gcse:searchbox>
         <gcse:searchresults refinementStyle="link"></gcse:searchresults>
       </div>
+    </div>
+    <div id="tabs-5">
+      <%= display_annc_tab() %>
     </div>
   </div>
 </div>
@@ -264,6 +268,13 @@
 
 
 <script type="text/javascript">
+
+  //Show the announcement content
+  function displayAnnc(id) {
+    var url = "/announcement/notice?id=" + id;
+    $(location).attr('href', url);
+  }
+
   function readFile() {
     var files = document.getElementById('files').files;
     if (!files.length) {

@@ -38,7 +38,9 @@
 			<th>IP_Address</th>
 			<th>Title</th>
 			<th>Status</th>
-			<th>Owner</th>
+			<% if @user_admin %>
+				<th>Owner</th>
+			<% end %>
 		</tr>
 	</thead>
 	<tbody>
@@ -67,6 +69,7 @@
 								<%= displayAdmin(complaint.admin_id) %>
 							<% end %>
 						<% end %>
+					</td>
 					<td>
 						<% if @user_admin and not complaint.admin_id.nil? %>
 							<div class="btn-group">

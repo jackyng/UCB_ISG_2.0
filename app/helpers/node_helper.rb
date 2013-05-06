@@ -56,4 +56,20 @@ module NodeHelper
         html_code.html_safe
     end
   end
+
+  def display_annc_tab()
+    showing_announcements = Announcement.where(shown_on_homepage: true).order("created_at desc")
+    html_code = "<table class=\"table table-stripped table-hover table-condensed\"><thead><tr><th>Submitted Date</th><th>Title</th></tr></thead>"
+    unless showing_announcements.blank?
+        html_code << "<tbody>"
+        showing_announcements.each do |notice|
+            html_code << "<tr><td>#{h(notice.created_at)}</td>"
+            html_code << "<td>#{h(notice.title)}</td>"
+            html_code << "<td><button class=\"btn btn-small btn-info\" onclick=\"displayAnnc(#{h(notice.id)})\" type=\"button\">Content</button></td></tr>"
+        end
+        html_code << "</tbody></table>"
+        html_code.html_safe
+    end
+  end
+
 end

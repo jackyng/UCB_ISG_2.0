@@ -42,6 +42,14 @@ class NodeController < ApplicationController
     if new_child.save
       flash[:notice] = "Successfully created subtopic '#{new_child.name}' under '#{new_child.parent.name}'"
       redirect_to :root
+    else
+      if not Node.find_by_name(params[:name]).blank?
+          flash[:error] = "Another node with same name already created!"
+      elsif not Node.find_by_description(params[:description]).blank?
+        flash[:error] = "Another node with same description already created!"
+      else
+        flash[:error] = "Please check your name '#{params[:name]}' and/or description '#{params[:description]}'"
+      end
     end
   end
 

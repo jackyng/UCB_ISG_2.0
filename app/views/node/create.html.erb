@@ -3,7 +3,9 @@
 <% if flash[:error] %>
   <div id='error' class='alert alert-error'><%= flash[:error] %></div>
 <% end %>
-<h4><%= 'Path: ../' + Node.find(params[:parent]).parent.name + "/" + Node.find(params[:parent]).name + "/" %></h4>
+<% unless Node.find(params[:parent]).parent.nil? %>
+	<h4><%= 'Path: ../' + Node.find(params[:parent]).parent.name + "/" + Node.find(params[:parent]).name + "/" %></h4>
+<% end %>
 <%= form_tag "/node/create" do %>
   <%= label_tag :name, 'Node name: ' %>
   <%= text_field_tag :name %><br />
