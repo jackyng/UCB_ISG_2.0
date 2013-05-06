@@ -132,7 +132,7 @@
       $(this).data('state', state);
 
       el.css({overflow: 'hidden', position: 'relative'})
-        .children('ul').css({position: 'absolute', margin: 0, padding: 0})
+        .children('ul').css({position: 'relative', margin: 0, padding: 0})
         .children('li').css({margin: options.margin, padding: options.padding});
 
       if(isNaN(options.height) || options.height == 0)

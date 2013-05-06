@@ -141,14 +141,18 @@ input {
   width: 1095px;
 }
 
-#announcement_feed{;
-  width: 1080px;
-  padding-left: 30px;
-  padding-bottom: 2px;
-  padding-top: 2px;
+
+#announcement_feed{
+  padding-top: 1.5px;
+  padding-bottom: 1px;
+  text-align: center;
+  ul {
+    display: inline-block;
+  }
   li, a {
-    padding-left: 10px;
-    font-size: 14px;
+    list-style: none;
+    font-size: 16px;
+
   }
 }
 
