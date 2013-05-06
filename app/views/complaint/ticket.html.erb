@@ -5,3 +5,29 @@
   	</br></br></br>
 	<%= backbutton() %>
 </div>
+
+<!-- Reply Form -->
+  <div id="replyForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="replyForm" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Reply</h3>
+    </div>
+    <div class="modal-body">
+      <%= form_tag "/", id: "reply_form" do %>
+  		<%= label_tag 'Reply: ' %>
+  		<%= text_area_tag :content, nil, rows: "10", cols: "25"%><br />
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <%= submit_tag 'Submit', :class => "btn btn-primary" %>
+      </div>
+      <% end %>   
+  </div>
+
+<script type="text/javascript">
+	//Show the reply form
+	function displayMessagesForm(id) {
+		$('#replyForm').modal();
+		$('#reply_form').attr("action", '/message/'+id+'/reply')
+	}
+</script>

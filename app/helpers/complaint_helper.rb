@@ -8,7 +8,7 @@ module ComplaintHelper
 		current_complaint = Complaint.find_by_id(complaint_id)
 		messages = Message.ordered_by_complaint(complaint_id)
 		content = "<table><tr><td><h2>#{h(current_complaint.title)}</h2></td><td><div class=\"span7\"></div></td>"
-		content << "<td><a class=\"btn btn-primary\" href=\"#{h(message_reply_path(messages[-1].id))}\" data-method=\"get\">Reply</a></td></table>"
+		content << "<td><button class=\"btn btn-primary\" onclick=\"displayMessagesForm(#{h(messages[-1].id)})\">Reply</button></td></table>"
 		content << "<h5>Description:</h5>"
 		content << "<div class=complaint>#{h(messages[0].content)}</div>"
 		content.html_safe
@@ -17,7 +17,7 @@ module ComplaintHelper
 	def displayMessages(complaint_id)
 		messages = Message.ordered_by_complaint(complaint_id)
 		messages.shift
-		html_code = "<table>"
+		html_code = "<table class=\"table table-stripped table-hover table-condensed\">"
 		html_code << "<tr>"
 		html_code << "<th class='span2'>Message no.</th>"
 		html_code << "<th class='span3'>Author</th>"
@@ -26,9 +26,9 @@ module ComplaintHelper
 		messages.each do |message|
 			html_code << "<tr>"
 			author = message.admin || message.user
-			html_code << "<td>#{message.depth}</td>"
-			html_code << "<td>#{author.fullname}</td>"
-			html_code << "<td>#{message.content}</td>"
+			html_code << "<td class='span2'>#{message.depth}</td>"
+			html_code << "<td class='span3'>#{author.fullname}</td>"
+			html_code << "<td class='span7'>#{message.content}</td>"
 			html_code << "</tr>"
 		end
 		html_code << "</table>"
