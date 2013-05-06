@@ -24,9 +24,42 @@ class ComplaintController < ApplicationController
     redirect_to complaint_path
   end
 
+  def assign_admin
+    begin
+      @complaint = Complaint.find(params[:id])
+    rescue
+      flash[:error] = "Could not find complaint with id '#{params[:id]}'"
+      redirect_to complaint_path and return
+    end
+    if params[:status]
+      unless @complaint.update_attributes(status: params[:status])
+        flash[:error] = "Couldn't update status of complaint #{@complaint.id} to '#{params[:status]}'"
+      else
+        flash[:notice] = "Status of Complaint '#{@complaint.title}' updated."
+      end
+    else
+      flash[:error] = "Parameter status missing"
+    end
+    if params[:owner]
+      unless @complaint.update_attributes(admin_id: params[:owner])
+        flash[:error] = "Couldn't assign complaint #{@complaint.id} to admin #{params[:owner]}"
+      else
+        flash[:notice] = "Assigned Complaint '#{@complaint.title}' to Admin #{params[:owner]}."
+      end
+    else
+      flash[:error] = "Parameter owner missing"
+    end
+    redirect_to complaint_path
+  end
+
 	def index
     if @admin
-      @complaints = Complaint.all()
+      if params[:id]
+        @complaints = Complaint.find_all_by_admin_id(params[:id])
+      else
+        @complaints = Complaint.all()
+      end
+      @list_admins= Admin.all()
     elsif @user
       @complaints = Complaint.find_all_by_user_id(@user)
     else

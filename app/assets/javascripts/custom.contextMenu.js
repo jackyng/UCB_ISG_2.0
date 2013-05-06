@@ -172,6 +172,30 @@ $(function(){
           }
       });
     }
+    else {
+      $.contextMenu({
+          selector: '.resources', 
+          callback: function(key, opt) {
+              var url = opt.$trigger.attr("href");
+              var $tabs = $('#body').tabs();
+              switch (key) 
+              {
+                case "resource_tab_1":
+                  loadTabFrame("#tabs-2", url);
+                  $tabs.tabs("option", "active", 1);
+                  break;
+                case "resource_tab_2":
+                  loadTabFrame("#tabs-3", url);
+                  $tabs.tabs("option", "active", 2);
+                  break;
+              }
+          },
+          items: {
+              "resource_tab_1": {name: "Open in Resource 1 tab" },
+              "resource_tab_2": {name: "Open in Resource 2 tab" }
+          }
+      });
+    }
     function loadTabFrame(tab, url) {
       $(tab).html("");
       if ($(tab).find("iframe").length == 0) {

@@ -114,3 +114,18 @@ User.first(10).each do |user|
   )
 end
 puts "done"
+
+
+
+# Create announcements
+print "[progress update] creating announcements............."
+Admin.all.each do |admin|
+  2.times do |i|
+    admin.announcements.create(
+      title: "#{admin.fullname} announcement ##{i+1}",
+      description: "This is the announcement ##{i+1} of admin #{admin.fullname}",
+      shown_on_homepage: i.odd?
+    )
+  end
+end
+puts "done"
