@@ -1,6 +1,6 @@
 class ResourceController < ApplicationController
   before_filter CASClient::Frameworks::Rails::Filter => [:open]
-  before_filter :check_admin_privilege, :except => [:open]
+  before_filter :check_admin_privilege, :except => [:open, :getBreadcrumbs]
   
   def create
     unless params[:node_id]
@@ -80,4 +80,25 @@ class ResourceController < ApplicationController
     @resource.save
     redirect_to @resource.url
   end
+
+  def getBreadcrumbs
+    data = {}
+    resource_path = []
+
+    @resource = Resource.find(params[:id])
+    resource_path << @resource.name
+    node_parent = Node.find(@resource.node_id)
+    while !node_parent.is_root?
+      resource_path << node_parent.name
+      node_parent = node_parent.parent
+    end
+    resource_path << node_parent.name
+    resource_path = resource_path.reverse
+
+    data[:path] = resource_path
+    respond_to do |format|
+      format.json {render :json => data}
+    end
+  end
+
 end

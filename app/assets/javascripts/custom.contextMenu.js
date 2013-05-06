@@ -134,6 +134,7 @@ $(function(){
               var resource_name = opt.$trigger.text();
               var url = opt.$trigger.attr("href");
               var $tabs = $('#body').tabs();
+
               switch (key) 
               {
                 case "delete":
@@ -154,12 +155,26 @@ $(function(){
                   NODE_CUT_NAME = null;
                   break;
                 case "resource_tab_1":
-                  loadTabFrame("#tabs-2", url);
-                  $tabs.tabs("option", "active", 1);
+                  $.ajax({
+                    url: "/resource/getBreadcrumbs?id=" + resource_id,
+                    dataType: "json",
+                    }).success(function(breadcrumbs) {
+                      path = breadcrumbs.path;
+                      path = path.join(" > ");
+                      loadTabFrame("#tabs-2", url, path);
+                      $tabs.tabs("option", "active", 1);
+                  });
                   break;
                 case "resource_tab_2":
-                  loadTabFrame("#tabs-3", url);
-                  $tabs.tabs("option", "active", 2);
+                  $.ajax({
+                    url: "/resource/getBreadcrumbs?id=" + resource_id,
+                    dataType: "json",
+                    }).success(function(breadcrumbs) {
+                      path = breadcrumbs.path;
+                      path = path.join(" > ");
+                      loadTabFrame("#tabs-3", url, path);
+                      $tabs.tabs("option", "active", 2);
+                  });
                   break;
               }
           },
@@ -176,17 +191,32 @@ $(function(){
       $.contextMenu({
           selector: '.resources', 
           callback: function(key, opt) {
+              var resource_id = opt.$trigger.attr("id").split("_")[1];
               var url = opt.$trigger.attr("href");
               var $tabs = $('#body').tabs();
               switch (key) 
               {
                 case "resource_tab_1":
-                  loadTabFrame("#tabs-2", url);
-                  $tabs.tabs("option", "active", 1);
+                  $.ajax({
+                    url: "/resource/getBreadcrumbs?id=" + resource_id,
+                    dataType: "json",
+                    }).success(function(breadcrumbs) {
+                      path = breadcrumbs.path;
+                      path = path.join(" > ");
+                      loadTabFrame("#tabs-2", url, path);
+                      $tabs.tabs("option", "active", 1);
+                  });
                   break;
                 case "resource_tab_2":
-                  loadTabFrame("#tabs-3", url);
-                  $tabs.tabs("option", "active", 2);
+                  $.ajax({
+                    url: "/resource/getBreadcrumbs?id=" + resource_id,
+                    dataType: "json",
+                    }).success(function(breadcrumbs) {
+                      path = breadcrumbs.path;
+                      path = path.join(" > ");
+                      loadTabFrame("#tabs-3", url, path);
+                      $tabs.tabs("option", "active", 2);
+                  });
                   break;
               }
           },
@@ -196,11 +226,11 @@ $(function(){
           }
       });
     }
-    function loadTabFrame(tab, url) {
+    function loadTabFrame(tab, url, path) {
       $(tab).html("");
       if ($(tab).find("iframe").length == 0) {
           var html = [];
-          html.push('<div class="tabIframeWrapper">');
+          html.push(path + '<br><br>' + '<div class="tabIframeWrapper">');
           html.push('<div class="openout"><a href="' + url + '"><img src="/assets/world.png" border="0" alt="Open" title="Remove iFrame" /></a></div><iframe class="iframetab" src="' + url + '">Load Failed?</iframe>');
           html.push('</div>');
           $(tab).append(html.join(""));

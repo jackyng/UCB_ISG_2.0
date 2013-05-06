@@ -15,6 +15,7 @@ Isg2::Application.routes.draw do
   match "resource/edit" => "resource#edit", via: [:get, :post]
   delete "resource/destroy"
   get "resource/:id/open" => "resource#open", as: :resource_open
+  get "resource/getBreadcrumbs"
 
   get "complaint" => "complaint#index"
   match "complaint/create" => "complaint#create", via: [:get, :post]
