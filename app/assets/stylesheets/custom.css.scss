@@ -20,6 +20,7 @@ body {
   padding-top: 60px;
   font-family: 'Raleway';
   background-color:rgb(46, 43, 46);
+  color: rgb(168, 103, 103);
 }
 
 section {
@@ -36,8 +37,10 @@ textarea {
     margin-bottom: 10px;
   }
 }
-/* typography */
 
+.table tbody tr:hover td, .table tbody tr:hover th {
+    background-color: orange;
+}
 
 /* header */
 .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
