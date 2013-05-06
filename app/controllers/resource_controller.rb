@@ -1,5 +1,5 @@
 class ResourceController < ApplicationController
-  before_filter CASClient::Frameworks::Rails::Filter => [:open]
+  before_filter CASClient::Frameworks::Rails::Filter, :except => [:open, :getBreadcrumbs]
   before_filter :check_admin_privilege, :except => [:open, :getBreadcrumbs]
   
   def create
