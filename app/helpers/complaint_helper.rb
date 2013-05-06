@@ -42,8 +42,9 @@ module ComplaintHelper
 
 	def displayAdmin(admin_id)
 		admin = Admin.find_by_id(admin_id)
-		html_code = "#{admin.fullname}"
-		html_code.html_safe
+		if not admin.nil?
+			html_code = "#{admin.fullname}"
+			html_code.html_safe
+		end
 	end
-
 end

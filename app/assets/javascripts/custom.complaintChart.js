@@ -44,7 +44,7 @@ function drawChart() {
         'chartArea': {'height': '80%', 'width': '90%'},
         'hAxis': {'slantedText': false},
         'vAxis': {'viewWindow': {'min': 0, 'max': 30}},
-        'legend': {'position': 'none'}
+        'legend': {'position': 'left'}
       },
       // Convert the first column from 'date' to 'string'.
       'view': {

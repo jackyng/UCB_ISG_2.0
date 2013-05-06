@@ -61,14 +61,14 @@
 							<% end %>
 						<% end %>
 					<td>
-						<% if @user_admin %>
+						<% if @user_admin and not complaint.admin_id.nil? %>
 							<div class="btn-group">
 								<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
 									Update
 									<span class="caret"></span>
 								</a>
 								<ul class="dropdown-menu">
-									<% ["new", "assigned", "read", "in progress", "completed"].each do |status| %>
+									<% ["read", "in progress", "completed"].each do |status| %>
 										<%= link_to status, complaint_update_status_path(complaint, status: status), method: :post %>
 									<% end %>
 								</ul>
