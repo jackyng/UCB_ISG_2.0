@@ -13,8 +13,8 @@ end
 def create_resources(node)
   3.times do |i|
     node.resources.create(
-      :name => "r#{node.name[1..-1]}.#{i}",
-      :url => "https://r#{node.name[1..-1]}.#{i}.com/"
+      name: "r#{node.name[1..-1]}.#{i}",
+      url: "https://r#{node.name[1..-1]}.#{i}.com/"
     )
   end
 end
@@ -30,11 +30,11 @@ servers = Node.create(name: "Servers", parent: $root, description: "Server probl
 labs = Node.create(name: "Labs", parent: $root, description: "Lab problems?")
 
 licenses = Node.create(name: "Licenses", parent: software, description: "License info")
-licenses.resources.create(name: "Eclipse", url: "http://inst.eecs.berkeley.edu/cgi-bin/pub.cgi?file=eclipse.help")
-licenses.resources.create(name: "Microsoft", url: "http://msdnaa.eecs.berkeley.edu/")
+licenses.resources.create(name: "Eclipse", url: "http://inst.eecs.berkeley.edu/cgi-bin/pub.cgi?file=eclipse.help", description: "Eclipse stuff")
+licenses.resources.create(name: "Microsoft", url: "http://msdnaa.eecs.berkeley.edu/", description: "Microsoft stuff")
 os = Node.create(name: "Operating Systems", parent: software, description: "OS info")
-os.resources.create(name: "Windows", url: "http://inst.eecs.berkeley.edu/cgi-bin/pub.cgi?file=microsoft.help")
-os.resources.create(name: "UNIX", url: "http://inst.eecs.berkeley.edu/cgi-bin/pub.cgi?file=software.help")
+os.resources.create(name: "Windows", url: "http://inst.eecs.berkeley.edu/cgi-bin/pub.cgi?file=microsoft.help", description: "Windows stuff")
+os.resources.create(name: "UNIX", url: "http://inst.eecs.berkeley.edu/cgi-bin/pub.cgi?file=software.help", description: "UNIX stuff")
 
 keyboards = Node.create(name: "Keyboards", parent: hardware, description: "Keyboards problems")
 mice = Node.create(name: "Mice", parent: hardware, description: "Mice problems")

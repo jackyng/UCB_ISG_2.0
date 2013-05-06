@@ -20,7 +20,14 @@ module NodeHelper
         resource_id = "resource_" + resource.id.to_s()
     	html << "<li>"
         html << "<i class=\"icon-file\"></i>"
-        html << link_to(resource.name, resource_open_path(resource.id), id: resource_id, class: "resources iframe")
+        html << link_to(
+            resource.name,
+            resource_open_path(resource.id),
+            id: resource_id,
+            class: "resources iframe",
+            rel: "tooltip",
+            title: @admin ? h("#{resource.description} (#{resource.count} views)") : h(resource.description)
+        )
         html << "</li>"
     }
     html << "</ul></li>"
